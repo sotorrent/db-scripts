@@ -1,6 +1,6 @@
 # add secure-file-priv="" under [mysqld] in my.ini
 
-USE `stackoverflow17_06`;
+USE `sotorrent17_12`;
 
 SELECT *
 INTO OUTFILE 'PostBlockDiff.csv' 

@@ -1,4 +1,4 @@
-USE `stackoverflow17_06`;
+USE `sotorrent17_12`;
 
 CREATE INDEX `comments_index_1` ON Comments(UserId);
 
