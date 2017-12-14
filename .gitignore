@@ -1,0 +1,47 @@
+######################
+# OS generated files #
+######################
+*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+#Icon?
+ehthumbs.db
+Thumbs.db
+
+##############
+# Java/Scala #
+##############
+*.class
+
+##########################
+# Webstorm/IntelliJ IDEA #
+##########################
+.idea/
+*.iml
+
+#########
+# Excel #
+#########
+~$*
+
+###########
+# RStudio #
+###########
+.Rhistory
+.RData
+
+#########
+# Maven #
+##########
+target/
+
+########
+# Misc #
+########
+/data
+*.log
+*.log.*
+*.lck
