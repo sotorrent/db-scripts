@@ -111,7 +111,7 @@ CREATE TABLE `PostLinks` (
 
 CREATE TABLE `Tags` (
     Id INT NOT NULL,
-    TagName VARCHAR(25),
+    TagName VARCHAR(64),
     Count INT,
     ExcerptPostId INT,
     WikiPostId INT,
