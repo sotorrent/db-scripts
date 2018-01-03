@@ -1,4 +1,4 @@
-# add secure-file-priv="" under [mysqld] in my.ini
+# add secure-file-priv="" under [mysqld] in my.ini or /etc/mysql/mysql.conf.d/mysqld.cnf
 
 USE `sotorrent17_12`;
 
