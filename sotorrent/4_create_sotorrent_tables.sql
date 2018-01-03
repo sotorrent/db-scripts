@@ -107,6 +107,7 @@ CREATE TABLE `PostReferenceGH` (
   Path TEXT NOT NULL,
   FileExt TEXT NOT NULL,
   Size INT NOT NULL,
+  Copies INT NOT NULL,
   PostId INT NOT NULL,
   PostTypeId TINYINT NOT NULL,
   Url TEXT NOT NULL,
