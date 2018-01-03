@@ -1,8 +1,6 @@
 --- Status: 20.11.2017
 --- Execute this in BigQuery
 
---- TODO: Check extraction of SO references (e.g. post 3758880)
-
 --- Select all source code lines of text files that contain a link to Stack Overflow
 SELECT
   file_id,
@@ -107,7 +105,7 @@ WHERE
 => so_references_2017_11_20.matched_files_aq
 
 
---- Use camel case for column names and remove line content for export into MySQL database
+--- Use camel case for column names and remove line content for export to MySQL database
 SELECT
   file_id as FileId,
   repo_name as RepoName,
@@ -123,7 +121,6 @@ FROM `soposthistory.so_references_2017_11_20.matched_files_aq`;
 
 => so_references_2017_11_20.PostReferenceGH
 
---- TODO: merge with SO data
 
 --- Retrieve info about referenced SO answers
 WITH

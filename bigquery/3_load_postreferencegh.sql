@@ -1,4 +1,4 @@
-USE `stackoverflow17_06`;
+USE `sotorrent17_12`;
 
 SET foreign_key_checks = 0;
 LOAD DATA LOCAL INFILE 'PostReferenceGH.csv' INTO TABLE `PostReferenceGH`
