@@ -1,6 +1,12 @@
 # Add secure-file-priv="/data/tmp/" under [mysqld] in my.ini or /etc/mysql/mysql.conf.d/mysqld.cnf
 # to allow file export to that directory.
-# If AppArmor is activated for MySQL, the MySQL profile has to be modified to allow accessing /data/tmp/
+# If AppArmor is activated for MySQL, the MySQL profile has to be modified to allow accessing /data/tmp/:
+#  sudo nano /etc/apparmor.d/local/usr.sbin.mysqld
+#  # Site-specific additions and overrides for usr.sbin.mysqld.
+#  # For more details, please see /etc/apparmor.d/local/README.
+#  /data/tmp/ r,
+#  /data/tmp/** rwk,
+#  sudo service apparmor reload
 # Alternative: Temporarily disable AppArmor for MySQL
 # (see, e.g., https://www.cyberciti.biz/faq/ubuntu-linux-howto-disable-apparmor-commands/)
 
