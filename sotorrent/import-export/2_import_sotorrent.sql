@@ -37,15 +37,6 @@ LINES TERMINATED BY '\n'
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD DATA LOCAL INFILE 'PostReferenceGH.csv' INTO TABLE `PostReferenceGH`
-CHARACTER SET utf8mb4
-FIELDS TERMINATED BY ','
-OPTIONALLY ENCLOSED BY '\"'
-ESCAPED BY '\"'
-LINES TERMINATED BY '\n';
-SET foreign_key_checks = 1;
-
-SET foreign_key_checks = 0;
 LOAD DATA LOCAL INFILE 'PostType.csv' INTO TABLE `PostType`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
