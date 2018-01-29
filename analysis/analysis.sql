@@ -333,3 +333,185 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
+
+# compare edit and comment dates
+select
+  PostId,
+  Date,
+  Count(PostHistoryId) as EditCount
+from (
+  select
+    PostId,
+    date(CreationDate) as Date,
+    Id as PostHistoryId
+  from PostHistory
+  where PostHistoryTypeId in (2, 5, 8)
+) edits
+group by PostId, Date
+into outfile '/data/tmp/posthistory_date_editcount.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+select
+  PostId,
+  date(CreationDate) as Date,
+  CreationDate,
+  Id as PostHistoryId
+from PostHistory
+where PostHistoryTypeId in (2, 5, 8)
+into outfile '/data/tmp/posthistory_date.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+select
+  PostId,
+  Date,
+  Count(CommentId) as CommentCount
+from (
+  select
+    PostId,
+    date(CreationDate) as Date,
+    Id as CommentId
+  from Comments
+) comments
+group by PostId, Date
+into outfile '/data/tmp/comments_date_commentcount.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+select
+  PostId,
+  date(CreationDate) as Date,
+  CreationDate,
+  Id as CommentId
+from Comments
+into outfile '/data/tmp/comments_date.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+
+create table edits_comments as
+select
+  edits_aggregated.PostId as PostId,
+  edits_aggregated.Date as Date,
+  EditCount,
+  CommentCount
+from (
+  select
+    PostId,
+    Date,
+    Count(PostHistoryId) as EditCount
+  from (
+    select
+      PostId,
+      date(CreationDate) as Date,
+      Id as PostHistoryId
+    from PostHistory
+    where PostHistoryTypeId in (2, 5, 8)
+  ) edits
+  group by PostId, Date
+) edits_aggregated
+join (
+  select
+    PostId,
+    Date,
+    Count(CommentId) as CommentCount
+  from (
+    select
+      PostId,
+      date(CreationDate) as Date,
+      Id as CommentId
+    from Comments
+  ) comments
+  group by PostId, Date
+) comments_aggregated
+on edits_aggregated.PostId = comments_aggregated.PostId
+  and edits_aggregated.Date = comments_aggregated.Date;
+
+  
+create table edits_comments_2 as
+select
+  post_dates.PostId as PostId,
+  post_dates.Date as Date,
+  CommentId,
+  CommentTimestamp
+from (
+  select PostId, Date
+  from edits_comments
+  where EditCount>0 & CommentCount>0
+) post_dates
+join (
+  select
+    PostId,
+    date(CreationDate) as Date,
+    CreationDate as CommentTimestamp,
+    Id as CommentId
+  from Comments
+) comments
+on post_dates.PostId = comments.PostId
+  and post_dates.Date = comments.Date;
+
+
+drop table edits_comments;
+
+create table edits_comments as
+select
+  edits_comments.PostId as PostId,
+  edits_comments.Date as Date,
+  CommentId,
+  CommentTimestamp,
+  PostHistoryId,
+  EditTimestamp,
+  TIMESTAMPDIFF(SECOND, EditTimestamp, CommentTimestamp) as TimestampDiff
+from edits_comments_2 edits_comments
+join (
+  select
+    PostId,
+    date(CreationDate) as Date,
+    CreationDate as EditTimestamp,
+    Id as PostHistoryId
+  from PostHistory
+  where PostHistoryTypeId in (2, 5, 8)
+) ph
+on edits_comments.PostId = ph.PostId
+  and edits_comments.Date = ph.Date;
+
+drop table edits_comments_2;
+
+create table edits_comments_min as
+select PostHistoryId, CommentId, min(abs(TimestampDiff)) as MinTimestampDiffAbs
+from edits_comments
+group by PostHistoryId, CommentId;
+
+create table edits_comments_final
+select
+  e.PostHistoryId as PostHistoryId,
+  e.CommentId as CommentId,
+  TimestampDiff
+from edits_comments e
+join edits_comments_min e_min
+on e.PostHistoryId = e_min.PostHistoryId
+  and e.CommentId = e_min.CommentId
+  and abs(e.TimestampDiff) = e_min.MinTimestampDiffAbs;
+
+drop table edits_comments_min;
+drop table edits_comments;
+
+
+
+##########
+# order of post blocks
+##########
+select p1.Id as PostBlockVersionId, (p2.LocalId - p1.LocalId) as LocalIdDiff
+from PostBlockVersion p1
+join PostBlockVersion p2
+on p1.PredPostBlockId = p2.Id
+into outfile '/data/tmp/postblockversion_localiddiff.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
