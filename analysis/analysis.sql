@@ -664,9 +664,8 @@ select
 from `edits_votes.first_edits` e
 join `edits_votes.first_versions` v
 on e.PostId = v.PostId
-where date_diff(date(e.Timestamp), date(v.Timestamp), DAY) >= 7;
+where date_diff(date(e.Timestamp), date(v.Timestamp), DAY) > 7;
 => sample_edits
-
 
 # get upvotes one week before and after edit
 select
@@ -676,7 +675,7 @@ select
   # edit before vote -> diff negative
   date_diff(date(e.Timestamp), date(v.Timestamp), DAY) as TimespanDiff
 from `edits_votes.sample_edits` e
-join `edits_votes.post_votes` v
+left join `edits_votes.post_votes` v
 on e.PostId = v.PostId
 where UpVote > 0
   and abs(date_diff(date(e.Timestamp), date(v.Timestamp), DAY)) <= 7;
@@ -686,18 +685,17 @@ select
   PostId,
   count(VoteId) as UpVotes
 from `edits_votes.sample_edits_votes`
-where TimespanDiff<0
+where TimespanDiff<0 and VoteId is not null
 group by PostId;
-=> sample_votes_after_edits;
+=> sample_votes_after_edits
 
 select
   PostId,
   count(VoteId) as UpVotes
 from `edits_votes.sample_edits_votes`
-where TimespanDiff>0
+where TimespanDiff>0 and VoteId is not null
 group by PostId;
-=> sample_votes_before_edits;
-
+=> sample_votes_before_edits
 
 ####################################################
   
