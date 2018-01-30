@@ -1,0 +1,17 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Timestamp",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostHistoryId",
+        "type": "INTEGER"
+    }
+]

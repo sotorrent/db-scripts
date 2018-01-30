@@ -1,0 +1,27 @@
+[
+    {
+        "name": "PostId",
+        "type": "INTEGER",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "Timestamp",
+        "type": "DATETIME",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "VoteId",
+        "type": "INTEGER",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "UpVote",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "DownVote",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    }
+]

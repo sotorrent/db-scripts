@@ -614,8 +614,94 @@ lines terminated by '\n';
 ####################################################
 # BigQuery
 ########## 
-  
+# replace NAs
+select
+  PostId,
+  Timestamp,
+  VoteId,
+  case UpVote when '\\N' then '0' else UpVote end as UpVote,
+  case DownVote when '\\N' then '0' else DownVote end as DownVote
+from `edits_votes.post_votes`;
+=> post_votes_tmp
+
+select
+  PostId,
+  Timestamp,
+  VoteId,
+  cast(UpVote as int64) as UpVote,
+  cast(DownVote as int64) as DownVote
+from `edits_votes.post_votes_tmp`;
+=> post_votes_tmp_2
+=> post_votes
+
+# get PostHistoryIds of first version
+select
+  PostId,
+  min(PostHistoryId) as PostHistoryId,
+  min(Timestamp) as Timestamp
+from `edits_votes.post_edits`
+group by PostId;
+=> first_versions
+
+select
+  PostId,
+  min(PostHistoryId) as PostHistoryId,
+  min(Timestamp) as Timestamp
+from `edits_votes.post_edits` e
+where PostHistoryId > (
+    select min(PostHistoryId)
+    from `edits_votes.post_edits`
+    where PostId = e.PostId
+    group by PostId)
+group by PostId;
+=> first_edits
+
+# select first edits that were done at least one week after the creation of the post
+select
+  e.PostId as PostId,
+  e.PostHistoryId as PostHistoryId,
+  e.Timestamp as Timestamp
+from `edits_votes.first_edits` e
+join `edits_votes.first_versions` v
+on e.PostId = v.PostId
+where date_diff(date(e.Timestamp), date(v.Timestamp), DAY) >= 7;
+=> sample_edits
+
+
+# get upvotes one week before and after edit
+select
+  e.PostId as PostId,
+  PostHistoryId,
+  VoteId,
+  # edit before vote -> diff negative
+  date_diff(date(e.Timestamp), date(v.Timestamp), DAY) as TimespanDiff
+from `edits_votes.sample_edits` e
+join `edits_votes.post_votes` v
+on e.PostId = v.PostId
+where UpVote > 0
+  and abs(date_diff(date(e.Timestamp), date(v.Timestamp), DAY)) <= 7;
+=> sample_edits_votes
+
+select
+  PostId,
+  count(VoteId) as UpVotes
+from `edits_votes.sample_edits_votes`
+where TimespanDiff<0
+group by PostId;
+=> sample_votes_after_edits;
+
+select
+  PostId,
+  count(VoteId) as UpVotes
+from `edits_votes.sample_edits_votes`
+where TimespanDiff>0
+group by PostId;
+=> sample_votes_before_edits;
+
+
 ####################################################
   
+
+
  
 
