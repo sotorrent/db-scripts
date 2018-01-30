@@ -1,0 +1,17 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "PostHistoryId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "CommentId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "MinTimestampDiffAbs",
+        "type": "INTEGER"
+    }
+]

@@ -334,7 +334,22 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 
-# compare edit and comment dates
+   
+##########
+# order of post blocks
+##########
+select p1.Id as PostBlockVersionId, (p2.LocalId - p1.LocalId) as LocalIdDiff
+from PostBlockVersion p1
+join PostBlockVersion p2
+on p1.PredPostBlockId = p2.Id
+into outfile '/data/tmp/postblockversion_localiddiff.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+
+
+# compare edit and comment/vote dates
 select
   PostId,
   Date,
@@ -349,18 +364,6 @@ from (
 ) edits
 group by PostId, Date
 into outfile '/data/tmp/posthistory_date_editcount.csv'
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\n';
-
-select
-  PostId,
-  date(CreationDate) as Date,
-  CreationDate,
-  Id as PostHistoryId
-from PostHistory
-where PostHistoryTypeId in (2, 5, 8)
-into outfile '/data/tmp/posthistory_date.csv'
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
@@ -382,17 +385,39 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
+
+# analyze connection of edits and votes
 select
   PostId,
-  date(CreationDate) as Date,
-  CreationDate,
-  Id as CommentId
-from Comments
-into outfile '/data/tmp/comments_date.csv'
+  Date,
+  SUM(UpVote) as UpVotes,
+  SUM(DownVote) as DownVotes
+from (
+  select
+    PostId,
+    date(CreationDate) as Date,
+    Id as VoteId,
+    case VoteTypeId
+      when 2 then 1
+      else NULL
+    end as UpVote,
+    case VoteTypeId
+      when 3 then 1
+      else NULL
+    end as DownVote
+  from Votes
+  where VoteTypeId in (2, 3) # (upvote, downvote)
+) votes
+group by PostId, Date
+into outfile '/data/tmp/votes_date_votecount.csv'
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
+
+
+
+# analyze edits and comments happening on the same day
 
 create table edits_comments as
 select
@@ -483,35 +508,114 @@ on edits_comments.PostId = ph.PostId
 drop table edits_comments_2;
 
 create table edits_comments_min as
-select PostHistoryId, CommentId, min(abs(TimestampDiff)) as MinTimestampDiffAbs
+select
+  PostHistoryId,
+  CommentId,
+  min(abs(TimestampDiff)) as MinTimestampDiffAbs
 from edits_comments
 group by PostHistoryId, CommentId;
 
-create table edits_comments_final
+create table edits_comments_filtered as
+select
+  PostHistoryId,
+  CommentId,
+  TimestampDiff
+from edits_comments;
+
+drop table edits_comments;
+
+# cannot create indices because SSD is full
+
+#CREATE INDEX edits_comments_min_index_1 ON edits_comments_min(PostHistoryId);
+#CREATE INDEX edits_comments_min_index_2 ON edits_comments_min(CommentId);
+#CREATE INDEX edits_comments_min_index_3 ON edits_comments_min(MinTimestampDiffAbs);
+
+#CREATE INDEX edits_comments_index_1 ON edits_comments(PostHistoryId);
+#CREATE INDEX edits_comments_index_2 ON edits_comments(CommentId);
+#CREATE INDEX edits_comments_index_3 ON edits_comments(TimestampDiff);
+
+#create table edits_comments_final
+#select
+#  e.PostHistoryId as PostHistoryId,
+#  e.CommentId as CommentId,
+#  TimestampDiff
+#from edits_comments_filtered e
+#join edits_comments_min e_min
+#on e.PostHistoryId = e_min.PostHistoryId
+#  and e.CommentId = e_min.CommentId
+#  and abs(e.TimestampDiff) = e_min.MinTimestampDiffAbs;
+
+  
+# join takes too long on our server hardware -> export to CSV and join using BigQuery
+
+select PostHistoryId, CommentId, MinTimestampDiffAbs
+from edits_comments_min
+into outfile '/data/tmp/edits_comments_min.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+select PostHistoryId, CommentId, TimestampDiff
+from edits_comments_filtered
+into outfile '/data/tmp/edits_comments.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+####################################################
+# BigQuery
+##########
 select
   e.PostHistoryId as PostHistoryId,
   e.CommentId as CommentId,
   TimestampDiff
-from edits_comments e
-join edits_comments_min e_min
+from `edits_comments.edits_comments` e
+join `edits_comments.edits_comments_min` e_min
 on e.PostHistoryId = e_min.PostHistoryId
   and e.CommentId = e_min.CommentId
   and abs(e.TimestampDiff) = e_min.MinTimestampDiffAbs;
+####################################################
 
-drop table edits_comments_min;
-drop table edits_comments;
+ 
 
+# export for analysis in BigQuery
 
-
-##########
-# order of post blocks
-##########
-select p1.Id as PostBlockVersionId, (p2.LocalId - p1.LocalId) as LocalIdDiff
-from PostBlockVersion p1
-join PostBlockVersion p2
-on p1.PredPostBlockId = p2.Id
-into outfile '/data/tmp/postblockversion_localiddiff.csv'
+select
+  PostId,
+  CreationDate as Timestamp,
+  Id as PostHistoryId
+from PostHistory
+where PostHistoryTypeId in (2, 5, 8)
+into outfile '/data/tmp/post_edits.csv'
 fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
+
+select
+  PostId,
+  CreationDate as Timestamp,
+  Id as VoteId,
+  case VoteTypeId
+    when 2 then 1
+    else NULL
+  end as UpVote,
+  case VoteTypeId
+    when 3 then 1
+    else NULL
+  end as DownVote
+from Votes
+where VoteTypeId in (2, 3) # (upvote, downvote)
+into outfile '/data/tmp/post_votes.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+  
+####################################################
+# BigQuery
+########## 
+  
+####################################################
+  
+ 
 
