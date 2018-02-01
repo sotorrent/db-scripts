@@ -1,5 +1,5 @@
 ##########
-# get java posts (to compare all vs. java posts)
+# Get Java posts (to compare all vs. Java posts)
 ##########
 select Id as PostId, PostTypeId
 from Posts
@@ -25,7 +25,7 @@ lines terminated by '\n';
 
 
 ##########
-# analyze post scores
+# Analyze post scores
 ##########
 select Id as PostId, PostTypeId, Score
 from Posts
@@ -36,9 +36,8 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 
-
 ##########
-# number of text/code blocks per post
+# Number of text/code blocks per post
 ##########
 select
   p2.PostId as PostId,
@@ -95,17 +94,19 @@ lines terminated by '\n';
 
 
 ##################################################
-# correlations
+# Correlations
 ##################################################
 
+# Correlate the following measures with the version count
+
 ##########
-# is code in upvoted posts changed more often?
+# Is code in upvoted posts changed more often?
 ##########
 ##########
-# is code in posts with many commentes changed more often?
+# Is code in posts with many comments changed more often?
 ##########
 ##########
-# is code in old posts changed more often?
+# Is code in old posts changed more often?
 ##########
 select
   Id as PostId,
@@ -122,7 +123,7 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 ##########
-# are code snippets found on GH more likely to be revised?
+# Are code snippets found on GH more likely to be revised?
 ##########
 select PostId, count(FileId) as GHMatchCount
 from PostReferenceGH
@@ -133,7 +134,7 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 ##########
-# does author reputation influence the versioncount?
+# Does author reputation influence the versioncount?
 ##########
 select Id as UserId, Reputation
 from Users
@@ -142,15 +143,11 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-
-# compare everything with versioncount
-
 ##################################################
 
 
-
 ##########
-# length of all text block lifespans
+# Length of all text block lifespans
 ##########
 select pbv.PostId as PostId, PostTypeId, RootPostBlockId, count(pbv.Id) as LifespanLength
 from PostBlockVersion pbv
@@ -164,7 +161,7 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 ##########
-# length of all code block lifespans
+# Length of all code block lifespans
 ##########
 select pbv.PostId as PostId, PostTypeId, RootPostBlockId, count(pbv.Id) as LifespanLength
 from PostBlockVersion pbv
@@ -177,9 +174,9 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-
-
-# are text and code blocks changed together?
+##########
+# Are text and code blocks changed together?
+##########
 select PostId, PostHistoryId, Count(Id) as TextBlockEdits
 from PostBlockVersion
 where PostBlockTypeId=1 and (PredEqual IS NULL or PredEqual=0) 
@@ -199,8 +196,9 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 
-
-# length of text blocks
+##########
+# Length of text blocks
+##########
 select PostId, PostHistoryId, Id as PostBlockVersionId, Length, LineCount
 from PostBlockVersion
 where PostBlockTypeId=1
@@ -210,7 +208,9 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-# length of code blocks
+##########
+# Length of code blocks
+##########
 select PostId, PostHistoryId, Id as PostBlockVersionId, Length, LineCount
 from PostBlockVersion
 where PostBlockTypeId=2
@@ -220,7 +220,9 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-# length of text blocks over time (only consider changes)
+##########
+# Length of text blocks over time (only consider changes)
+##########
 select PostId, RootPostBlockId, Id as PostBlockVersionId, Length, LineCount
 from PostBlockVersion
 where PostBlockTypeId=1 and (PredEqual IS NULL or PredEqual=0)
@@ -230,7 +232,9 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-# length of code blocks over time (only consider changes)
+##########
+# Length of code blocks over time (only consider changes)
+##########
 select PostId, RootPostBlockId, Id as PostBlockVersionId, Length, LineCount
 from PostBlockVersion
 where PostBlockTypeId=2 and (PredEqual IS NULL or PredEqual=0)
@@ -240,8 +244,9 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-
-# analyze who edited the posts
+##########
+# Analyze who edited the posts
+##########
 select
   PostId,
   PostTypeId,
@@ -274,8 +279,9 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-
-# analyze timespan between the edits
+##########
+# Analyze timespan between the edits
+##########
 select
   pv1.PostId as PostId,
   pv1.PostTypeId as PostTypeId,
@@ -306,7 +312,9 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 
-# retrieve lines deleted/added
+##########
+# Retrieve lines deleted/added
+##########
 select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, count(PostBlockDiffOperationId) as LinesDeleted
 from PostBlockDiff
 where PostBlockDiffOperationId=-1
@@ -334,9 +342,8 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 
-   
 ##########
-# order of post blocks
+# Order of post blocks
 ##########
 select p1.Id as PostBlockVersionId, (p2.LocalId - p1.LocalId) as LocalIdDiff
 from PostBlockVersion p1
@@ -348,8 +355,9 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 
-
-# compare edit and comment/vote dates
+##########
+# Compare edit and comment/vote dates
+##########
 select
   PostId,
   Date,
@@ -385,8 +393,6 @@ fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\n';
 
-
-# analyze connection of edits and votes
 select
   PostId,
   Date,
@@ -415,10 +421,9 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 
-
-
-# analyze edits and comments happening on the same day
-
+##########
+# Analyze edits and comments happening on the same day
+##########
 create table edits_comments as
 select
   edits_aggregated.PostId as PostId,
@@ -457,7 +462,6 @@ join (
 on edits_aggregated.PostId = comments_aggregated.PostId
   and edits_aggregated.Date = comments_aggregated.Date;
 
-  
 create table edits_comments_2 as
 select
   post_dates.PostId as PostId,
@@ -479,7 +483,6 @@ join (
 ) comments
 on post_dates.PostId = comments.PostId
   and post_dates.Date = comments.Date;
-
 
 drop table edits_comments;
 
@@ -577,9 +580,9 @@ on e.PostHistoryId = e_min.PostHistoryId
 ####################################################
 
  
-
-# export for analysis in BigQuery
-
+##########
+# Export for analysis of edits vs. votes in BigQuery
+##########
 select
   PostId,
   CreationDate as Timestamp,
