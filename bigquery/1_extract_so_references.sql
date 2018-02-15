@@ -1,7 +1,7 @@
---- Status: 20.11.2017
+--- Status: 15.02.2018
 --- Execute this in BigQuery
 
---- Select all source code lines of text files that contain a link to Stack Overflow
+--- select all source code lines of text files that contain a link to Stack Overflow
 SELECT
   file_id,
   size,
@@ -33,10 +33,10 @@ FROM (
 )
 WHERE REGEXP_CONTAINS(line, r'(?i:https?://stackoverflow\.com/[^\s)\.\"]*)');
 
-=> so_references_2017_11_20.matched_lines
+=> so_references_2018_02_15.matched_lines
 
 
---- Join with table files to get information about repos
+--- join with table "files" to get information about repos
 SELECT
   lines.file_id as file_id,
   repo_name,
@@ -46,14 +46,14 @@ SELECT
   copies,
   url,
   line
-FROM `soposthistory.so_references_2017_11_20.matched_lines` as lines
+FROM `soposthistory.so_references_2018_02_15.matched_lines` as lines
 LEFT JOIN `bigquery-public-data.github_repos.files` as files
 ON lines.file_id = files.id;
 
-=> so_references_2017_11_20.matched_files
+=> so_references_2018_02_15.matched_files
 
 
---- Normalize the SO links to (http://stackoverflow.com/(a/q)/<id>)
+--- normalize the SO links to (http://stackoverflow.com/(a/q)/<id>)
 SELECT
   file_id,
   repo_name,
@@ -74,12 +74,12 @@ SELECT
     ELSE url
   END as url,
   line
-FROM `soposthistory.so_references_2017_11_20.matched_files`;
+FROM `soposthistory.so_references_2018_02_15.matched_files`;
 
-=> so_references_2017_11_20.matched_files_normalized
+=> so_references_2018_02_15.matched_files_normalized
 
 
---- Extract post id from links, set post type id, and extract file extension from path
+--- extract post id from links, set post type id, and extract file extension from path
 SELECT
   file_id,
   repo_name,
@@ -98,14 +98,14 @@ SELECT
   END as post_type_id,
   url,
   line
-FROM `soposthistory.so_references_2017_11_20.matched_files_normalized`
+FROM `soposthistory.so_references_2018_02_15.matched_files_normalized`
 WHERE
   REGEXP_CONTAINS(url, r'(http:\/\/stackoverflow\.com\/(?:a|q)\/[\d]+)');
   
-=> so_references_2017_11_20.matched_files_aq
+=> so_references_2018_02_15.matched_files_aq
 
 
---- Use camel case for column names and remove line content for export to MySQL database
+--- use camel case for column names and remove line content for export to MySQL database
 SELECT
   file_id as FileId,
   repo_name as RepoName,
@@ -117,12 +117,12 @@ SELECT
   post_id as PostId,
   post_type_id as PostTypeId,
   url as Url
-FROM `soposthistory.so_references_2017_11_20.matched_files_aq`;
+FROM `soposthistory.so_references_2018_02_15.matched_files_aq`;
 
-=> so_references_2017_11_20.PostReferenceGH
+=> so_references_2018_02_15.PostReferenceGH
 
 
---- Retrieve info about referenced SO answers
+--- retrieve info about referenced SO answers
 WITH
   answers AS (
     SELECT
@@ -139,7 +139,7 @@ WITH
       comment_count As CommentCount,
       score as Score,
       parent_id as ParentId
-    FROM `soposthistory.so_references_2017_11_20.PostReferenceGH` ref
+    FROM `soposthistory.so_references_2018_02_15.PostReferenceGH` ref
     LEFT JOIN `bigquery-public-data.stackoverflow.posts_answers` a
     ON ref.PostId = a.id
     WHERE PostTypeId=2
@@ -163,7 +163,8 @@ FROM answers
 LEFT JOIN `bigquery-public-data.stackoverflow.posts_questions` q
 ON answers.ParentId = q.id;
 
-=> so_references_2017_11_20.PostReferenceGH_Answers
+=> so_references_2018_02_15.PostReferenceGH_Answers
+
 
 SELECT
   FileId,
@@ -173,12 +174,12 @@ SELECT
   CommentCount,
   Score,
   ParentViewCount
-FROM `soposthistory.so_references_2017_11_20.PostReferenceGH_Answers`;
+FROM `soposthistory.so_references_2018_02_15.PostReferenceGH_Answers`;
 
-=> so_references_2017_11_20.PostReferenceGH_Answers_R
+=> so_references_2018_02_15.PostReferenceGH_Answers_R
 
 
---- Retrieve info about referenced SO questions
+--- retrieve info about referenced SO questions
 SELECT
   FileId,
   RepoName,
@@ -193,12 +194,13 @@ SELECT
   comment_count As CommentCount,
   score as Score,
   view_count as ViewCount
-FROM `soposthistory.so_references_2017_11_20.PostReferenceGH` ref
+FROM `soposthistory.so_references_2018_02_15.PostReferenceGH` ref
 LEFT JOIN `bigquery-public-data.stackoverflow.posts_questions` q
 ON ref.PostId = q.id
 WHERE PostTypeId=1;
 
-=> so_references_2017_11_20.PostReferenceGH_Questions
+=> so_references_2018_02_15.PostReferenceGH_Questions
+
 
 SELECT
   FileId,
@@ -208,36 +210,6 @@ SELECT
   CommentCount,
   Score,
   ViewCount
-FROM `soposthistory.so_references_2017_11_20.PostReferenceGH_Questions`;
+FROM `soposthistory.so_references_2018_02_15.PostReferenceGH_Questions`;
 
-
-=> so_references_2017_11_20.PostReferenceGH_Questions_R
-
-
---- Retrieve information about all Java questions to compare referenced questions with all questions
-SELECT
-  id as post_id,
-  REGEXP_CONTAINS(tags, r'(?:^|.+\|)(java)(?:\||$)') as java_tag,
-  REGEXP_CONTAINS(tags, r'(?:^|.+\|)(android)(?:\||$)') as android_tag,
-  score,
-  comment_count,
-  view_count
-FROM `bigquery-public-data.stackoverflow.posts_questions`
-WHERE REGEXP_CONTAINS(tags, r'(?:^|.+\|)(java|android)(?:\||$)');
-
-=> so_java.questions
-
---- Retrieve information about all Java answers to compare referenced answers with all answers
-SELECT
-  answers.id as post_id,
-  answers.parent_id as parent_id,
-  java_questions.java_tag as java_tag,
-  java_questions.android_tag as android_tag,
-  answers.score as score,
-  answers.comment_count as comment_count,
-  java_questions.view_count as parent_view_count
-FROM `bigquery-public-data.stackoverflow.posts_answers` answers
-INNER JOIN `soposthistory.so_java.questions` java_questions
-ON java_questions.post_id = answers.parent_id;
-
-=> so_java.answers
+=> so_references_2018_02_15.PostReferenceGH_Questions_R
