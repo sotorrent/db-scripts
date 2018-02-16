@@ -48,6 +48,7 @@ CREATE TABLE `PostVersion` (
   PostId INT NOT NULL,
   PostHistoryId INT NOT NULL,
   PostTypeId TINYINT NOT NULL,
+  CreationDate DATETIME,
   PredPostHistoryId INT DEFAULT NULL,
   SuccPostHistoryId INT DEFAULT NULL,
   PRIMARY KEY(Id),
