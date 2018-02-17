@@ -1,5 +1,6 @@
 # Add secure-file-priv="/data/tmp/" under [mysqld] in my.ini or /etc/mysql/mysql.conf.d/mysqld.cnf
-# to allow file export to that directory.
+# to allow file export to that directory. Windows paths without backslashes, e.g., F:/Temp
+# Alternatively, disable secure-file-priv by setting it to ""
 # If AppArmor is activated for MySQL, the MySQL profile has to be modified to allow accessing /data/tmp/:
 #  sudo nano /etc/apparmor.d/local/usr.sbin.mysqld
 #  # Site-specific additions and overrides for usr.sbin.mysqld.
