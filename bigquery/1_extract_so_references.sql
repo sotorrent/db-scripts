@@ -5,7 +5,6 @@
 SELECT
   file_id,
   size,
-  copies,
   REGEXP_REPLACE(
       REGEXP_EXTRACT(LOWER(line), r'(https?://stackoverflow\.com/[^\s)\.\"]*)'),
       r'(^https)',
@@ -16,13 +15,11 @@ FROM (
   SELECT
     file_id,
     size,
-    copies,
     line
   FROM (
     SELECT
       id as file_id,
       size,
-      copies,
       SPLIT(content, '\n') as lines
     FROM `bigquery-public-data.github_repos.contents`
     WHERE
@@ -43,7 +40,6 @@ SELECT
   REGEXP_EXTRACT(ref, r'refs/heads/(.+)') as branch,
   path,
   size,
-  copies,
   url,
   line
 FROM `soposthistory.so_references_2018_02_15.matched_lines` as lines
@@ -60,7 +56,6 @@ SELECT
   branch,
   path,
   size,
-  copies,
   CASE
     --- DO NOT replace the distinction between answers and questions, because otherwise URLs like this won't be matched: http://stackoverflow.com/a/3758880/1035417
     WHEN REGEXP_CONTAINS(LOWER(url), r'(https?:\/\/stackoverflow\.com\/a\/[\d]+)')
@@ -87,7 +82,6 @@ SELECT
   path,
   LOWER(REGEXP_EXTRACT(path, r'(\.[^.]+$)')) as file_ext,
   size,
-  copies,
   CAST(REGEXP_EXTRACT(url, r'http:\/\/stackoverflow\.com\/(?:a|q)\/([\d]+)') AS INT64) as post_id,
   CASE
     WHEN REGEXP_CONTAINS(url, r'(http:\/\/stackoverflow\.com\/q\/[\d]+)')
@@ -106,18 +100,26 @@ WHERE
 
 
 --- use camel case for column names and remove line content for export to MySQL database
+WITH
+	copies AS (
+		SELECT file_id, count(*) as copies
+		FROM `soposthistory.so_references_2018_02_15.matched_files_aq`
+		GROUP BY file_id
+	)
 SELECT
-  file_id as FileId,
+  files.file_id as FileId,
   repo_name as RepoName,
   branch as Branch,
   path as Path,
   file_ext as FileExt,
   size as Size,
-  copies as Copies,
+  copies.copies as Copies,
   post_id as PostId,
   post_type_id as PostTypeId,
   url as Url
-FROM `soposthistory.so_references_2018_02_15.matched_files_aq`;
+FROM `soposthistory.so_references_2018_02_15.matched_files_aq` files
+JOIN copies
+ON files.file_id = copies.file_id;
 
 => so_references_2018_02_15.PostReferenceGH
 
