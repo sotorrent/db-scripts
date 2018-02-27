@@ -116,7 +116,8 @@ SELECT
   copies.copies as Copies,
   post_id as PostId,
   post_type_id as PostTypeId,
-  url as Url
+  url as SOUrl,
+  CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl
 FROM `soposthistory.so_references_2018_02_15.matched_files_aq` files
 JOIN copies
 ON files.file_id = copies.file_id;
@@ -135,12 +136,13 @@ WITH
       FileExt,
       Size,
       Copies,
-      Url,
       PostId,
       PostTypeId,
       comment_count As CommentCount,
       score as Score,
-      parent_id as ParentId
+      parent_id as ParentId,
+	  SOUrl,
+	  GHUrl
     FROM `soposthistory.so_references_2018_02_15.PostReferenceGH` ref
     LEFT JOIN `bigquery-public-data.stackoverflow.posts_answers` a
     ON ref.PostId = a.id
@@ -154,13 +156,14 @@ SELECT
   FileExt,
   Size,
   Copies,
-  Url,
   PostId,
   PostTypeId,
   CommentCount,
   answers.Score as Score,
   ParentId,
-  view_count as ParentViewCount
+  view_count as ParentViewCount,
+  SOUrl,
+  GHUrl
 FROM answers
 LEFT JOIN `bigquery-public-data.stackoverflow.posts_questions` q
 ON answers.ParentId = q.id;
@@ -190,12 +193,13 @@ SELECT
   FileExt,
   Size,
   Copies,
-  Url,
   PostId,
   PostTypeId,
   comment_count As CommentCount,
   score as Score,
-  view_count as ViewCount
+  view_count as ViewCount,
+  SOUrl,
+  GHUrl
 FROM `soposthistory.so_references_2018_02_15.PostReferenceGH` ref
 LEFT JOIN `bigquery-public-data.stackoverflow.posts_questions` q
 ON ref.PostId = q.id
