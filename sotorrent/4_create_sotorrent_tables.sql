@@ -58,7 +58,7 @@ CREATE TABLE `PostVersion` (
   FOREIGN KEY(PostTypeId) REFERENCES PostType(Id),
   FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
   FOREIGN KEY(SuccPostHistoryId) REFERENCES PostHistory(Id)
-);
+) AUTO_INCREMENT = 1;
 
 CREATE TABLE `PostBlockVersion` (
   Id INT NOT NULL AUTO_INCREMENT,
@@ -99,7 +99,7 @@ CREATE TABLE `PostVersionUrl` (
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(PostBlockVersionId) REFERENCES PostBlockVersion(Id),
   FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id)
-);
+) AUTO_INCREMENT = 1;
 
 CREATE TABLE `PostReferenceGH` (
   FileId VARCHAR(40) NOT NULL,
