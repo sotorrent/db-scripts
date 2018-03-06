@@ -54,7 +54,7 @@ SELECT
   file_id,
   repo_name,
   branch,
-  path,
+  REPLACE(path, '\n', '') as path,
   size,
   CASE
     --- DO NOT replace the distinction between answers and questions, because otherwise URLs like this won't be matched: http://stackoverflow.com/a/3758880/1035417
