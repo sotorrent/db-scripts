@@ -24,7 +24,7 @@ SELECT
 	FileId,
 	RepoName,
 	Branch,
-	REPLACE(Path, '\n', '') as Path,
+	Path,
 	FileExt,
 	Size,
 	Copies,
@@ -33,7 +33,7 @@ SELECT
 	Score,
 	CommentCount,
 	SOUrl,
-	REPLACE(GHUrl, '\n', '') as GHUrl
+	GHUrl
 INTO OUTFILE 'F:/Temp/PostReferenceGH_Java.csv'
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
