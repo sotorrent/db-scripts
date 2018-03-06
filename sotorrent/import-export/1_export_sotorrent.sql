@@ -13,7 +13,7 @@
 
 USE `sotorrent17_12`;
 
-SELECT PostId, PostHistoryId, PredPostBlockVersionId, PostBlockVersionId, PostBlockDiffOperationId, Text
+SELECT Id, PostId, PostHistoryId, PredPostBlockVersionId, PostBlockVersionId, PostBlockDiffOperationId, REPLACE(Text, '\n', '&#xD;&#xA;')
 INTO OUTFILE 'F:/Temp/PostBlockDiff.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -22,7 +22,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostBlockDiff`;
 
-SELECT PostId, PostHistoryId, PostTypeId, CreationDate, PredPostHistoryId, SuccPostHistoryId
+SELECT Id, PostId, PostHistoryId, PostTypeId, CreationDate, IFNULL(PredPostHistoryId, ''), IFNULL(SuccPostHistoryId, '')
 INTO OUTFILE 'F:/Temp/PostVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -31,7 +31,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostVersion`;
 
-SELECT PostVersionId, PostId, PostHistoryId, PostBlockTypeId, LocalId, Content, Length, LineCount, RootPostBlockId, PredPostBlockId, PredEqual, PredSimilarity, PredCount, SuccCount
+SELECT Id, PostVersionId, PostId, PostHistoryId, PostBlockTypeId, LocalId, REPLACE(Content, '\n', '&#xD;&#xA;'), Length, LineCount, IFNULL(RootPostBlockId, ''), IFNULL(PredPostBlockId, ''), IFNULL(PredEqual, ''), IFNULL(PredSimilarity, ''), IFNULL(PredCount, ''), IFNULL(SuccCount, '')
 INTO OUTFILE 'F:/Temp/PostBlockVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
