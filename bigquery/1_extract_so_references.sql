@@ -80,7 +80,7 @@ SELECT
   repo_name,
   branch,
   path,
-  LOWER(REGEXP_EXTRACT(path, r'(\.[^.]+$)')) as file_ext,
+  LOWER(REGEXP_EXTRACT(path, r'(\.[^.\\\/:]+$)')) as file_ext,
   size,
   CAST(REGEXP_EXTRACT(url, r'http:\/\/stackoverflow\.com\/(?:a|q)\/([\d]+)') AS INT64) as post_id,
   CASE
@@ -124,6 +124,12 @@ ON files.file_id = copies.file_id;
 
 => so_references_2018_02_15.PostReferenceGH
 
+
+
+###################################################################
+# the following tables are not present in so_references_2018_02_15
+# will only be created on demand
+###################################################################
 
 --- retrieve info about referenced SO answers
 WITH
