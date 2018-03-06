@@ -1,0 +1,77 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostVersionId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostHistoryId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostBlockTypeId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "LocalId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Content",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Length",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "LineCount",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "RootPostBlockId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "PredPostBlockId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "PredEqual",
+        "type": "BOOLEAN"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "PredSimilarity",
+        "type": "FLOAT"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "PredCount",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "SuccCount",
+        "type": "INTEGER"
+    }
+]
