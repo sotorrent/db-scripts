@@ -55,5 +55,5 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostBlockVersionId, Url)
+(Id, PostId, PostHistoryId, PostBlockVersionId, Url);
 SET foreign_key_checks = 1;
