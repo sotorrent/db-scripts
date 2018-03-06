@@ -36,8 +36,14 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostVersionId, PostId, PostHistoryId, PostBlockTypeId, LocalId, @Content, Length, LineCount, RootPostBlockId, PredPostBlockId, PredEqual, PredSimilarity, PredCount, SuccCount)
-SET Content = REPLACE(@Content, '&#xD;&#xA;', '\n');
+(Id, PostVersionId, PostId, PostHistoryId, PostBlockTypeId, LocalId, @Content, Length, LineCount, @RootPostBlockId, @PredPostBlockId, @PredEqual, @PredSimilarity, @PredCount, @SuccCount)
+SET Content = REPLACE(@Content, '&#xD;&#xA;', '\n'),
+    RootPostBlockId = nullif(@RootPostBlockId, ''),
+    PredPostBlockId = nullif(@PredPostBlockId, ''),
+    PredEqual = nullif(@PredEqual, ''),
+    PredSimilarity = nullif(@PredSimilarity, ''),
+    PredCount = nullif(@PredCount, ''),
+    SuccCount = nullif(@SuccCount, '');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
