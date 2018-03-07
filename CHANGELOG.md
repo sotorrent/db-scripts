@@ -5,6 +5,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
+* add table `PostHistoryTypeId` (see column `Revision` [here](http://data.stackexchange.com/stackoverflow/query/36599/show-all-types))
 * `UserId`/`OwnerUserId` is in some cases actually the `UserDisplayName` in tables `Comments`, `PostHistory`, `Posts`. Find the corresponding Ids, replace the values, and add foreign key constraints, which is currently not possible.
 
 ---
