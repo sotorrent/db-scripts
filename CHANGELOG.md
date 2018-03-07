@@ -3,7 +3,16 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ---
 
+## [Upcoming]
+
+* `UserId`/`OwnerUserId` is in some cases actually the `UserDisplayName` in tables `Comments`, `PostHistory`, `Posts`. Find the corresponding Ids, replace the values, and add foreign key constraints, which is currently not possible.
+
+---
+
 ## [2018-02-16] - Release for MSR camera-ready
+
+### Added
+* Schema files for importing SOTorrent into Google BigQuery ([db-scripts](http://github.com/sotorrent/db-scripts))
 
 ### Changed
 *  Improve filename regex ([db-scripts](http://github.com/sotorrent/db-scripts))
@@ -15,6 +24,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
     * Thus, we now order post versions according to their `CreationDate` (instead of using the `PostHistoryId`).
     * Updated database schema and class `PostVersion to include new member variable `CreationDate`.
 * Fixed import and export scripts ([db-scripts](http://github.com/sotorrent/db-scripts))
+* Replaced newline character in GitHub path, which was present in two rows of table PostReferenceGH ([db-scripts](http://github.com/sotorrent/db-scripts))
 
 ---
 
