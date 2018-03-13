@@ -78,7 +78,7 @@ CREATE TABLE `Comments` (
     Score INT NOT NULL DEFAULT 0,
     Text TEXT,
     CreationDate DATETIME,
-    UserDisplayName VARCHAR(30),
+    UserDisplayName VARCHAR(40),
     UserId INT, # either UserId or UserDisplayName is present
     PRIMARY KEY (Id),
     FOREIGN KEY (PostId) REFERENCES Posts(Id)

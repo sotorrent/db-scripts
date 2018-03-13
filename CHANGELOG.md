@@ -5,8 +5,9 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
+* `Comments.UserDisplayName`:  `VARCHAR(30)` → `VARCHAR(40)` (unify the type of all display name columns) 
+* create indices for all user display name columns
 * add table `PostHistoryTypeId` (see column `Revision` [here](http://data.stackexchange.com/stackoverflow/query/36599/show-all-types))
-* `UserId`/`OwnerUserId` is in some cases actually the `UserDisplayName` in tables `Comments`, `PostHistory`, `Posts`. Find the corresponding Ids, replace the values, and add foreign key constraints, which is currently not possible.
 
 ---
 
@@ -26,6 +27,13 @@ All notable changes to the SOTorrent dataset project will be documented in this 
     * Updated database schema and class `PostVersion to include new member variable `CreationDate`.
 * Fixed import and export scripts ([db-scripts](http://github.com/sotorrent/db-scripts))
 * Replaced newline character in GitHub path, which was present in two rows of table PostReferenceGH ([db-scripts](http://github.com/sotorrent/db-scripts))
+
+---
+
+## [Obsolete]
+
+* `UserId`/`OwnerUserId` is `null` in some cases. Then, the  `UserDisplayName` has to be employed to identify users. This applies for tables `Comments`, `PostHistory`, `Posts`. Idea: Find the corresponding Ids using `UserDisplayName` and table `Users`, replace the `null` values, and add foreign key constraints, which is currently not possible.
+  **UPDATE 2018-03-13:**  533,378 of 5,765,510 `UserDisplayNames` are not unique, thus the approach described above does not work. 
 
 ---
 
