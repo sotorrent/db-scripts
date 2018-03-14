@@ -1,7 +1,4 @@
-# create database for temporary tables
-SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE DATABASE `sebastian` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
-USE `sebastian`;
+USE `analysis`;
 
 # create tables with Java questions, answers, and posts
 CREATE TABLE `JavaQuestions` AS
