@@ -7,7 +7,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 * `Comments.UserDisplayName`:  `VARCHAR(30)` → `VARCHAR(40)` (unify the type of all display name columns) 
 * create indices for all user display name columns
-* add table `PostHistoryTypeId` (see column `Revision` [here](http://data.stackexchange.com/stackoverflow/query/36599/show-all-types))
+* add table `PostHistoryTypeId` (see column `Revision` [here](http://data.stackexchange.com/stackoverflow/query/36599/show-all-types)) and column `PostHistoryTypeId` to table `PostVersion` 
 
 ---
 
