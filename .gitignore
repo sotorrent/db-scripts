@@ -45,3 +45,4 @@ target/
 *.log
 *.log.*
 *.lck
+*.bak
