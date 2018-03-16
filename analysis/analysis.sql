@@ -117,9 +117,9 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
 ##########
-# Are code snippets found on GH more likely to be revised?
+# Are code snippets found on GH more likely to be revised (consider number of distinct files)?
 ##########
-select PostId, count(FileId) as GHMatchCount
+select PostId, count(distinct FileId) as GHMatchCount
 from sotorrent17_12.PostReferenceGH
 group by PostId
 into outfile 'F:/Temp/posts_gh-matches.csv'
@@ -145,7 +145,7 @@ lines terminated by '\n';
 ##########
 select pbv.PostId as PostId, PostTypeId, RootPostBlockId, count(pbv.Id) as LifespanLength
 from sotorrent17_12.PostBlockVersion pbv
-left join PostVersion pv
+left join sotorrent17_12.PostVersion pv
 on pbv.PostId = pv.PostId
 where PostBlockTypeId=1 and (PredEqual IS NULL or PredEqual=0) 
 group by PostId, PostTypeId, RootPostBlockId
@@ -265,7 +265,7 @@ from (
   on ph.UserId = u.Id
   where PostHistoryTypeId in (2, 5, 8)
 ) ph_u
-left join Posts p
+left join sotorrent17_12.Posts p
 on ph_u.PostId = p.Id
 where PostTypeId in (1, 2)
 into outfile 'F:/Temp/posthistory_users.csv'
@@ -292,14 +292,14 @@ from (
     PostTypeId,
     PostHistoryId,
     PostHistoryTypeId,
-    CreationDate,
+    pv.CreationDate as CreationDate,
     SuccPostHistoryId
   from sotorrent17_12.PostVersion pv
   join sotorrent17_12.PostHistory ph
   on pv.PostHistoryId = ph.Id
 ) pv1
 left join sotorrent17_12.PostHistory ph1
-on SuccPostHistoryId = Id
+on pv1.SuccPostHistoryId = ph1.Id
 into outfile 'F:/Temp/postversion_edits.csv'
 fields terminated by ','
 optionally enclosed by '"'
@@ -350,17 +350,27 @@ lines terminated by '\n';
 
 
 ##########
-# Compare edit and comment/vote dates
+# Compare edits and comment/vote dates
 ##########
 select
   PostId,
   Date,
-  Count(PostHistoryId) as EditCount
+  SUM(Creation) as Creation,
+  SUM(Edit) as Edits
 from (
   select
     PostId,
     date(CreationDate) as Date,
-    Id as PostHistoryId
+    case
+		when PostHistoryTypeId = 2
+		then 1 
+		else 0
+	end as Creation,
+	case
+		when PostHistoryTypeId in (5, 8)
+		then 1
+		else 0
+	end as Edit
   from sotorrent17_12.PostHistory
   where PostHistoryTypeId in (2, 5, 8)
 ) edits
@@ -438,7 +448,7 @@ from (
       date(CreationDate) as Date,
       Id as PostHistoryId
     from sotorrent17_12.PostHistory
-    where PostHistoryTypeId in (2, 5, 8)
+    where PostHistoryTypeId in (5, 8) # do not consider 2 here, because we are only interested in the edits
   ) edits
   group by PostId, Date
 ) edits_aggregated
@@ -470,7 +480,8 @@ select
   CommentTimestamp,
   PostHistoryId,
   EditTimestamp,
-  TIMESTAMPDIFF(SECOND, EditTimestamp, CommentTimestamp) as TimestampDiff
+  TIMESTAMPDIFF(SECOND, EditTimestamp, CommentTimestamp) as TimestampDiff,
+  PostHistoryTypeId
 from (
 	# all comments (with timestamp) that happened on days were also an edit happened
 	select
@@ -501,9 +512,10 @@ join (
     PostId,
     date(CreationDate) as Date,
     CreationDate as EditTimestamp,
-    Id as PostHistoryId
+    Id as PostHistoryId,
+	PostHistoryTypeId
   from sotorrent17_12.PostHistory
-  where PostHistoryTypeId in (2, 5, 8)
+  where PostHistoryTypeId in (2, 5, 8) # consider 2 here to be able to match comments that were close to the creation, exclude them later
 ) ph
 on comments_edits_same_day.PostId = ph.PostId
   and comments_edits_same_day.Date = ph.Date;
@@ -526,11 +538,13 @@ CREATE INDEX edits_comments_min_timestamp_index_2 ON edits_comments_min_timestam
 CREATE INDEX edits_comments_min_timestamp_index_3 ON edits_comments_min_timestamp(MinTimestampDiffAbs);
 
 # get post versions (PostHistoryId) together with comments on the same day and their time difference to the edit
+# also write PostHistoryId to allow filtering (exclude intial creation)
 create table edits_comments_final as
 select
   e.PostHistoryId as PostHistoryId,
   e.CommentId as CommentId,
-  TimestampDiff
+  TimestampDiff,
+  PostHistoryTypeId
 from edits_comments e
 join edits_comments_min_timestamp e_min
 on e.PostHistoryId = e_min.PostHistoryId
@@ -565,132 +579,125 @@ optionally enclosed by '"'
 lines terminated by '\n';
 
   
-
-####################################################
-
  
 ##########
-# Export for analysis of edits vs. votes in BigQuery
+# Analysis of edits vs. votes
 ##########
-select
-  PostId,
-  CreationDate as Timestamp,
-  Id as PostHistoryId
-from sotorrent17_12.PostHistory
-where PostHistoryTypeId in (2, 5, 8)
-into outfile 'F:/Temp/post_edits.csv'
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\n';
 
+# get votes per post together with timestamp
+create table post_votes as
 select
   PostId,
   CreationDate as Timestamp,
   Id as VoteId,
   case VoteTypeId
     when 2 then 1
-    else NULL
+    else 0
   end as UpVote,
   case VoteTypeId
     when 3 then 1
-    else NULL
+    else 0
   end as DownVote
 from sotorrent17_12.Votes
-where VoteTypeId in (2, 3) # (upvote, downvote)
-into outfile 'F:/Temp/post_votes.csv'
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\n';
+where VoteTypeId in (2, 3);  # (upvote, downvote)
 
-  
-####################################################
-# BigQuery
-########## 
-# replace NAs
+CREATE INDEX post_votes_index_1 ON post_votes(PostId);
+CREATE INDEX post_votes_index_2 ON post_votes(VoteId);
+
+
+# get PostHistoryIds of first post versions
+create table first_versions as
 select
   PostId,
-  Timestamp,
-  VoteId,
-  case UpVote when '\\N' then '0' else UpVote end as UpVote,
-  case DownVote when '\\N' then '0' else DownVote end as DownVote
-from `edits_votes.post_votes`;
-=> post_votes_tmp
-
-select
-  PostId,
-  Timestamp,
-  VoteId,
-  cast(UpVote as int64) as UpVote,
-  cast(DownVote as int64) as DownVote
-from `edits_votes.post_votes_tmp`;
-=> post_votes_tmp_2
-=> post_votes
-
-# get PostHistoryIds of first version
-select
-  PostId,
-  min(PostHistoryId) as PostHistoryId,
-  min(Timestamp) as Timestamp
-from `edits_votes.post_edits`
+  min(Id) as PostHistoryId,
+  min(CreationDate) as Timestamp
+from sotorrent17_12.PostHistory
+where PostHistoryTypeId in (2, 5, 8)
 group by PostId;
-=> first_versions
 
+CREATE INDEX first_versions_index_1 ON first_versions(PostId);
+CREATE INDEX first_versions_index_2 ON first_versions(PostHistoryId);
+
+
+# get PostHistoryIds of first edits (second version)
+create table first_edits as
 select
   PostId,
   min(PostHistoryId) as PostHistoryId,
   min(Timestamp) as Timestamp
-from `edits_votes.post_edits` e
+from (
+	select
+	  PostId,
+	  Id as PostHistoryId,
+	  CreationDate as Timestamp
+	from sotorrent17_12.PostHistory
+	where PostHistoryTypeId in (2, 5, 8)
+) e
 where PostHistoryId > (
-    select min(PostHistoryId)
-    from `edits_votes.post_edits`
+    select PostHistoryId
+    from first_versions
     where PostId = e.PostId
-    group by PostId)
+)
 group by PostId;
-=> first_edits
+
+CREATE INDEX first_edits_index_1 ON first_edits(PostId);
+CREATE INDEX first_edits_index_2 ON first_edits(PostHistoryId);
 
 # select first edits that were done at least one week after the creation of the post
+create table sample_edits as
 select
   e.PostId as PostId,
   e.PostHistoryId as PostHistoryId,
   e.Timestamp as Timestamp
-from `edits_votes.first_edits` e
-join `edits_votes.first_versions` v
+from first_edits e
+join first_versions v
 on e.PostId = v.PostId
-where date_diff(date(e.Timestamp), date(v.Timestamp), DAY) > 7;
-=> sample_edits
+where TIMESTAMPDIFF(DAY, v.Timestamp, e.Timestamp) >= 7;
 
-# get upvotes one week before and after edit
+CREATE INDEX sample_edits_index_1 ON sample_edits(PostId);
+CREATE INDEX sample_edits_index_2 ON sample_edits(PostHistoryId);
+
+
+# get upvotes up to one week before and after edit
+create table sample_edits_votes as
 select
   e.PostId as PostId,
   PostHistoryId,
   VoteId,
   # edit before vote -> diff negative
-  date_diff(date(e.Timestamp), date(v.Timestamp), DAY) as TimespanDiff
-from `edits_votes.sample_edits` e
-left join `edits_votes.post_votes` v
+  TIMESTAMPDIFF(DAY, v.Timestamp, e.Timestamp) as TimespanDiff
+from sample_edits e
+left join post_votes v
 on e.PostId = v.PostId
 where UpVote > 0
-  and abs(date_diff(date(e.Timestamp), date(v.Timestamp), DAY)) <= 7;
-=> sample_edits_votes
+  and abs(TIMESTAMPDIFF(DAY, v.Timestamp, e.Timestamp)) <= 7;
 
-select
-  PostId,
-  count(VoteId) as UpVotes
-from `edits_votes.sample_edits_votes`
-where TimespanDiff<0 and VoteId is not null
-group by PostId;
-=> sample_votes_after_edits
-
-select
-  PostId,
-  count(VoteId) as UpVotes
-from `edits_votes.sample_edits_votes`
-where TimespanDiff>0 and VoteId is not null
-group by PostId;
-=> sample_votes_before_edits
-
-####################################################
+CREATE INDEX sample_edits_votes_index_1 ON sample_edits_votes(PostId);
+CREATE INDEX sample_edits_votes_index_2 ON sample_edits_votes(PostHistoryId);
+CREATE INDEX sample_edits_votes_index_3 ON sample_edits_votes(VoteId); 
   
+# write data to CSV files for analysis
+select
+  PostId,
+  count(VoteId) as UpVotes
+from sample_edits_votes
+where TimespanDiff<0 and VoteId is not null
+group by PostId
+into outfile 'F:/Temp/sample_votes_after_edits.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
+
+select
+  PostId,
+  count(VoteId) as UpVotes
+from sample_edits_votes
+where TimespanDiff>0 and VoteId is not null
+group by PostId
+into outfile 'F:/Temp/sample_votes_before_edits.csv'
+fields terminated by ','
+optionally enclosed by '"'
+lines terminated by '\n';
 
 
  
