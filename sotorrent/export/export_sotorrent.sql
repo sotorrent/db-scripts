@@ -11,7 +11,7 @@
 # Alternative: Temporarily disable AppArmor for MySQL
 # (see, e.g., https://www.cyberciti.biz/faq/ubuntu-linux-howto-disable-apparmor-commands/)
 
-USE `sotorrent17_12`;
+USE `sotorrent18_03`;
 
 SELECT Id, PostId, PostHistoryId, PredPostBlockVersionId, PostBlockVersionId, PostBlockDiffOperationId, REPLACE(Text, '\n', '&#xD;&#xA;')
 INTO OUTFILE 'F:/Temp/PostBlockDiff.csv' 

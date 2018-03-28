@@ -1,4 +1,4 @@
-USE `sotorrent17_12`;
+USE `sotorrent18_03`;
 
 SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS `PostBlockType`;

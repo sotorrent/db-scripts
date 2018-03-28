@@ -1,4 +1,4 @@
-USE `sotorrent17_12`;
+USE `sotorrent18_03`;
 
 ALTER TABLE `PostBlockDiff` ADD INDEX postblockdiff_index_1 (PredPostBlockVersionId);
 ALTER TABLE `PostBlockDiff` ADD INDEX postblockdiff_index_2 (PostBlockVersionId);
