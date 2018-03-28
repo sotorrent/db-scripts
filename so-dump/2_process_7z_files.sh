@@ -21,6 +21,7 @@ rm stackoverflow.com-Votes.7z
 # adapt XML for MySQL import
 sed -e 's/TagBased="False"/TagBased="0"/' Badges.xml > tmp.xml
 sed -e 's/TagBased="True"/TagBased="1"/' tmp.xml > Badges.xml
+rm tmp.xml
 
 # zip XML files
 gzip -k Badges.xml
