@@ -7,6 +7,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 * n/a
 
+---
 
 ## [2018-03-28] - First release based on SO data dump 2018-03-13
 
