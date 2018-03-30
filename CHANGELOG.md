@@ -5,6 +5,11 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
+* n/a
+
+
+## [2018-03-28] - First release based on SO data dump 2018-03-13
+
 * update to Stack Overflow data dump 2018-03-13
 * `Comments.UserDisplayName`:  `VARCHAR(30)` → `VARCHAR(40)` (unify the type of all display name columns) 
 * create indices for all user display name columns
