@@ -57,7 +57,7 @@ CREATE TABLE `PostVersion` (
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
   FOREIGN KEY(PostTypeId) REFERENCES PostType(Id),
-  FOREIGN KEY(PostHistoryTypeId) REFERENCES PostHistoryTypeId(Id),
+  FOREIGN KEY(PostHistoryTypeId) REFERENCES PostHistoryType(Id),
   FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
   FOREIGN KEY(SuccPostHistoryId) REFERENCES PostHistory(Id)
 ) AUTO_INCREMENT = 1;
