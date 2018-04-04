@@ -22,7 +22,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostBlockDiff`;
 
-SELECT Id, PostId, PostHistoryId, PostTypeId, CreationDate, IFNULL(PredPostHistoryId, ''), IFNULL(SuccPostHistoryId, '')
+SELECT Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, IFNULL(PredPostHistoryId, ''), IFNULL(SuccPostHistoryId, '')
 INTO OUTFILE 'F:/Temp/PostVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
