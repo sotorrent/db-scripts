@@ -14,6 +14,71 @@ CREATE DATABASE `sotorrent18_03` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE u
 
 USE `sotorrent18_03`;
 
+######################
+# Create type tables #
+######################
+
+# see https://meta.stackexchange.com/a/2678
+CREATE TABLE `PostType` (
+  Id TINYINT NOT NULL,
+  Type VARCHAR(50) NOT NULL,
+  PRIMARY KEY(Id)
+);
+
+# see http://data.stackexchange.com/stackoverflow/query/36599/show-all-types
+INSERT INTO `PostType` VALUES(1, 'Question');
+INSERT INTO `PostType` VALUES(2, 'Answer');
+INSERT INTO `PostType` VALUES(3, 'Wiki');
+INSERT INTO `PostType` VALUES(4, 'TagWikiExcerpt');
+INSERT INTO `PostType` VALUES(5, 'TagWiki');
+INSERT INTO `PostType` VALUES(6, 'ModeratorNomination');
+INSERT INTO `PostType` VALUES(7, 'WikiPlaceholder');
+INSERT INTO `PostType` VALUES(8, 'PrivilegeWiki');
+
+# see https://meta.stackexchange.com/a/2678
+CREATE TABLE `PostHistoryType` (
+  Id TINYINT NOT NULL,
+  Type VARCHAR(50) NOT NULL,
+  PRIMARY KEY(Id)
+);
+
+# http://data.stackexchange.com/stackoverflow/query/36599/show-all-types
+INSERT INTO `PostHistoryType` VALUES(1, 'Initial Title');
+INSERT INTO `PostHistoryType` VALUES(2, 'Initial Body');
+INSERT INTO `PostHistoryType` VALUES(3, 'Initial Tags');
+INSERT INTO `PostHistoryType` VALUES(4, 'Edit Title');
+INSERT INTO `PostHistoryType` VALUES(5, 'Edit Body');
+INSERT INTO `PostHistoryType` VALUES(6, 'Edit Tags');
+INSERT INTO `PostHistoryType` VALUES(7, 'Rollback Title');
+INSERT INTO `PostHistoryType` VALUES(8, 'Rollback Body');
+INSERT INTO `PostHistoryType` VALUES(9, 'Rollback Tags');
+INSERT INTO `PostHistoryType` VALUES(10, 'Post Closed');
+INSERT INTO `PostHistoryType` VALUES(11, 'Post Reopened');
+INSERT INTO `PostHistoryType` VALUES(12, 'Post Deleted');
+INSERT INTO `PostHistoryType` VALUES(13, 'Post Undeleted');
+INSERT INTO `PostHistoryType` VALUES(14, 'Post Locked');
+INSERT INTO `PostHistoryType` VALUES(15, 'Post Unlocked');
+INSERT INTO `PostHistoryType` VALUES(16, 'Community Owned');
+INSERT INTO `PostHistoryType` VALUES(17, 'Post Migrated');
+INSERT INTO `PostHistoryType` VALUES(18, 'Question Merged');
+INSERT INTO `PostHistoryType` VALUES(19, 'Question Protected');
+INSERT INTO `PostHistoryType` VALUES(20, 'Question Unprotected');
+INSERT INTO `PostHistoryType` VALUES(22, 'Question Unmerged');
+INSERT INTO `PostHistoryType` VALUES(24, 'Suggested Edit Applied');
+INSERT INTO `PostHistoryType` VALUES(25, 'Post Tweeted');
+INSERT INTO `PostHistoryType` VALUES(31, 'Discussion moved to chat');
+INSERT INTO `PostHistoryType` VALUES(33, 'Post Notice Added');
+INSERT INTO `PostHistoryType` VALUES(34, 'Post Notice Removed');
+INSERT INTO `PostHistoryType` VALUES(35, 'Post Migrated Away');
+INSERT INTO `PostHistoryType` VALUES(36, 'Post Migrated Here');
+INSERT INTO `PostHistoryType` VALUES(37, 'Post Merge Source');
+INSERT INTO `PostHistoryType` VALUES(38, 'Post Merge Destination');
+INSERT INTO `PostHistoryType` VALUES(50, 'CommunityBump');
+
+######################
+# Create data tables #
+######################
+
 CREATE TABLE `Users` (
     Id INT NOT NULL,
     Reputation INT NOT NULL,
@@ -69,7 +134,8 @@ CREATE TABLE `Posts` (
     CommunityOwnedDate DATETIME,
     PRIMARY KEY (Id),
     FOREIGN KEY (AcceptedAnswerId) REFERENCES Posts(Id),
-    FOREIGN KEY (ParentId) REFERENCES Posts(Id)
+    FOREIGN KEY (ParentId) REFERENCES Posts(Id),
+	FOREIGN KEY (PostTypeId) REFERENCES PostType(Id)
 );
 
 CREATE TABLE `Comments` (
@@ -95,7 +161,8 @@ CREATE TABLE `PostHistory` (
     Comment TEXT,
     Text MEDIUMTEXT,
     PRIMARY KEY (Id),
-    FOREIGN KEY (PostId) REFERENCES Posts(Id)
+    FOREIGN KEY (PostId) REFERENCES Posts(Id),
+	FOREIGN KEY (PostHistoryTypeId) REFERENCES PostHistoryType(Id)
 );
 
 CREATE TABLE `PostLinks` (
@@ -129,69 +196,3 @@ CREATE TABLE `Votes` (
     FOREIGN KEY (PostId) REFERENCES Posts(Id),
     FOREIGN KEY (UserId) REFERENCES Users(Id)
 );
-
-# see https://meta.stackexchange.com/a/2678
-CREATE TABLE `PostType` (
-  Id TINYINT NOT NULL,
-  Type VARCHAR(50) NOT NULL,
-  PRIMARY KEY(Id)
-);
-
-# see http://data.stackexchange.com/stackoverflow/query/36599/show-all-types
-INSERT INTO `PostType` VALUES(1, 'Question');
-INSERT INTO `PostType` VALUES(2, 'Answer');
-INSERT INTO `PostType` VALUES(3, 'Wiki');
-INSERT INTO `PostType` VALUES(4, 'TagWikiExcerpt');
-INSERT INTO `PostType` VALUES(5, 'TagWiki');
-INSERT INTO `PostType` VALUES(6, 'ModeratorNomination');
-INSERT INTO `PostType` VALUES(7, 'WikiPlaceholder');
-INSERT INTO `PostType` VALUES(8, 'PrivilegeWiki');
-
-ALTER TABLE `Posts` ADD FOREIGN KEY(PostTypeId) REFERENCES PostType(Id);
-
-# see https://meta.stackexchange.com/a/2678
-CREATE TABLE `PostHistoryType` (
-  Id TINYINT NOT NULL,
-  Type VARCHAR(50) NOT NULL,
-  PRIMARY KEY(Id)
-);
-
-# http://data.stackexchange.com/stackoverflow/query/36599/show-all-types
-INSERT INTO `PostHistoryType` VALUES(1, 'Initial Title');
-INSERT INTO `PostHistoryType` VALUES(2, 'Initial Body');
-INSERT INTO `PostHistoryType` VALUES(3, 'Initial Tags');
-INSERT INTO `PostHistoryType` VALUES(4, 'Edit Title');
-INSERT INTO `PostHistoryType` VALUES(5, 'Edit Body');
-INSERT INTO `PostHistoryType` VALUES(6, 'Edit Tags');
-INSERT INTO `PostHistoryType` VALUES(7, 'Rollback Title');
-INSERT INTO `PostHistoryType` VALUES(8, 'Rollback Body');
-INSERT INTO `PostHistoryType` VALUES(9, 'Rollback Tags');
-INSERT INTO `PostHistoryType` VALUES(10, 'Post Closed');
-INSERT INTO `PostHistoryType` VALUES(11, 'Post Reopened');
-INSERT INTO `PostHistoryType` VALUES(12, 'Post Deleted');
-INSERT INTO `PostHistoryType` VALUES(13, 'Post Undeleted');
-INSERT INTO `PostHistoryType` VALUES(14, 'Post Locked');
-INSERT INTO `PostHistoryType` VALUES(15, 'Post Unlocked');
-INSERT INTO `PostHistoryType` VALUES(16, 'Community Owned');
-INSERT INTO `PostHistoryType` VALUES(17, 'Post Migrated');
-INSERT INTO `PostHistoryType` VALUES(18, 'Question Merged');
-INSERT INTO `PostHistoryType` VALUES(19, 'Question Protected');
-INSERT INTO `PostHistoryType` VALUES(20, 'Question Unprotected');
-
-INSERT INTO `PostHistoryType` VALUES(22, 'Question Unmerged');
-
-INSERT INTO `PostHistoryType` VALUES(24, 'Suggested Edit Applied');
-INSERT INTO `PostHistoryType` VALUES(25, 'Post Tweeted');
-
-INSERT INTO `PostHistoryType` VALUES(31, 'Discussion moved to chat');
-
-INSERT INTO `PostHistoryType` VALUES(33, 'Post Notice Added');
-INSERT INTO `PostHistoryType` VALUES(34, 'Post Notice Removed');
-INSERT INTO `PostHistoryType` VALUES(35, 'Post Migrated Away');
-INSERT INTO `PostHistoryType` VALUES(36, 'Post Migrated Here');
-INSERT INTO `PostHistoryType` VALUES(37, 'Post Merge Source');
-INSERT INTO `PostHistoryType` VALUES(38, 'Post Merge Destination');
-
-INSERT INTO `PostHistoryType` VALUES(50, 'CommunityBump');
-
-ALTER TABLE `PostHistory` ADD FOREIGN KEY(PostHistoryTypeId) REFERENCES PostHistoryType(Id);

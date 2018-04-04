@@ -10,6 +10,10 @@ DROP TABLE IF EXISTS `PostVersionUrl`;
 DROP TABLE IF EXISTS `PostReferenceGH`;
 SET foreign_key_checks = 1;
 
+######################
+# Create type tables #
+######################
+
 CREATE TABLE `PostBlockType` (
   Id TINYINT NOT NULL,
   Type VARCHAR(50) NOT NULL,
@@ -28,6 +32,10 @@ CREATE TABLE `PostBlockDiffOperation` (
 INSERT INTO `PostBlockDiffOperation` VALUES(-1, 'DELETE');
 INSERT INTO `PostBlockDiffOperation` VALUES(0, 'EQUAL');
 INSERT INTO `PostBlockDiffOperation` VALUES(1, 'INSERT');
+
+######################
+# Create data tables #
+######################
 
 CREATE TABLE `PostBlockDiff` (
   Id INT NOT NULL AUTO_INCREMENT,
