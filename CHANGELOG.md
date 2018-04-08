@@ -16,6 +16,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * create indices for all user display name columns
 * add table `PostHistoryType` (see column `Revision` [here](http://data.stackexchange.com/stackoverflow/query/36599/show-all-types)) and add column `PostHistoryTypeId` to table `PostVersion`
 * add auto-generated primary key `Id` to table `PostReferenceGH`
+* tables `Posts` and `PostHistory` are now available in the BigQuery version of the dataset
 
 ---
 
