@@ -1,0 +1,78 @@
+// delimter ',', no header row
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Reputation",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CreationDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "DisplayName",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "LastAccessDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "WebsiteUrl",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Location",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "ProfileImageUrl",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "AboutMe",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Views",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "UpVotes",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "DownVotes",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Age",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "AccountId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "EmailHash",
+        "type": "STRING"
+    }
+]

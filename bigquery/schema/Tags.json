@@ -1,0 +1,28 @@
+// delimter ',', no header row
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "TagName",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Count",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "ExcerptPostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "WikiPostId",
+        "type": "INTEGER"
+    }
+]

@@ -11,12 +11,12 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [2018-03-28] - First release based on SO data dump 2018-03-13
 
-* update to Stack Overflow data dump 2018-03-13
+* Update to Stack Overflow data dump 2018-03-13
 * `Comments.UserDisplayName`:  `VARCHAR(30)` → `VARCHAR(40)` (unify the type of all display name columns) 
-* create indices for all user display name columns
-* add table `PostHistoryType` (see column `Revision` [here](http://data.stackexchange.com/stackoverflow/query/36599/show-all-types)) and add column `PostHistoryTypeId` to table `PostVersion`
-* add auto-generated primary key `Id` to table `PostReferenceGH`
-* tables `Posts` and `PostHistory` are now available in the BigQuery version of the dataset
+* Create indices for all user display name columns
+* Add table `PostHistoryType` (see column `Revision` [here](http://data.stackexchange.com/stackoverflow/query/36599/show-all-types)) and add column `PostHistoryTypeId` to table `PostVersion`
+* Add auto-generated primary key `Id` to table `PostReferenceGH`
+* All tables from the offical Stack Overflow dump are now available in the BigQuery version of the dataset
 
 ---
 
