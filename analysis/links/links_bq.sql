@@ -51,7 +51,7 @@ FROM (
 SELECT
   Id,
   PostId,
-  REGEXP_EXTRACT(LOWER(line), r'google(?:d){0,1}\s+(?:it|that)\s+') as Match,
+  REGEXP_EXTRACT(LOWER(line), r'google(?:d){0,1}\s+(?:it|that|this)\s+') as Match,
   Line
 FROM (
   SELECT Id, PostId, Line
@@ -63,7 +63,7 @@ FROM (
   CROSS JOIN UNNEST(lines) as Line
 )
 WHERE
-  REGEXP_CONTAINS(LOWER(Line), r'google(?:d){0,1}\s+(?:it|that)\s+');
+  REGEXP_CONTAINS(LOWER(Line), r'google(?:d){0,1}\s+(?:it|that|this)\s+');
 
 => analysis_2018_03_28.GoogleLines
 
