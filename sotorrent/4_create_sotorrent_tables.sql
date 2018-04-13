@@ -119,7 +119,8 @@ CREATE TABLE `CommentUrl` (
   Domain TEXT NOT NULL,
   Url TEXT NOT NULL,
   PRIMARY KEY(Id),
-  FOREIGN KEY(PostId) REFERENCES Posts(Id),
+  # there are comments for posts that don't exist anymore
+  # FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(CommentId) REFERENCES Comments(Id)
 ) AUTO_INCREMENT = 1;
 
