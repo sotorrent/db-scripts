@@ -1,0 +1,48 @@
+// delimter ',', no header row
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostHistoryTypeId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "RevisionGUID",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CreationDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "UserId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "UserDisplayName",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Comment",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Text",
+        "type": "STRING"
+    }
+]

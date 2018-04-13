@@ -57,3 +57,15 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 (Id, PostId, PostHistoryId, PostBlockVersionId, Url);
 SET foreign_key_checks = 1;
+
+SET foreign_key_checks = 0;
+# remove auto-increment for import
+ALTER TABLE `CommentUrl` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
+LOAD DATA LOCAL INFILE 'CommentUrl.csv' INTO TABLE `CommentUrl`
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+(Id, PostId, CommentId, Url);
+SET foreign_key_checks = 1;

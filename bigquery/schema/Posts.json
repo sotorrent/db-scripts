@@ -1,0 +1,113 @@
+// delimter ',', no header row
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "PostTypeId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "AcceptedAnswerId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "ParentId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CreationDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "DeletionDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Score",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "ViewCount",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Body",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "OwnerUserId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "OwnerDisplayName",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "LastEditorUserId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "LastEditorDisplayName",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "LastEditDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "LastActivityDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Title",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "Tags",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "AnswerCount",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CommentCount",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "FavoriteCount",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "ClosedDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CommunityOwnedDate",
+        "type": "DATETIME"
+    }
+]

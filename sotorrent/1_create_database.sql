@@ -1,6 +1,6 @@
 # Copyright (c) 2013 Georgios Gousios
 # MIT-licensed
-# Updated by Sebastian Baltes to support December 2017 data set
+# Updated by Sebastian Baltes to support data dump version 2018-03-13
 
 # collation: http://stackoverflow.com/a/1036459/1974143
 # character set: http://stackoverflow.com/a/20429481/1974143 and https://mathiasbynens.be/notes/mysql-utf8mb4#character-sets
@@ -74,7 +74,6 @@ INSERT INTO `PostHistoryType` VALUES(36, 'Post Migrated Here');
 INSERT INTO `PostHistoryType` VALUES(37, 'Post Merge Source');
 INSERT INTO `PostHistoryType` VALUES(38, 'Post Merge Destination');
 INSERT INTO `PostHistoryType` VALUES(50, 'CommunityBump');
-
 
 ######################
 # Create data tables #

@@ -1,0 +1,28 @@
+// delimter ',', no header row
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CreationDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "RelatedPostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "LinkTypeId",
+        "type": "INTEGER"
+    }
+]

@@ -1,0 +1,33 @@
+// delimter ',', no header row
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "VoteTypeId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "UserId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CreationDate",
+        "type": "DATETIME"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "BountyAmount",
+        "type": "INTEGER"
+    }
+]
