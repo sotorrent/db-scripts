@@ -141,3 +141,25 @@ CREATE TABLE `PostReferenceGH` (
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(PostTypeId) REFERENCES PostType(Id)
 ) AUTO_INCREMENT = 1;
+
+CREATE TABLE `TitleVersion` (
+  Id INT NOT NULL AUTO_INCREMENT,
+  PostId INT NOT NULL,
+  PostHistoryId INT NOT NULL,
+  PostTypeId TINYINT NOT NULL,
+  PostHistoryTypeId TINYINT NOT NULL,
+  CreationDate DATETIME NOT NULL,
+  Title TEXT NOT NULL,
+  PredPostHistoryId INT DEFAULT NULL,
+  PredEditDistance INT DEFAULT NULL,
+  SuccPostHistoryId INT DEFAULT NULL,
+  SuccEditDistance INT DEFAULT NULL,
+  PRIMARY KEY(Id),
+  UNIQUE(PostHistoryId, PredPostHistoryId, SuccPostHistoryId),
+  FOREIGN KEY(PostId) REFERENCES Posts(Id),
+  FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
+  FOREIGN KEY(PostTypeId) REFERENCES PostType(Id),
+  FOREIGN KEY(PostHistoryTypeId) REFERENCES PostHistoryType(Id),
+  FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
+  FOREIGN KEY(SuccPostHistoryId) REFERENCES PostHistory(Id)
+) AUTO_INCREMENT = 1;

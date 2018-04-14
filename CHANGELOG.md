@@ -7,6 +7,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 * Add new column `Domain` to table `PostVersionUrl`
 * Add new table `CommentUrl`
+* Add new table `TitleVersion`
 
 ---
 
