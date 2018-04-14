@@ -40,7 +40,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostBlockVersion`;
 
-SELECT Id, PostId, PostHistoryId, PostBlockVersionId, Url
+SELECT Id, PostId, PostHistoryId, PostBlockVersionId, Domain, Url
 INTO OUTFILE 'F:/Temp/PostVersionUrl.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -49,7 +49,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostVersionUrl`;
 
-SELECT Id, PostId, CommentId, Url
+SELECT Id, PostId, CommentId, Domain, Url
 INTO OUTFILE 'F:/Temp/CommentUrl.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -57,3 +57,12 @@ OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostVersionUrl`;
+
+SELECT Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, REPLACE(Title, '\n', ' '), IFNULL(PredPostHistoryId, ''), IFNULL(PredEditDistance, ''), IFNULL(SuccPostHistoryId, ''), IFNULL(SuccEditDistance, '')
+INTO OUTFILE 'F:/Temp/TitleVersion.csv' 
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+FROM `TitleVersion`;

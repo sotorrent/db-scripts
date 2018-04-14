@@ -22,7 +22,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId)
+(Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId)
 SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
 	SuccPostHistoryId = nullif(@SuccPostHistoryId, '');
 SET foreign_key_checks = 1;
@@ -55,7 +55,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostBlockVersionId, Url);
+(Id, PostId, PostHistoryId, PostBlockVersionId, Domain, Url);
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
@@ -67,5 +67,21 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, CommentId, Url);
+(Id, PostId, CommentId, Domain, Url);
+SET foreign_key_checks = 1;
+
+SET foreign_key_checks = 0;
+# remove auto-increment for import
+ALTER TABLE `TitleVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
+LOAD DATA LOCAL INFILE 'TitleVersion.csv' INTO TABLE `TitleVersion`
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+(Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, Title, @PredPostHistoryId, @PredEditDistance, @SuccPostHistoryId, @SuccEditDistance)
+SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
+	PredEditDistance = nullif(@PredEditDistance, ''),
+	SuccPostHistoryId = nullif(@SuccPostHistoryId, ''),
+	SuccEditDistance = nullif(@SuccEditDistance, '');
 SET foreign_key_checks = 1;

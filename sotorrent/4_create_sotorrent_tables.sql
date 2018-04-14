@@ -7,7 +7,9 @@ DROP TABLE IF EXISTS `PostBlockDiff`;
 DROP TABLE IF EXISTS `PostVersion`;
 DROP TABLE IF EXISTS `PostBlockVersion`;
 DROP TABLE IF EXISTS `PostVersionUrl`;
+DROP TABLE IF EXISTS `CommentUrl`;
 DROP TABLE IF EXISTS `PostReferenceGH`;
+DROP TABLE IF EXISTS `TitleVersion`;
 SET foreign_key_checks = 1;
 
 ######################
