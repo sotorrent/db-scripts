@@ -56,7 +56,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-FROM `PostVersionUrl`;
+FROM `CommentUrl`;
 
 SELECT Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, REPLACE(Title, '\n', ' '), IFNULL(PredPostHistoryId, ''), IFNULL(PredEditDistance, ''), IFNULL(SuccPostHistoryId, ''), IFNULL(SuccEditDistance, '')
 INTO OUTFILE 'F:/Temp/TitleVersion.csv' 
