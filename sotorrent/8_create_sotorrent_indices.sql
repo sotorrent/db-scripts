@@ -16,3 +16,5 @@ ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_3 (Branch);
 ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_4 (FileExt);
 ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_5 (Size);
 ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_6 (Copies);
+
+ALTER TABLE `CommentUrl` ADD INDEX commenturl_index_1 (PostId);
