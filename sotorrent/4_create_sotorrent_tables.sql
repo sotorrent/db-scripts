@@ -53,9 +53,7 @@ CREATE TABLE `PostBlockDiff` (
   PRIMARY KEY(Id),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
-  FOREIGN KEY(PostBlockVersionId) REFERENCES PostBlockVersion(Id),
   FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
-  FOREIGN KEY(PredPostBlockVersionId) REFERENCES PostBlockVersion(Id),
   FOREIGN KEY(PostBlockDiffOperationId) REFERENCES PostBlockDiffOperation(Id)
 ) AUTO_INCREMENT = 1;
 
@@ -108,8 +106,8 @@ CREATE TABLE `PostBlockVersion` (
   FOREIGN KEY(RootPostHistoryId) REFERENCES PostHistory(Id)
 ) AUTO_INCREMENT = 1;
 
-ALTER TABLE `PostBlockDiff` ADD FOREIGN KEY(PredPostBlockVersionId) REFERENCES PostBlockVersion(Id);
 ALTER TABLE `PostBlockDiff` ADD FOREIGN KEY(PostBlockVersionId) REFERENCES PostBlockVersion(Id);
+ALTER TABLE `PostBlockDiff` ADD FOREIGN KEY(PredPostBlockVersionId) REFERENCES PostBlockVersion(Id);
 
 CREATE TABLE `PostVersionUrl` (
   Id INT NOT NULL AUTO_INCREMENT,
