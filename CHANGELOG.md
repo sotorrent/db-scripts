@@ -8,7 +8,8 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Add new column `Domain` to table `PostVersionUrl`
 * Add new columns `LocalId`, `PredLocalId`, and `PredPostHistoryId` to table `PostBlockDiff` (enables retrieval of diffs according to position in post without requiring a join)
 * Add new columns `PredLocalId`, `PredPostHistoryId`, `RootLocalId`, and `RootPostHistoryId` to table `PostBlockVersion` (easier detection of position changes and easier retrieval of post block lifespans)
-* Rename `RootPostBlockId` to `RootPostBlockVersionId` and `PredPostBlockId` to `PredPostBlockVersionId` (reason: consistent naming)
+* Rename column `RootPostBlockId` of table `PostBlockVersion` to `RootPostBlockVersionId` and column `PredPostBlockId` to `PredPostBlockVersionId` (reason: consistent naming)
+* Remove column `PostVersionId` from table `PostBlockVersion` (reason: the stable `PostHistoryId` should be used instead)
 * Add new table `CommentUrl`
 * Add new table `TitleVersion`
 
