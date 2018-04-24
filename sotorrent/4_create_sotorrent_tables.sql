@@ -44,22 +44,26 @@ CREATE TABLE `PostBlockDiff` (
   PostId INT NOT NULL,
   PostHistoryId INT NOT NULL,
   LocalId INT NOT NULL,
+  PostBlockVersionId INT NOT NULL,
+  PredPostHistoryId INT NOT NULL,
   PredLocalId INT NOT NULL,
   PredPostBlockVersionId INT NOT NULL,
-  PostBlockVersionId INT NOT NULL,
   PostBlockDiffOperationId TINYINT NOT NULL,
   Text TEXT NOT NULL,
   PRIMARY KEY(Id),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
+  FOREIGN KEY(PostBlockVersionId) REFERENCES PostBlockVersion(Id),
+  FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
+  FOREIGN KEY(PredPostBlockVersionId) REFERENCES PostBlockVersion(Id),
   FOREIGN KEY(PostBlockDiffOperationId) REFERENCES PostBlockDiffOperation(Id)
 ) AUTO_INCREMENT = 1;
 
 CREATE TABLE `PostVersion` (
   Id INT NOT NULL AUTO_INCREMENT,
   PostId INT NOT NULL,
-  PostHistoryId INT NOT NULL,
   PostTypeId TINYINT NOT NULL,
+  PostHistoryId INT NOT NULL,
   PostHistoryTypeId TINYINT NOT NULL,
   CreationDate DATETIME NOT NULL,
   PredPostHistoryId INT DEFAULT NULL,
@@ -76,29 +80,32 @@ CREATE TABLE `PostVersion` (
 
 CREATE TABLE `PostBlockVersion` (
   Id INT NOT NULL AUTO_INCREMENT,
-  PostVersionId INT DEFAULT NULL,
+  PostBlockTypeId TINYINT NOT NULL,
   PostId INT NOT NULL,
   PostHistoryId INT NOT NULL,
-  PostBlockTypeId TINYINT NOT NULL,
   LocalId INT NOT NULL,
+  PredPostBlockVersionId INT DEFAULT NULL,
+  PredPostHistoryId INT DEFAULT NULL,
   PredLocalId INT DEFAULT NULL,
-  Content TEXT NOT NULL,
-  Length INT NOT NULL,
-  LineCount INT NOT NULL,
-  RootPostBlockId INT DEFAULT NULL,
-  PredPostBlockId INT DEFAULT NULL,
+  RootPostBlockVersionId INT DEFAULT NULL,
+  RootPostHistoryId INT DEFAULT NULL,
+  RootLocalId INT DEFAULT NULL,
   PredEqual BOOLEAN DEFAULT NULL,
   PredSimilarity DOUBLE DEFAULT NULL,
   PredCount INT DEFAULT NULL,
   SuccCount INT DEFAULT NULL,
+  Length INT NOT NULL,
+  LineCount INT NOT NULL,
+  Content TEXT NOT NULL,
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PostBlockTypeId, LocalId),
-  FOREIGN KEY(PostVersionId) REFERENCES PostVersion(Id),
+  FOREIGN KEY(PostBlockTypeId) REFERENCES PostBlockType(Id),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
-  FOREIGN KEY(PostBlockTypeId) REFERENCES PostBlockType(Id),
-  FOREIGN KEY(RootPostBlockId) REFERENCES PostBlockVersion(Id),
-  FOREIGN KEY(PredPostBlockId) REFERENCES PostBlockVersion(Id)
+  FOREIGN KEY(PredPostBlockVersionId) REFERENCES PostBlockVersion(Id),
+  FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
+  FOREIGN KEY(RootPostBlockVersionId) REFERENCES PostBlockVersion(Id),
+  FOREIGN KEY(RootPostHistoryId) REFERENCES PostHistory(Id)
 ) AUTO_INCREMENT = 1;
 
 ALTER TABLE `PostBlockDiff` ADD FOREIGN KEY(PredPostBlockVersionId) REFERENCES PostBlockVersion(Id);
@@ -113,8 +120,8 @@ CREATE TABLE `PostVersionUrl` (
   Url TEXT NOT NULL,
   PRIMARY KEY(Id),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
-  FOREIGN KEY(PostBlockVersionId) REFERENCES PostBlockVersion(Id),
-  FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id)
+  FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
+  FOREIGN KEY(PostBlockVersionId) REFERENCES PostBlockVersion(Id)
 ) AUTO_INCREMENT = 1;
 
 CREATE TABLE `CommentUrl` (
@@ -150,8 +157,8 @@ CREATE TABLE `PostReferenceGH` (
 CREATE TABLE `TitleVersion` (
   Id INT NOT NULL AUTO_INCREMENT,
   PostId INT NOT NULL,
-  PostHistoryId INT NOT NULL,
   PostTypeId TINYINT NOT NULL,
+  PostHistoryId INT NOT NULL,
   PostHistoryTypeId TINYINT NOT NULL,
   CreationDate DATETIME NOT NULL,
   Title TEXT NOT NULL,
@@ -162,8 +169,8 @@ CREATE TABLE `TitleVersion` (
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PredPostHistoryId, SuccPostHistoryId),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
-  FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
   FOREIGN KEY(PostTypeId) REFERENCES PostType(Id),
+  FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id),
   FOREIGN KEY(PostHistoryTypeId) REFERENCES PostHistoryType(Id),
   FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
   FOREIGN KEY(SuccPostHistoryId) REFERENCES PostHistory(Id)
