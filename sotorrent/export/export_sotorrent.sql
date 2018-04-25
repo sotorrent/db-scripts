@@ -13,7 +13,7 @@
 
 USE `sotorrent18_03`;
 
-SELECT Id, PostId, PostHistoryId, PredPostBlockVersionId, PostBlockVersionId, PostBlockDiffOperationId, REPLACE(Text, '\n', '&#xD;&#xA;')
+SELECT Id, PostId, PostHistoryId, LocalId, PostBlockVersionId, PredPostHistoryId, PredLocalId, PredPostBlockVersionId, PostBlockDiffOperationId, REPLACE(Text, '\n', '&#xD;&#xA;')
 INTO OUTFILE 'F:/Temp/PostBlockDiff.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -22,7 +22,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostBlockDiff`;
 
-SELECT Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, IFNULL(PredPostHistoryId, ''), IFNULL(SuccPostHistoryId, '')
+SELECT Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, IFNULL(PredPostHistoryId, ''), IFNULL(SuccPostHistoryId, '')
 INTO OUTFILE 'F:/Temp/PostVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -31,7 +31,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostVersion`;
 
-SELECT Id, PostVersionId, PostId, PostHistoryId, PostBlockTypeId, LocalId, REPLACE(Content, '\n', '&#xD;&#xA;'), Length, LineCount, IFNULL(RootPostBlockId, ''), IFNULL(PredPostBlockId, ''), IFNULL(PredEqual, ''), IFNULL(PredSimilarity, ''), IFNULL(PredCount, ''), IFNULL(SuccCount, '')
+SELECT Id, PostBlockTypeId, PostId, PostHistoryId, LocalId, IFNULL(PredPostBlockVersionId, ''), IFNULL(PredPostHistoryId, ''), IFNULL(PredLocalId, ''), IFNULL(RootPostBlockVersionId, ''), IFNULL(RootPostHistoryId, ''), IFNULL(RootLocalId, ''), IFNULL(PredEqual, ''), IFNULL(PredSimilarity, ''), IFNULL(PredCount, ''), IFNULL(SuccCount, ''), Length, LineCount, REPLACE(Content, '\n', '&#xD;&#xA;')
 INTO OUTFILE 'F:/Temp/PostBlockVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -58,7 +58,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `CommentUrl`;
 
-SELECT Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, REPLACE(Title, '\n', ' '), IFNULL(PredPostHistoryId, ''), IFNULL(PredEditDistance, ''), IFNULL(SuccPostHistoryId, ''), IFNULL(SuccEditDistance, '')
+SELECT Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, REPLACE(Title, '\n', ' '), IFNULL(PredPostHistoryId, ''), IFNULL(PredEditDistance, ''), IFNULL(SuccPostHistoryId, ''), IFNULL(SuccEditDistance, '')
 INTO OUTFILE 'F:/Temp/TitleVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','

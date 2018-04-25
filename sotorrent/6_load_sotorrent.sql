@@ -9,7 +9,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PredPostBlockVersionId, PostBlockVersionId, PostBlockDiffOperationId, @Text)
+(Id, PostId, PostHistoryId, LocalId, PostBlockVersionId, PredPostHistoryId, PredLocalId, PredPostBlockVersionId, PostBlockDiffOperationId, @Text)
 SET Text = REPLACE(@Text, '&#xD;&#xA;', '\n');
 SET foreign_key_checks = 1;
 
@@ -22,7 +22,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId)
+(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId)
 SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
 	SuccPostHistoryId = nullif(@SuccPostHistoryId, '');
 SET foreign_key_checks = 1;
@@ -36,10 +36,14 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostVersionId, PostId, PostHistoryId, PostBlockTypeId, LocalId, @Content, Length, LineCount, @RootPostBlockId, @PredPostBlockId, @PredEqual, @PredSimilarity, @PredCount, @SuccCount)
+(Id, PostBlockTypeId, PostId, PostHistoryId, LocalId, @PredPostBlockVersionId, @PredPostHistoryId, @PredLocalId, @RootPostBlockVersionId, @RootPostHistoryId, @RootLocalId, @PredEqual, @PredSimilarity, @PredCount, @SuccCount, Length, LineCount, @Content)
 SET Content = REPLACE(@Content, '&#xD;&#xA;', '\n'),
-    RootPostBlockId = nullif(@RootPostBlockId, ''),
-    PredPostBlockId = nullif(@PredPostBlockId, ''),
+    PredPostBlockVersionId = nullif(@PredPostBlockVersionId, ''),
+    PredPostHistoryId = nullif(@PredPostHistoryId, ''),
+    PredLocalId = nullif(@PredLocalId, ''),
+    RootPostBlockVersionId = nullif(@RootPostBlockVersionId, ''),
+    RootPostHistoryId = nullif(@RootPostHistoryId, ''),
+    RootLocalId = nullif(@RootLocalId, ''),
     PredEqual = nullif(@PredEqual, ''),
     PredSimilarity = nullif(@PredSimilarity, ''),
     PredCount = nullif(@PredCount, ''),
@@ -79,7 +83,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostTypeId, PostHistoryTypeId, CreationDate, Title, @PredPostHistoryId, @PredEditDistance, @SuccPostHistoryId, @SuccEditDistance)
+(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, Title, @PredPostHistoryId, @PredEditDistance, @SuccPostHistoryId, @SuccEditDistance)
 SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
 	PredEditDistance = nullif(@PredEditDistance, ''),
 	SuccPostHistoryId = nullif(@SuccPostHistoryId, ''),
