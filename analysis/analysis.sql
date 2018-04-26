@@ -307,25 +307,42 @@ lines terminated by '\n';
 
 
 ##########
-# Retrieve lines deleted/added
+# Retrieve lines deleted/added (BigQuery)
 ##########
-select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, count(PostBlockDiffOperationId) as LinesDeleted
-from sotorrent17_12.PostBlockDiff
-where PostBlockDiffOperationId=-1
-group by PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId
-into outfile 'F:/Temp/postblockversion_linesdeleted.csv'
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\n';
+select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, sum(LineCount) as LinesDeleted
+from (
+  select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, count(Line) as LineCount
+  from (
+    select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, split(Text, '&#xD;&#xA;') as Lines
+    from `2018_02_16.PostBlockDiff`
+    where PostBlockDiffOperationId=-1
+  )
+  cross join unnest(Lines) as Line
+  where length(trim(Line))>0
+  group by PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId
+)
+group by PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId;
 
-select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, count(PostBlockDiffOperationId) as LinesAdded
-from sotorrent17_12.PostBlockDiff
-where PostBlockDiffOperationId=1
-group by PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId
-into outfile 'F:/Temp/postblockversion_linesadded.csv'
-fields terminated by ','
-optionally enclosed by '"'
-lines terminated by '\n';
+=> analysis_2018_02_16.PostBlockVersion_LinesDeleted
+=> postblockversion_linesdeleted.csv
+
+select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, sum(LineCount) as LinesAdded
+from (
+  select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, count(Line) as LineCount
+  from (
+    select PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId, split(Text, '&#xD;&#xA;') as Lines
+    from `2018_02_16.PostBlockDiff`
+    where PostBlockDiffOperationId=1
+  )
+  cross join unnest(Lines) as Line
+  where length(trim(Line))>0
+  group by PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId
+)
+group by PostId, PostHistoryId, PostBlockVersionId, PredPostBlockVersionId;
+
+=> analysis_2018_02_16.PostBlockVersion_LinesAdded
+=> postblockversion_linesadded.csv
+
 
 select Id as PostBlockVersionId, PostBlockTypeId
 from sotorrent17_12.PostBlockVersion
