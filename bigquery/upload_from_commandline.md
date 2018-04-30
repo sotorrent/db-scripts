@@ -14,3 +14,12 @@
     gsutil cp PostLinks.csv gs://sotorrent/
     gsutil cp Tags.csv gs://sotorrent/
     gsutil cp Votes.csv gs://sotorrent/
+
+    gsutil cp PostBlockDiff.csv gs://sotorrent/
+    gsutil cp PostVersion.csv gs://sotorrent/
+    gsutil cp PostBlockVersion.csv gs://sotorrent/
+    gsutil cp PostVersionUrl.csv gs://sotorrent/
+    gsutil cp CommentUrl.csv gs://sotorrent/
+    gsutil cp TitleVersion.csv gs://sotorrent/ 
+      
+    gsutil cp PostReferenceGH.csv gs://sotorrent/
