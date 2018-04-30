@@ -21,7 +21,7 @@ CREATE INDEX `edited_posts_index_3` ON EditedPosts(ParentId);
 # write post ids of threads with edits
 # (edited questions and questions with edited answers)
 SELECT PostId
-INTO OUTFILE 'F:/Temp/EditedPosts.csv'
+INTO OUTFILE 'F:/Temp/EditedThreads.csv'
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
