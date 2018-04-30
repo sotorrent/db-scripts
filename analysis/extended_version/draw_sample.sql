@@ -28,10 +28,10 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM
 # questions with edits
-SELECT PostId FROM analysis_18_03.EditedPosts
+(SELECT PostId FROM analysis_18_03.EditedPosts
 WHERE PostTypeId = 1
 UNION DISTINCT
 # questions for answers with edits
 SELECT ParentId as PostId
 FROM analysis_18_03.EditedPosts
-WHERE PostTypeId = 2;
+WHERE PostTypeId = 2) as posts;
