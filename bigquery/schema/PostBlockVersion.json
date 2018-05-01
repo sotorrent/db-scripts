@@ -7,7 +7,7 @@
     },
     {
         "mode": "REQUIRED",
-        "name": "PostVersionId",
+        "name": "PostBlockTypeId",
         "type": "INTEGER"
     },
     {
@@ -22,37 +22,37 @@
     },
     {
         "mode": "REQUIRED",
-        "name": "PostBlockTypeId",
-        "type": "INTEGER"
-    },
-    {
-        "mode": "REQUIRED",
         "name": "LocalId",
         "type": "INTEGER"
     },
     {
-        "mode": "REQUIRED",
-        "name": "Content",
-        "type": "STRING"
-    },
-    {
-        "mode": "REQUIRED",
-        "name": "Length",
-        "type": "INTEGER"
-    },
-    {
-        "mode": "REQUIRED",
-        "name": "LineCount",
+        "mode": "NULLABLE",
+        "name": "PredPostBlockVersionId",
         "type": "INTEGER"
     },
     {
         "mode": "NULLABLE",
-        "name": "RootPostBlockId",
+        "name": "PredPostHistoryId",
         "type": "INTEGER"
     },
     {
         "mode": "NULLABLE",
-        "name": "PredPostBlockId",
+        "name": "PredLocalId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "RootPostBlockVersionId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "RootPostHistoryId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "RootLocalId",
         "type": "INTEGER"
     },
     {
@@ -74,5 +74,20 @@
         "mode": "NULLABLE",
         "name": "SuccCount",
         "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Length",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "LineCount",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Content",
+        "type": "STRING"
     }
 ]

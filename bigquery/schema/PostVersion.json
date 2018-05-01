@@ -12,12 +12,12 @@
     },
     {
         "mode": "REQUIRED",
-        "name": "PostHistoryId",
+        "name": "PostTypeId",
         "type": "INTEGER"
     },
     {
         "mode": "REQUIRED",
-        "name": "PostTypeId",
+        "name": "PostHistoryId",
         "type": "INTEGER"
     },
     {

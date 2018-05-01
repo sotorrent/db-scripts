@@ -12,42 +12,47 @@
     },
     {
         "mode": "REQUIRED",
+        "name": "PostTypeId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
         "name": "PostHistoryId",
         "type": "INTEGER"
     },
     {
         "mode": "REQUIRED",
-        "name": "LocalId",
+        "name": "PostHistoryTypeId",
         "type": "INTEGER"
     },
     {
         "mode": "REQUIRED",
-        "name": "PostBlockVersionId",
-        "type": "INTEGER"
+        "name": "CreationDate",
+        "type": "DATETIME"
     },
     {
         "mode": "REQUIRED",
+        "name": "Title",
+        "type": "STRING"
+    },
+    {
+        "mode": "NULLABLE",
         "name": "PredPostHistoryId",
         "type": "INTEGER"
     },
     {
-        "mode": "REQUIRED",
-        "name": "PredLocalId",
+        "mode": "NULLABLE",
+        "name": "PredEditDistance",
         "type": "INTEGER"
     },
     {
-        "mode": "REQUIRED",
-        "name": "PredPostBlockVersionId",
+        "mode": "NULLABLE",
+        "name": "SuccPostHistoryId",
         "type": "INTEGER"
     },
     {
-        "mode": "REQUIRED",
-        "name": "PostBlockDiffOperationId",
+        "mode": "NULLABLE",
+        "name": "SuccEditDistance",
         "type": "INTEGER"
-    },
-    {
-        "mode": "REQUIRED",
-        "name": "Text",
-        "type": "STRING"
     }
 ]

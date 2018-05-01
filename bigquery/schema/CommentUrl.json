@@ -12,12 +12,7 @@
     },
     {
         "mode": "REQUIRED",
-        "name": "PostHistoryId",
-        "type": "INTEGER"
-    },
-    {
-        "mode": "REQUIRED",
-        "name": "PostBlockVersionId",
+        "name": "CommentId",
         "type": "INTEGER"
     },
     {
