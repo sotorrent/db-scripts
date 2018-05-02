@@ -49,7 +49,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostVersionUrl`;
 
-SELECT Id, PostId, CommentId, Domain, Url
+SELECT Id, PostId, CommentId, Protocol, CompleteDomain, RootDomain, IFNULL(Path, ''), Url
 INTO OUTFILE 'F:/Temp/CommentUrl.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','

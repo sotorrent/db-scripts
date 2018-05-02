@@ -126,7 +126,10 @@ CREATE TABLE `CommentUrl` (
   Id INT NOT NULL AUTO_INCREMENT,
   PostId INT NOT NULL,
   CommentId INT NOT NULL,
-  Domain TEXT NOT NULL,
+  Protocol TEXT NOT NULL,
+  CompleteDomain TEXT NOT NULL,
+  RootDomain TEXT NOT NULL,
+  Path TEXT DEFAULT NULL,
   Url TEXT NOT NULL,
   PRIMARY KEY(Id),
   # there are comments for posts that don't exist anymore
