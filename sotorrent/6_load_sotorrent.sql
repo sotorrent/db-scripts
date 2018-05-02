@@ -59,7 +59,8 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostBlockVersionId, Domain, Url);
+(Id, PostId, PostHistoryId, PostBlockVersionId, Protocol, CompleteDomain, RootDomain, @Path, Url)
+SET Path = nullif(@Path, '');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;

@@ -40,7 +40,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostBlockVersion`;
 
-SELECT Id, PostId, PostHistoryId, PostBlockVersionId, Domain, Url
+SELECT Id, PostId, PostHistoryId, PostBlockVersionId, Protocol, CompleteDomain, RootDomain, IFNULL(Path, ''), Url
 INTO OUTFILE 'F:/Temp/PostVersionUrl.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
