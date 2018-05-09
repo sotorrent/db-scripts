@@ -9,12 +9,12 @@ dump (https://archive.org/details/stackexchange), which is licensed under
 
 `Badges`
 `Comments`
-``PostHistory`
+`PostHistory`
 `PostLinks`
 `Posts`
 `Tags`
 `Users`
-`Votes``
+`Votes`
 `PostType`
 
 Link to Creative Commons:
@@ -35,13 +35,12 @@ https://help.github.com/articles/github-terms-of-service/
 
 These tables were based on the tables from the offical Stack Exchange data dump listed above.
 
+`CommentUrl`
 `PostBlockDiff`
-`PostBlockDiffOperation`
-`PostBlockType`
 `PostBlockVersion`
-`PostType`
 `PostVersion`
 `PostVersionUrl`
+`TitleVersion`
 
 These tables are licensed under *Creative Commons Attribution-ShareAlike 4.0
 International* (CC BY-SA 4.0).
