@@ -5,7 +5,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* case-insensitive extraction of URL components
+* Case-insensitive extraction of URL components
 
 ## [2018-05-04] - Second release based on SO data dump 2018-03-13
 
