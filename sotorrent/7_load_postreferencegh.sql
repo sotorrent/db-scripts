@@ -1,4 +1,4 @@
-USE `sotorrent18_03`;
+USE `sotorrent18_06`;
 
 SET foreign_key_checks = 0;
 # load file exported from BigQuery (see also https://cloud.google.com/sql/docs/mysql/import-export/)
