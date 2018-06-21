@@ -7,7 +7,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 * N/A
 
-## [2018-03-28] - First release based on SO data dump 2018-06-05
+## [2018-06-17] - First release based on SO data dump 2018-06-05
 
 * Update to Stack Overflow data dump 2018-06-05
 * Case-insensitive extraction of URL components
