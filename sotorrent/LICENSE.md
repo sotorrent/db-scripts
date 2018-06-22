@@ -1,55 +1,27 @@
-# License
+# Licenses
 
 
 ## Tables based on the offical Stack Exchange data dump
 
-The following tables are based on the official Stack Exhange data
-dump (https://archive.org/details/stackexchange), which is licensed under
-*Creative Commons Attribution-Share Alike 3.0 Unported* (CC BY-SA 3.0):
+The following tables are identical to the corresponding XML files in the [official Stack Exhange data dump](https://archive.org/details/stackexchange), which is licensed under
+*Creative Commons Attribution-Share Alike 3.0 Unported* ([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/legalcode)):
 
-`Badges`
-`Comments`
-`PostHistory`
-`PostLinks`
-`Posts`
-`Tags`
-`Users`
-`Votes`
-`PostType`
+`Badges`, `Comments`, `PostHistory`, `PostLinks`, `Posts`, `Tags`, `Users`, `Votes`, `PostType`
 
-Link to Creative Commons:
-https://creativecommons.org/licenses/by-sa/3.0/legalcode
+Legal code can be found below ([source](https://github.com/creativecommons/legalcode/blob/master/by-sa_3.0.txt)).
 
-Source of legal code below:
-https://github.com/creativecommons/legalcode/blob/master/by-sa_3.0.txt
 
 ## Table PostReferenceGH
 
-The table `PostReferenceGH` was retrieved from the Google BigQuery GitHub data set:
-https://cloud.google.com/bigquery/public-data/github
-
-For this data set, the GitHub Terms of Service apply:
-https://help.github.com/articles/github-terms-of-service/
+The table `PostReferenceGH` was retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github), for which the [GitHub Terms of Service](https://help.github.com/articles/github-terms-of-service/) apply.
 
 ## Other SOTorrent tables
 
-These tables were based on the tables from the offical Stack Exchange data dump listed above.
+The following tables are based on the tables from the offical Stack Exchange data dump listed above. We license them under *Creative Commons Attribution-ShareAlike 4.0 International* ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)):
 
-`CommentUrl`
-`PostBlockDiff`
-`PostBlockVersion`
-`PostVersion`
-`PostVersionUrl`
-`TitleVersion`
+`CommentUrl`, `PostBlockDiff`, `PostBlockVersion`, `PostVersion`, `PostVersionUrl`, `TitleVersion`
 
-These tables are licensed under *Creative Commons Attribution-ShareAlike 4.0
-International* (CC BY-SA 4.0).
-
-Link to Creative Commons:
-https://creativecommons.org/licenses/by-sa/4.0/legalcode
-
-Source of legal code below:
-https://github.com/creativecommons/legalcode/blob/master/by-sa_4.0.txt
+Legal code can be found below ([source](https://github.com/creativecommons/legalcode/blob/master/by-sa_4.0.txt)).
 
 ## Legal codes
 
