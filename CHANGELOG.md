@@ -5,7 +5,9 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* N/A
+* Add new column `LinkType` to tables `PostVersionUrl` and `CommentUrl` (e.g., inline Markdown link, bare link, etc.)
+* Add new column `LinkLocation` to tables `PostVersionUrl` and `CommentUrl` (top, middle, end of post/comment)
+* Add new column `RelativeLinkLength` to tables `PostVersionUrl` and `CommentUrl` (length of link in relation to length of post/comment)
 
 ## [2018-06-17] - First release based on SO data dump 2018-06-05
 
