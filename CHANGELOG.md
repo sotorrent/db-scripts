@@ -5,11 +5,9 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
+* Add new column `FragmentIdentifier` to tables `PostVersionUrl` and `CommentUrl`
 * Add new column `LinkType` to tables `PostVersionUrl` and `CommentUrl` (e.g., inline Markdown link, bare link, etc.)
-* Add new column `LinkLocation` to tables `PostVersionUrl` and `CommentUrl` (top, middle, end of post/comment)
-* Add new column `RelativeLinkLength` to tables `PostVersionUrl` and `CommentUrl` (length of link in relation to length of post/comment).
-* Mark comments that only consist of an URL without any further text (`RelativeLinkLength` = 100%).
-* Add further metadata for links (path depth, anchor present, link pointing to root of domain).
+* Add new column `LinkPosition` to tables `PostVersionUrl` and `CommentUrl` (begin, middle, end of post/comment, or "link only" if a comment/post consists only of a URL)
 
 ## [2018-06-17] - First release based on SO data dump 2018-06-05
 
