@@ -1,4 +1,4 @@
-// delimter ',', no header row
+// delimiter ',', no header row
 [
     {
         "mode": "REQUIRED",
@@ -20,9 +20,29 @@
         "name": "PostBlockVersionId",
         "type": "INTEGER"
     },
+	{
+        "mode": "REQUIRED",
+        "name": "LinkType",
+        "type": "STRING"
+    },
+	{
+        "mode": "REQUIRED",
+        "name": "LinkPosition",
+        "type": "STRING"
+    },
+	{
+        "mode": "NULLABLE",
+        "name": "LinkAnchor",
+        "type": "STRING"
+    },
     {
         "mode": "REQUIRED",
         "name": "Protocol",
+        "type": "STRING"
+    },
+	{
+        "mode": "REQUIRED",
+        "name": "RootDomain",
         "type": "STRING"
     },
     {
@@ -31,18 +51,23 @@
         "type": "STRING"
     },
     {
-        "mode": "REQUIRED",
-        "name": "RootDomain",
-        "type": "STRING"
-    },
-    {
         "mode": "NULLABLE",
         "name": "Path",
+        "type": "STRING"
+    },
+	{
+        "mode": "NULLABLE",
+        "name": "FragmentIdentifier",
         "type": "STRING"
     },
     {
         "mode": "REQUIRED",
         "name": "Url",
+        "type": "STRING"
+    },
+	{
+        "mode": "REQUIRED",
+        "name": "FullMatch",
         "type": "STRING"
     }
 ]

@@ -59,8 +59,10 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostBlockVersionId, Protocol, CompleteDomain, RootDomain, @Path, Url)
-SET Path = nullif(@Path, '');
+(Id, PostId, PostHistoryId, PostBlockVersionId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @FragmentIdentifier, Url, FullMatch)
+SET LinkAnchor = nullif(@LinkAnchor, ''),
+	Path = nullif(@Path, ''),
+	FragmentIdentifier = nullif(@FragmentIdentifier, '');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
@@ -72,8 +74,10 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, CommentId, Protocol, CompleteDomain, RootDomain, @Path, Url)
-SET Path = nullif(@Path, '');
+(Id, PostId, CommentId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @FragmentIdentifier, Url, FullMatch)
+SET LinkAnchor = nullif(@LinkAnchor, ''),
+	Path = nullif(@Path, ''),
+	FragmentIdentifier = nullif(@FragmentIdentifier, '');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
