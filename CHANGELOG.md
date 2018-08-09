@@ -5,7 +5,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* Add new column `FragmentIdentifier` to tables `PostVersionUrl` and `CommentUrl`
+* Add new columns `FragmentIdentifier` and `Query` to tables `PostVersionUrl` and `CommentUrl`
 * Add new column `LinkType` to tables `PostVersionUrl` and `CommentUrl` (e.g., inline Markdown link, bare link, etc.)
 * Add new column `LinkPosition` to tables `PostVersionUrl` and `CommentUrl` (beginning, middle, end of post/comment, or "link only" if a comment/post consists only of a URL)
 * Add new column `FullMatch` to tables `PostVersionUrl` and `CommentUrl`

@@ -40,7 +40,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostBlockVersion`;
 
-SELECT Id, PostId, PostHistoryId, PostBlockVersionId, LinkType, LinkPosition, IFNULL(LinkAnchor, ''), Protocol, RootDomain, CompleteDomain, IFNULL(Path, ''), IFNULL(FragmentIdentifier, ''), Url, FullMatch
+SELECT Id, PostId, PostHistoryId, PostBlockVersionId, LinkType, LinkPosition, IFNULL(LinkAnchor, ''), Protocol, RootDomain, CompleteDomain, IFNULL(Path, ''), IFNULL(Query, ''), IFNULL(FragmentIdentifier, ''), Url, FullMatch
 INTO OUTFILE 'F:/Temp/PostVersionUrl.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -49,7 +49,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostVersionUrl`;
 
-SELECT Id, PostId, CommentId, LinkType, LinkPosition, IFNULL(LinkAnchor, ''), Protocol, RootDomain, CompleteDomain, IFNULL(Path, ''), IFNULL(FragmentIdentifier, ''), Url, FullMatch
+SELECT Id, PostId, CommentId, LinkType, LinkPosition, IFNULL(LinkAnchor, ''), Protocol, RootDomain, CompleteDomain, IFNULL(Path, ''), IFNULL(Query, ''), IFNULL(FragmentIdentifier, ''), Url, FullMatch
 INTO OUTFILE 'F:/Temp/CommentUrl.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
