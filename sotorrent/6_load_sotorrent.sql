@@ -59,11 +59,12 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostHistoryId, PostBlockVersionId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @Query, @FragmentIdentifier, Url, FullMatch)
+(Id, PostId, PostHistoryId, PostBlockVersionId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @Query, @FragmentIdentifier, Url, @FullMatch)
 SET LinkAnchor = nullif(@LinkAnchor, ''),
 	Path = nullif(@Path, ''),
 	Query = nullif(@Query, ''),
-	FragmentIdentifier = nullif(@FragmentIdentifier, '');
+	FragmentIdentifier = nullif(@FragmentIdentifier, ''),
+	FullMatch = REPLACE(@FullMatch, '&#xD;&#xA;', '\n');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
@@ -75,11 +76,12 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, CommentId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @Query, @FragmentIdentifier, Url, FullMatch)
+(Id, PostId, CommentId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @Query, @FragmentIdentifier, Url, @FullMatch)
 SET LinkAnchor = nullif(@LinkAnchor, ''),
 	Path = nullif(@Path, ''),
 	Query = nullif(@Query, ''),
-	FragmentIdentifier = nullif(@FragmentIdentifier, '');
+	FragmentIdentifier = nullif(@FragmentIdentifier, ''),
+	FullMatch = REPLACE(@FullMatch, '&#xD;&#xA;', '\n');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
