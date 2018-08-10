@@ -55,6 +55,11 @@
         "name": "Path",
         "type": "STRING"
     },
+    {
+        "mode": "NULLABLE",
+        "name": "Query",
+        "type": "STRING"
+    },
 	{
         "mode": "NULLABLE",
         "name": "FragmentIdentifier",
