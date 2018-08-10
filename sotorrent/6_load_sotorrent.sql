@@ -60,7 +60,7 @@ OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 (Id, PostId, PostHistoryId, PostBlockVersionId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @Query, @FragmentIdentifier, Url, @FullMatch)
-SET LinkAnchor = nullif(@LinkAnchor, ''),
+SET LinkAnchor = nullif(REPLACE(@LinkAnchor, '&#xD;&#xA;', '\n'), ''),
 	Path = nullif(@Path, ''),
 	Query = nullif(@Query, ''),
 	FragmentIdentifier = nullif(@FragmentIdentifier, ''),
@@ -77,7 +77,7 @@ OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 (Id, PostId, CommentId, LinkType, LinkPosition, @LinkAnchor, Protocol, RootDomain, CompleteDomain, @Path, @Query, @FragmentIdentifier, Url, @FullMatch)
-SET LinkAnchor = nullif(@LinkAnchor, ''),
+SET LinkAnchor = nullif(REPLACE(@LinkAnchor, '&#xD;&#xA;', '\n'), ''),
 	Path = nullif(@Path, ''),
 	Query = nullif(@Query, ''),
 	FragmentIdentifier = nullif(@FragmentIdentifier, ''),
