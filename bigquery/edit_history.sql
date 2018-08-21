@@ -6,11 +6,11 @@ SELECT
     WHEN PostTypeId=1 THEN Id
     WHEN PostTypeId=2 THEN ParentId
   END as ParentId
-FROM `sotorrent-org.2018_07_31.Posts`
+FROM `sotorrent-org.2018_06_17.Posts`
 WHERE PostTypeId=1  # only consider questions and answers
   OR PostTypeId=2; 
 
--> `sotorrent-org.2018_07_31.Threads`
+-> `sotorrent-org.2018_06_17.Threads`
 
 
 # create table with edit history of posts (title and body edits, comments)
@@ -26,8 +26,8 @@ FROM (
 	  END as Event,
 	  UserId,
 	  pv.CreationDate AS CreationDate
-	FROM `sotorrent-org.2018_07_31.PostVersion` pv
-	JOIN `sotorrent-org.2018_07_31.PostHistory` ph
+	FROM `sotorrent-org.2018_06_17.PostVersion` pv
+	JOIN `sotorrent-org.2018_06_17.PostHistory` ph
 	ON pv.PostHistoryId = ph.Id
 	UNION ALL
 	SELECT
@@ -40,8 +40,8 @@ FROM (
 	  END as Event,
 	  UserId,
 	  tv.CreationDate as CreationDate
-	FROM `sotorrent-org.2018_07_31.TitleVersion` tv
-	JOIN `sotorrent-org.2018_07_31.PostHistory` ph
+	FROM `sotorrent-org.2018_06_17.TitleVersion` tv
+	JOIN `sotorrent-org.2018_06_17.PostHistory` ph
 	ON tv.PostHistoryId = ph.Id
 	UNION ALL
 	SELECT
@@ -51,20 +51,20 @@ FROM (
 	  "Comment" AS Event,
 	  UserId,
 	  c.CreationDate as CreationDate
-	FROM `sotorrent-org.2018_07_31.Comments` c
-	JOIN `sotorrent-org.2018_07_31.Posts` p
+	FROM `sotorrent-org.2018_06_17.Comments` c
+	JOIN `sotorrent-org.2018_06_17.Posts` p
 	ON c.PostId = p.Id
 );
 
--> `sotorrent-org.2018_07_31.EditHistory`
+-> `sotorrent-org.2018_06_17.EditHistory`
 
 
 # exemplary query to retrieve edit history of a thread using the post id of a question
 SELECT *
-FROM `sotorrent-org.2018_07_31.EditHistory`
+FROM `sotorrent-org.2018_06_17.EditHistory`
 WHERE PostId IN (
 	SELECT PostId
-	FROM `sotorrent-org.2018_07_31.Threads`
+	FROM `sotorrent-org.2018_06_17.Threads`
 	WHERE ParentId = 3758606
 )
 ORDER BY CreationDate;
@@ -72,13 +72,13 @@ ORDER BY CreationDate;
 
 # exemplary query to retrieve edit history of a thread using the post id of an answer
 SELECT *
-FROM `sotorrent-org.2018_07_31.EditHistory`
+FROM `sotorrent-org.2018_06_17.EditHistory`
 WHERE PostId IN (
 	SELECT PostId
-	FROM `sotorrent-org.2018_07_31.Threads`
+	FROM `sotorrent-org.2018_06_17.Threads`
 	WHERE ParentId = (
 	  SELECT ParentID
-	  FROM `sotorrent-org.2018_07_31.Threads`
+	  FROM `sotorrent-org.2018_06_17.Threads`
 	  WHERE PostId=3758880
 	)
 )
