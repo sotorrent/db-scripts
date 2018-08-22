@@ -5,11 +5,14 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
+* Improve URL extraction (e.g., exclude matches in Markdown inline code, exclude invalid links)
+
+## [2018-07-31] - Second release based on SO data dump 2018-06-05
+
 * Add new columns `FragmentIdentifier` and `Query` to tables `PostVersionUrl` and `CommentUrl`
 * Add new column `LinkType` to tables `PostVersionUrl` and `CommentUrl` (e.g., inline Markdown link, bare link, etc.)
 * Add new column `LinkPosition` to tables `PostVersionUrl` and `CommentUrl` (beginning, middle, end of post/comment, or "link only" if a comment/post consists only of a URL)
 * Add new column `FullMatch` to tables `PostVersionUrl` and `CommentUrl`
-* Improve URL extraction (e.g., exclude matches in Markdown inline code)
 
 ## [2018-06-17] - First release based on SO data dump 2018-06-05
 
