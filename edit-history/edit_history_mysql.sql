@@ -1,23 +1,6 @@
 USE sotorrent18_06;
 
 
-# create table that makes it easier to retrieve all posts in a thread
-CREATE TABLE Threads AS
-SELECT
-  Id as PostId,
-  PostTypeId,
-  CASE
-    WHEN PostTypeId=1 THEN Id
-    WHEN PostTypeId=2 THEN ParentId
-  END as ParentId
-FROM Posts
-# only consider questions and answers
-WHERE PostTypeId=1
-  OR PostTypeId=2; 
-ALTER TABLE Threads ADD INDEX ThreadsPostIdIndex (PostId);
-ALTER TABLE Threads ADD INDEX ThreadsParentIdIndex (ParentId);
-
-
 # create table with edit history of posts (title and body edits, comments)
 CREATE TABLE EditHistory AS
 SELECT *
@@ -65,18 +48,24 @@ ALTER TABLE EditHistory ADD INDEX EditHistoryPostIdIndex (PostId);
 ALTER TABLE EditHistory ADD INDEX EditHistoryEventIdIndex (EventId);
 
 
-# exemplary query to retrieve edit history of a thread using the post id of a question
-SELECT *
-FROM EditHistory
-WHERE PostId IN (
-	SELECT PostId
-	FROM Threads
-	WHERE ParentId = 3758606
-)
-ORDER BY CreationDate;
+# create helper table that makes it easier to retrieve the parent id of a thread
+CREATE TABLE Threads AS
+SELECT
+  Id as PostId,
+  PostTypeId,
+  CASE
+    WHEN PostTypeId=1 THEN Id
+    WHEN PostTypeId=2 THEN ParentId
+  END as ParentId
+FROM Posts
+# only consider questions and answers
+WHERE PostTypeId=1
+  OR PostTypeId=2; 
+ALTER TABLE Threads ADD INDEX ThreadsPostIdIndex (PostId);
+ALTER TABLE Threads ADD INDEX ThreadsParentIdIndex (ParentId);
 
 
-# exemplary query to retrieve edit history of a thread using the post id of an answer
+# query to retrieve edit history of a thread using the post id of a question or an answer
 SELECT *
 FROM EditHistory
 WHERE PostId IN (
@@ -85,7 +74,7 @@ WHERE PostId IN (
 	WHERE ParentId = (
 	  SELECT ParentID
 	  FROM Threads
-	  WHERE PostId=3758880
+	  WHERE PostId=3758880 # this is an answers id, the question id 3758606 yields the same result
 	)
 )
 ORDER BY CreationDate;

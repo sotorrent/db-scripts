@@ -1,18 +1,3 @@
-# create table that makes it easier to retrieve all posts in a thread
-SELECT
-  Id as PostId,
-  PostTypeId,
-  CASE
-    WHEN PostTypeId=1 THEN Id
-    WHEN PostTypeId=2 THEN ParentId
-  END as ParentId
-FROM `sotorrent-org.2018_06_17.Posts`
-WHERE PostTypeId=1  # only consider questions and answers
-  OR PostTypeId=2; 
-
--> `sotorrent-org.2018_06_17.Threads`
-
-
 # create table with edit history of posts (title and body edits, comments)
 SELECT *
 FROM (
@@ -59,18 +44,22 @@ FROM (
 -> `sotorrent-org.2018_06_17.EditHistory`
 
 
-# exemplary query to retrieve edit history of a thread using the post id of a question
-SELECT *
-FROM `sotorrent-org.2018_06_17.EditHistory`
-WHERE PostId IN (
-	SELECT PostId
-	FROM `sotorrent-org.2018_06_17.Threads`
-	WHERE ParentId = 3758606
-)
-ORDER BY CreationDate;
+# create helper table that makes it easier to retrieve the parent id of a thread
+SELECT
+  Id as PostId,
+  PostTypeId,
+  CASE
+    WHEN PostTypeId=1 THEN Id
+    WHEN PostTypeId=2 THEN ParentId
+  END as ParentId
+FROM `sotorrent-org.2018_06_17.Posts`
+WHERE PostTypeId=1  # only consider questions and answers
+  OR PostTypeId=2; 
+
+-> `sotorrent-org.2018_06_17.Threads`
 
 
-# exemplary query to retrieve edit history of a thread using the post id of an answer
+# query to retrieve edit history of a thread using the post id of a question or an answer
 SELECT *
 FROM `sotorrent-org.2018_06_17.EditHistory`
 WHERE PostId IN (
@@ -79,7 +68,7 @@ WHERE PostId IN (
 	WHERE ParentId = (
 	  SELECT ParentID
 	  FROM `sotorrent-org.2018_06_17.Threads`
-	  WHERE PostId=3758880
+	  WHERE PostId=3758880  # this is an answers id, the question id 3758606 yields the same result
 	)
 )
 ORDER BY CreationDate;
