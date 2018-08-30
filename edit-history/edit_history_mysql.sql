@@ -74,7 +74,7 @@ WHERE PostId IN (
 	WHERE ParentId = (
 	  SELECT ParentID
 	  FROM Threads
-	  WHERE PostId=3758880 # this is an answers id, the question id 3758606 yields the same result
+	  WHERE PostId=3758880 # this is an answer id, the question id 3758606 yields the same result
 	)
 )
 ORDER BY CreationDate;

@@ -1,4 +1,5 @@
 # create table with edit history of posts (title and body edits, comments)
+#standardsql
 SELECT *
 FROM (
 	SELECT
@@ -45,6 +46,7 @@ FROM (
 
 
 # create helper table that makes it easier to retrieve the parent id of a thread
+#standardsql
 SELECT
   Id as PostId,
   PostTypeId,
@@ -60,6 +62,7 @@ WHERE PostTypeId=1  # only consider questions and answers
 
 
 # query to retrieve edit history of a thread using the post id of a question or an answer
+#standardsql
 SELECT *
 FROM `sotorrent-org.2018_06_17.EditHistory`
 WHERE PostId IN (
@@ -68,7 +71,7 @@ WHERE PostId IN (
 	WHERE ParentId = (
 	  SELECT ParentID
 	  FROM `sotorrent-org.2018_06_17.Threads`
-	  WHERE PostId=3758880  # this is an answers id, the question id 3758606 yields the same result
+	  WHERE PostId=3758880  # this is an answer id, the question id 3758606 yields the same result
 	)
 )
 ORDER BY CreationDate;
