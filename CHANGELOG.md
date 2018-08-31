@@ -3,7 +3,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ---
 
-## [Upcoming]
+## [2018-08-28] - Release for MSR Mining Challenge 2019, based on SO data dump 2018-06-05
 
 * Improve URL extraction (e.g., exclude matches in Markdown inline code, exclude invalid links)
 
@@ -42,7 +42,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ---
 
-## [2018-02-16] - Release for MSR camera-ready
+## [2018-02-16] - Release for MSR paper camera-ready
 
 * Schema files for importing SOTorrent into Google BigQuery ([db-scripts](http://github.com/sotorrent/db-scripts))
 *  Improve filename regex ([db-scripts](http://github.com/sotorrent/db-scripts))
