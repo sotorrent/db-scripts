@@ -1,6 +1,6 @@
 # Export tables from offical SO dump to CSV to be able to import them into BigQuery
 
-USE `sotorrent18_06`;
+USE `sotorrent18_09`;
 
 # Users
 SELECT

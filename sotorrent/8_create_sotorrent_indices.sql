@@ -1,4 +1,4 @@
-USE `sotorrent18_06`;
+USE `sotorrent18_09`;
 
 ALTER TABLE `PostBlockDiff` ADD INDEX postblockdiff_index_1 (LocalId);
 ALTER TABLE `PostBlockDiff` ADD INDEX postblockdiff_index_2 (PredLocalId);

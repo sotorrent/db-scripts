@@ -1,4 +1,4 @@
-USE `sotorrent18_06`;
+USE `sotorrent18_09`;
 
 SET foreign_key_checks = 0;
 # remove auto-increment for import
