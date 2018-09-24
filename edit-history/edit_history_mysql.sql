@@ -1,4 +1,4 @@
-USE sotorrent18_06;
+USE sotorrent18_09;
 
 
 # create table with edit history of posts (title and body edits, comments)

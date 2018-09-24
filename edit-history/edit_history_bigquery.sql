@@ -12,8 +12,8 @@ FROM (
 	  END as Event,
 	  UserId,
 	  pv.CreationDate AS CreationDate
-	FROM `sotorrent-org.2018_06_17.PostVersion` pv
-	JOIN `sotorrent-org.2018_06_17.PostHistory` ph
+	FROM `sotorrent-org.2018_09_23.PostVersion` pv
+	JOIN `sotorrent-org.2018_09_23.PostHistory` ph
 	ON pv.PostHistoryId = ph.Id
 	UNION ALL
 	SELECT
@@ -26,8 +26,8 @@ FROM (
 	  END as Event,
 	  UserId,
 	  tv.CreationDate as CreationDate
-	FROM `sotorrent-org.2018_06_17.TitleVersion` tv
-	JOIN `sotorrent-org.2018_06_17.PostHistory` ph
+	FROM `sotorrent-org.2018_09_23.TitleVersion` tv
+	JOIN `sotorrent-org.2018_09_23.PostHistory` ph
 	ON tv.PostHistoryId = ph.Id
 	UNION ALL
 	SELECT
@@ -37,12 +37,12 @@ FROM (
 	  "Comment" AS Event,
 	  UserId,
 	  c.CreationDate as CreationDate
-	FROM `sotorrent-org.2018_06_17.Comments` c
-	JOIN `sotorrent-org.2018_06_17.Posts` p
+	FROM `sotorrent-org.2018_09_23.Comments` c
+	JOIN `sotorrent-org.2018_09_23.Posts` p
 	ON c.PostId = p.Id
 );
 
--> `sotorrent-org.2018_06_17.EditHistory`
+-> `sotorrent-org.2018_09_23.EditHistory`
 
 
 # create helper table that makes it easier to retrieve the parent id of a thread
@@ -54,23 +54,23 @@ SELECT
     WHEN PostTypeId=1 THEN Id
     WHEN PostTypeId=2 THEN ParentId
   END as ParentId
-FROM `sotorrent-org.2018_06_17.Posts`
+FROM `sotorrent-org.2018_09_23.Posts`
 WHERE PostTypeId=1  # only consider questions and answers
   OR PostTypeId=2; 
 
--> `sotorrent-org.2018_06_17.Threads`
+-> `sotorrent-org.2018_09_23.Threads`
 
 
 # query to retrieve edit history of a thread using the post id of a question or an answer
 #standardsql
 SELECT *
-FROM `sotorrent-org.2018_06_17.EditHistory`
+FROM `sotorrent-org.2018_09_23.EditHistory`
 WHERE PostId IN (
 	SELECT PostId
-	FROM `sotorrent-org.2018_06_17.Threads`
+	FROM `sotorrent-org.2018_09_23.Threads`
 	WHERE ParentId = (
 	  SELECT ParentID
-	  FROM `sotorrent-org.2018_06_17.Threads`
+	  FROM `sotorrent-org.2018_09_23.Threads`
 	  WHERE PostId=3758880  # this is an answer id, the question id 3758606 yields the same result
 	)
 )
