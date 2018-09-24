@@ -3,7 +3,12 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ---
 
-## [2018-08-28] - Release for MSR Mining Challenge 2019, based on SO data dump 2018-06-05
+## [2018-09-23] - Second release for MSR Mining Challenge 2019, based on SO data dump 2018-09-05
+
+* Update to Stack Overflow data dump 2018-09-05
+* Update `PostReferenceGH` (retrieved on 2018-09-23)
+
+## [2018-08-28] - First release for MSR Mining Challenge 2019, based on SO data dump 2018-06-05
 
 * Improve URL extraction (e.g., exclude matches in Markdown inline code, exclude invalid links)
 
