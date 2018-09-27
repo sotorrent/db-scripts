@@ -6,6 +6,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * New release of Stack Overflow data dump in December 2018
+* Add matching line to table `PostReferenceGH`
 
 ## [2018-09-23] - Second release for MSR Mining Challenge 2019, based on SO data dump 2018-09-05
 
