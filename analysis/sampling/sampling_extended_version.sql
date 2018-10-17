@@ -1,4 +1,4 @@
-USE `analysis_18_03`;
+USE `analysis_18_09`;
 
 # retrieve edited questions
 CREATE TABLE EditedQuestions AS
@@ -7,7 +7,7 @@ SELECT
 	PostTypeId,
 	COUNT(PostHistoryId) as VersionCount,
 	PostId as ParentId  # questions have themselves as parents
-FROM sotorrent18_03.PostVersion
+FROM sotorrent18_09.PostVersion
 WHERE PostTypeId=1
 GROUP BY PostId, PostTypeId, ParentId
 HAVING VersionCount>1;
@@ -21,8 +21,8 @@ SELECT
 	pv.PostTypeId as PostTypeId,
 	COUNT(PostHistoryId) as VersionCount,
 	ParentId
-FROM sotorrent18_03.PostVersion pv
-JOIN sotorrent18_03.Posts p
+FROM sotorrent18_09.PostVersion pv
+JOIN sotorrent18_09.Posts p
 ON pv.PostId = p.Id
 WHERE pv.PostTypeId=2
 GROUP BY PostId, PostTypeId, ParentId
@@ -43,8 +43,8 @@ FROM (
 		pv.PostTypeId as PostTypeId,
 		COUNT(PostHistoryId) as VersionCount,
 		ParentId
-	FROM sotorrent18_03.PostVersion pv
-	JOIN sotorrent18_03.Posts p
+	FROM sotorrent18_09.PostVersion pv
+	JOIN sotorrent18_09.Posts p
 	ON pv.PostId = p.Id
 	WHERE pv.PostTypeId=2
 	GROUP BY PostId, PostTypeId, ParentId
@@ -67,7 +67,7 @@ FROM (
 		PostTypeId,
 		COUNT(PostHistoryId) as VersionCount,
 		PostId as ParentId  # questions have themselves as parents
-	FROM sotorrent18_03.PostVersion pv
+	FROM sotorrent18_09.PostVersion pv
 	WHERE PostTypeId=1
 	GROUP BY PostId, PostTypeId, ParentId
 ) q
@@ -91,8 +91,8 @@ FROM (
 		pv.PostTypeId as PostTypeId,
 		COUNT(PostHistoryId) as VersionCount,
 		ParentId
-	FROM sotorrent18_03.PostVersion pv
-	JOIN sotorrent18_03.Posts p
+	FROM sotorrent18_09.PostVersion pv
+	JOIN sotorrent18_09.Posts p
 	ON pv.PostId = p.Id
 	WHERE pv.PostTypeId=2
 	GROUP BY PostId, PostTypeId, ParentId
@@ -142,7 +142,7 @@ SELECT
 	OwnerUserId,
 	OwnerDisplayName
 FROM EditedThreads t
-JOIN sotorrent18_03.Posts p
+JOIN sotorrent18_09.Posts p
 ON t.PostId = p.Id;
 # add primary key
 ALTER TABLE EditedThreadsOwners ADD PRIMARY KEY(PostId);
@@ -169,8 +169,8 @@ SELECT
 	UserId,
 	UserDisplayName,
 	Comment
-FROM sotorrent18_03.PostVersion pv
-JOIN sotorrent18_03.PostHistory ph
+FROM sotorrent18_09.PostVersion pv
+JOIN sotorrent18_09.PostHistory ph
 ON pv.PostHistoryId = ph.Id
 WHERE pv.PostId IN (SELECT DISTINCT PostId FROM EditedThreads);
 # add primary key
@@ -206,7 +206,7 @@ SELECT
 	CreationDate,
 	UserId,
 	UserDisplayName
-FROM sotorrent18_03.Comments c
+FROM sotorrent18_09.Comments c
 JOIN EditedThreads t
 ON c.PostId = t.PostId;
 # add primary key
