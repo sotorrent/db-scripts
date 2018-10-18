@@ -53,3 +53,10 @@ FROM
 
 => sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesHash
 
+
+# Retrieve PostIds for a particular normalized code block hash
+SELECT PostId, clones.ContentNormalized AS ContentNormalized
+FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones` clones
+JOIN `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized` post_blocks
+ON clones.ContentNormalized = post_blocks.ContentNormalized
+WHERE ContentNormalizedHash = -6995110539257648111;
