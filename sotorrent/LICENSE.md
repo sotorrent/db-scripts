@@ -17,7 +17,7 @@ The table `PostReferenceGH` was retrieved from the [Google BigQuery GitHub data 
 
 ## Other SOTorrent tables
 
-The following tables are based on the tables from the offical Stack Exchange data dump listed above. We license them under *Creative Commons Attribution-ShareAlike 4.0 International* ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)):
+The following tables are based on the tables from the official Stack Exchange data dump listed above. We license them under *Creative Commons Attribution-ShareAlike 4.0 International* ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)):
 
 `CommentUrl`, `PostBlockDiff`, `PostBlockVersion`, `PostVersion`, `PostVersionUrl`, `TitleVersion`
 
