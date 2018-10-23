@@ -93,7 +93,7 @@ FROM
 => sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesExport
 
 
-# retrieve sample for web visualization
+# retrieve initial sample for web visualization
 SELECT
   ContentNormalizedHash,
   PostId,
@@ -116,7 +116,7 @@ ORDER BY ContentNormalizedHash, CreationDate, PostId;
 => sotorrent-extension.2018_09_23.CodeClonesSample
 
 
-# retrieve data for sample
+# retrieve data for inital sample
 SELECT
   ContentNormalizedHash,
   ARRAY_LENGTH(SPLIT(Content, '&#xD;&#xA;')) AS LineCount,
@@ -141,7 +141,55 @@ FROM (
 => sotorrent-extension.2018_09_23.CodeClonesSampleData
 
 
-# Retrieve links from posts containing clones
+# retrieve second sample for web visualization
+SELECT
+  ContentNormalizedHash,
+  PostId,
+  PostTypeId,
+  ParentId,
+  CreationDate
+FROM
+  `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized`
+WHERE 
+  ContentNormalizedHash IN (
+    SELECT
+      ContentNormalizedHash
+    FROM 
+      `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones`
+    WHERE
+      PostBlockTypeId = 2 AND LineCount >= 20 AND ThreadCount >= 5
+)
+ORDER BY ContentNormalizedHash, CreationDate, PostId;
+
+=> sotorrent-extension.2018_09_23.CodeClonesSample2
+
+
+# retrieve data for second sample
+SELECT
+  ContentNormalizedHash,
+  ARRAY_LENGTH(SPLIT(Content, '&#xD;&#xA;')) AS LineCount,
+  ThreadCount,
+  Content
+FROM (
+  SELECT
+    clones.ContentNormalizedHash AS ContentNormalizedHash,
+    MIN(Content) as Content,
+  MAX(ThreadCount) as ThreadCount
+  FROM
+    `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized` post_blocks
+  JOIN
+    `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones` clones
+  ON
+    post_blocks.ContentNormalizedHash = clones.ContentNormalizedHash
+  WHERE
+    clones.PostBlockTypeId = 2 AND clones.LineCount >= 20 AND ThreadCount >= 5
+  GROUP BY ContentNormalizedHash
+);
+
+=> sotorrent-extension.2018_09_23.CodeClonesSample2Data
+
+
+# Retrieve links from posts containing clones (second sample)
 SELECT
   ContentNormalizedHash,
   clones.PostId,
@@ -153,7 +201,7 @@ SELECT
 FROM
   `sotorrent-org.2018_09_23.PostVersionUrl` post_version_url
 JOIN
-  `sotorrent-extension.2018_09_23.CodeClonesSample` clones
+  `sotorrent-extension.2018_09_23.CodeClonesSample2` clones
 ON
   post_version_url.PostId = clones.PostId
 WHERE
@@ -166,10 +214,10 @@ WHERE
     pv.PostId = post_version_url.PostId
   );
   
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLinks
+=> sotorrent-extension.2018_09_23.CodeClonesSample2Links
   
 
-# Retrieve and normalize SO links
+# Retrieve and normalize SO links (second sample)
 SELECT
   ContentNormalizedHash,
   PostId,
@@ -207,31 +255,31 @@ FROM (
       ParentId,
       REGEXP_REPLACE(LOWER(Url), r'^http:', 'https:') AS Url
     FROM
-      `sotorrent-extension.2018_09_23.CodeClonesSampleLinks`
+      `sotorrent-extension.2018_09_23.CodeClonesSample2Links`
     WHERE
       RootDomain = "stackoverflow.com"
    )
 );
 
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLinksSO
+=> sotorrent-extension.2018_09_23.CodeClonesSample2LinksSO
 
 
 # Count SO links per code block hash
 SELECT ContentNormalizedHash, LinkedPostId, LinkedPostTypeId, COUNT(PostId) AS PostCount
-FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLinksSO`
+FROM `sotorrent-extension.2018_09_23.CodeClonesSample2LinksSO`
 WHERE LinkedPostId IS NOT NULL
 GROUP BY ContentNormalizedHash, LinkedPostId, LinkedPostTypeId;
 
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLinksSOExport
+=> sotorrent-extension.2018_09_23.CodeClonesSample2LinksSOExport
 
 
 # Count non-SO links per code block hash
 SELECT ContentNormalizedHash, Url, COUNT(PostId) AS PostCount
-FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLinks`
+FROM `sotorrent-extension.2018_09_23.CodeClonesSample2Links`
 WHERE RootDomain <> "stackoverflow.com"
 GROUP BY ContentNormalizedHash, Url;
 
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLinksNonSOExport
+=> sotorrent-extension.2018_09_23.CodeClonesSample2LinksNonSOExport
 
 
 
