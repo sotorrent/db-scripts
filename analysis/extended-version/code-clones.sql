@@ -263,6 +263,34 @@ FROM (
 
 => sotorrent-extension.2018_09_23.CodeClonesSample2LinksSO
 
+# Retrieve external links
+SELECT
+  ContentNormalizedHash,
+  clones.PostId as PostId,
+  PostTypeId,
+  ParentId,
+  RootDomain,
+  CompleteDomain,
+  Url
+FROM
+  `sotorrent-org.2018_09_23.PostVersionUrl` post_version_url
+JOIN
+  `sotorrent-extension.2018_09_23.CodeClonesSample2` clones
+ON
+  post_version_url.PostId = clones.PostId
+WHERE
+  PostHistoryId = (
+    SELECT
+    MAX(PostHistoryId)
+    FROM
+    `sotorrent-org.2018_09_23.PostVersion` pv
+    WHERE
+    pv.PostId = post_version_url.PostId
+  )
+  AND RootDomain <> "stackoverflow.com";
+
+=> sotorrent-extension.2018_09_23.CodeClonesSample2LinksNonSO
+
 
 # Count SO links per code block hash
 SELECT ContentNormalizedHash, LinkedPostId, LinkedPostTypeId, COUNT(PostId) AS PostCount
@@ -282,167 +310,33 @@ GROUP BY ContentNormalizedHash, Url;
 => sotorrent-extension.2018_09_23.CodeClonesSample2LinksNonSOExport
 
 
-
-# retrieve data to analysis linking of clones
-SELECT
-  ContentNormalizedHash,
-  PostId,
-  PostTypeId,
-  ParentId
-FROM
-  `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized`
-WHERE 
-  ContentNormalizedHash IN (
-    SELECT
-      ContentNormalizedHash
-    FROM 
-      `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones`
-    WHERE
-      PostBlockTypeId = 2 AND LineCount > 5 AND ThreadCount >= 2
-);
-
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLarge
-
-
-
-# Retrieve and normalize SO links
-SELECT
-  ContentNormalizedHash,
-  PostId,
-  PostTypeId,
-  ParentId,
-  REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/(?:a|q)\/([\d]+)') AS LinkedPostId,
-  CASE
-	WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/q') THEN 1
-	WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/a') THEN 2
-	ELSE NULL
-  END AS LinkedPostTypeId,
-  Url
-FROM (
-  SELECT
-    ContentNormalizedHash,
-    PostId,
-    PostTypeId,
-    ParentId,
-    CASE
-      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/a\/[\d]+)')
-	    THEN REGEXP_EXTRACT(Url, r'(https:\/\/stackoverflow\.com\/a\/[\d]+)')
-      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
-	    THEN REGEXP_EXTRACT(Url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
-      WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/questions\/[\d]+\/[^\s\/\#]+(?:\/|\#)([\d]+)')
-	    THEN CONCAT("https://stackoverflow.com/a/", REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/questions\/[\d]+\/[^\s\/\#]+(?:\/|\#)([\d]+)'))
-      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/questions\/[\d]+)')
-	    THEN CONCAT("https://stackoverflow.com/q/", REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/questions\/([\d]+)'))
-      ELSE Url
-    END AS Url
-  FROM (
-    SELECT
-      ContentNormalizedHash,
-      PostId,
-      PostTypeId,
-      ParentId,
-      REGEXP_REPLACE(LOWER(Url), r'^http:', 'https:') AS Url
-    FROM (
-	SELECT
-	  ContentNormalizedHash,
-	  clones.PostId,
-	  PostTypeId,
-	  ParentId,
-	  RootDomain,
-	  CompleteDomain,
-	  Url
-	FROM
-	  `sotorrent-org.2018_09_23.PostVersionUrl` post_version_url
-	JOIN
-	  `sotorrent-extension.2018_09_23.CodeClonesSampleLarge` clones
-	ON
-	  post_version_url.PostId = clones.PostId
-	WHERE
-	  PostHistoryId = (
-	  SELECT
-		MAX(PostHistoryId)
-	  FROM
-		`sotorrent-org.2018_09_23.PostVersion` pv
-	  WHERE
-		pv.PostId = post_version_url.PostId
-	  )
-    ) WHERE
-      RootDomain = "stackoverflow.com"
-   )
-);
-
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksSO
-
-
-# Export links to SO questions or answers
-SELECT
-  ContentNormalizedHash,
-  PostId,
-  PostTypeId,
-  ParentId,
-  LinkedPostId,
-  LinkedPostTypeId
-FROM
-  `sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksSO`
-WHERE
-  LinkedPostId IS NOT NULL;
-
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksSOExport
-
-
-# Retrieve external links
-SELECT
-  ContentNormalizedHash,
-  clones.PostId as PostId,
-  PostTypeId,
-  ParentId,
-  RootDomain,
-  CompleteDomain,
-  Url
-FROM
-  `sotorrent-org.2018_09_23.PostVersionUrl` post_version_url
-JOIN
-  `sotorrent-extension.2018_09_23.CodeClonesSampleLarge` clones
-ON
-  post_version_url.PostId = clones.PostId
-WHERE
-  PostHistoryId = (
-    SELECT
-    MAX(PostHistoryId)
-    FROM
-    `sotorrent-org.2018_09_23.PostVersion` pv
-    WHERE
-    pv.PostId = post_version_url.PostId
-  )
-  AND RootDomain <> "stackoverflow.com";
-
-=> sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksNonSO
-
-
 # How many posts contain links to other SO posts?
 
-SELECT COUNT(DISTINCT PostId) FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLarge`; 
-# 462,673
+SELECT COUNT(DISTINCT PostId) FROM `sotorrent-extension.2018_09_23.CodeClonesSample2`; 
+# 7,375
 
-SELECT COUNT(DISTINCT PostId) FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksSO` WHERE LinkedPostId IS NOT NULL;
-# 41,054 (8.9%)
+SELECT COUNT(DISTINCT PostId) FROM `sotorrent-extension.2018_09_23.CodeClonesSample2LinksSO` WHERE LinkedPostId IS NOT NULL;
+# 413 (5.6%)
 
-SELECT COUNT(DISTINCT PostId) FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksNonSO`;
-# 153,986 (33.3%)
+# ...and to external domains?
+
+SELECT COUNT(DISTINCT PostId) FROM `sotorrent-extension.2018_09_23.CodeClonesSample2LinksNonSO`;
+# 3,071 (41.6%)
 
 # either SO or external
 SELECT COUNT(DISTINCT PostId)
 FROM (
-  SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksSO` WHERE LinkedPostId IS NOT NULL
+  SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSample2LinksSO` WHERE LinkedPostId IS NOT NULL
   UNION DISTINCT
-  SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksNonSO`
+  SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSample2LinksNonSO`
 );
-# 180,175 (38.9%)
+# 3,304 (44.8%)
 
 # both SO and external
 SELECT COUNT(*) FROM
-(SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksSO` WHERE LinkedPostId IS NOT NULL) so
+(SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSample2LinksSO` WHERE LinkedPostId IS NOT NULL) so
 JOIN
-(SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSampleLargeLinksNonSO`) external
+(SELECT DISTINCT PostId FROM `sotorrent-extension.2018_09_23.CodeClonesSample2LinksNonSO`) external
 ON so.PostId = external.PostId;
-# 14,865 (3.2%)
+# 180 (2.4%)
+
