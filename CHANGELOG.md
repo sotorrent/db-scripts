@@ -6,7 +6,10 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * New release of Stack Overflow data dump in December 2018
-* Add matching line to table `PostReferenceGH`
+* Improve Stack Overflow URL extraction for table `PostReferenceGH`
+* Add new column `MatchingLine` to table `PostReferenceGH`
+* Stack Overflow links are now normalized to "https" instead of the "http" links
+* Improve post block predecessor matching strategy
 
 ## [2018-09-23] - Second release for MSR Mining Challenge 2019, based on SO data dump 2018-09-05
 
