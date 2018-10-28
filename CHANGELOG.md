@@ -8,6 +8,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * New release of Stack Overflow data dump in December 2018
 * Improve Stack Overflow URL extraction for table `PostReferenceGH`
 * Add new column `MatchingLine` to table `PostReferenceGH`
+* Split column `RepoName` into `RepoOwner` and `RepoName`, keep complete repo name as column `Repo`
 * Stack Overflow links are now normalized to "https" instead of the "http" links
 * Improve post block predecessor matching strategy
 
