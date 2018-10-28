@@ -103,7 +103,7 @@ WHERE
 => gh_so_references_2018_10_27.matched_files_aq
 
 
---- use camel case for column names, add number of copies, and remove line content for export to MySQL database
+--- use camel case for column names, add number of copies, and split repo name for export to MySQL database
 #standardSQL
 WITH
 	copies AS (
@@ -112,21 +112,39 @@ WITH
 		GROUP BY file_id
 	)
 SELECT
-  files.file_id as FileId,
-  repo_name as RepoName,
-  branch as Branch,
-  path as Path,
-  file_ext as FileExt,
-  size as Size,
-  copies.copies as Copies,
-  post_id as PostId,
-  post_type_id as PostTypeId,
-  url as SOUrl,
-  CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl,
-  line as MatchedLine
-FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_aq` files
-JOIN copies
-ON files.file_id = copies.file_id;
-
+  FileId,
+  Repo,
+  RepoArray[OFFSET(0)] AS RepoOwner,
+  RepoArray[OFFSET(1)] AS RepoName,
+  Branch,
+  Path,
+  FileExt,
+  Size,
+  Copies,
+  PostId,
+  PostTypeId,
+  SOUrl,
+  GHUrl,
+  MatchedLine
+FROM (
+  SELECT	
+    files.file_id as FileId,
+    repo_name as Repo,
+    SPLIT(repo_name, "/") as RepoArray,
+    branch as Branch,
+    path as Path,
+    file_ext as FileExt,
+    size as Size,
+    copies.copies as Copies,
+    post_id as PostId,
+    post_type_id as PostTypeId,
+    url as SOUrl,
+    CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl,
+    line as MatchedLine
+  FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_aq` files
+  JOIN copies
+  ON files.file_id = copies.file_id
+);
+  
 => gh_so_references_2018_10_27.PostReferenceGH
 
