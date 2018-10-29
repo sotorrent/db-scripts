@@ -63,6 +63,13 @@ FROM (
 
 => sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized
   
+  
+# count distinct code blocks
+SELECT COUNT(DISTINCT(ContentNormalizedHash))
+FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized`
+WHERE PostBlockTypeId = 2;
+# 43,942,960
+
 
 # count clones
 SELECT
@@ -79,6 +86,11 @@ GROUP BY
 
 => sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones
 
+# count distinct code blocks present in at least two threads
+SELECT COUNT(DISTINCT(ContentNormalizedHash))
+FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones`
+WHERE PostBlockTypeId = 2 AND ThreadCount > 1;
+# 909,323
 
 # copy clones without content (for export)
 SELECT
