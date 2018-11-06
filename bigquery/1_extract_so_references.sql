@@ -70,7 +70,11 @@ SELECT
     WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/([\d]+)')
     THEN CONCAT("https://stackoverflow.com/q/", REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/([\d]+)'))
     ELSE url
-  END as url,
+  END AS url,
+  CASE
+    WHEN REGEXP_CONTAINS(LOWER(url), r'(https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment[\d]+_[\d]+)')
+    THEN CAST(REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment([\d]+)_[\d]+') AS INT64)
+  END AS comment_id,
   line
 FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files`;
 
@@ -95,6 +99,7 @@ SELECT
     ELSE NULL
   END as post_type_id,
   url,
+  comment_id,
   line
 FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_normalized`
 WHERE
@@ -106,11 +111,11 @@ WHERE
 --- use camel case for column names, add number of copies, and split repo name for export to MySQL database
 #standardSQL
 WITH
-	copies AS (
-		SELECT file_id, count(*) as copies
-		FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_aq`
-		GROUP BY file_id
-	)
+  copies AS (
+    SELECT file_id, count(*) as copies
+    FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_aq`
+    GROUP BY file_id
+  )
 SELECT
   FileId,
   Repo,
@@ -123,11 +128,12 @@ SELECT
   Copies,
   PostId,
   PostTypeId,
+  CommentId,
   SOUrl,
   GHUrl,
   MatchedLine
 FROM (
-  SELECT	
+  SELECT  
     files.file_id as FileId,
     repo_name as Repo,
     SPLIT(repo_name, "/") as RepoArray,
@@ -138,6 +144,7 @@ FROM (
     copies.copies as Copies,
     post_id as PostId,
     post_type_id as PostTypeId,
+    comment_id as CommentId,
     url as SOUrl,
     CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl,
     line as MatchedLine
@@ -145,6 +152,5 @@ FROM (
   JOIN copies
   ON files.file_id = copies.file_id
 );
-  
-=> gh_so_references_2018_10_27.PostReferenceGH
 
+=> gh_so_references_2018_10_27.PostReferenceGH
