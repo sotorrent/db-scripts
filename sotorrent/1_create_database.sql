@@ -7,12 +7,12 @@
 # underscore vs. camel case: http://stackoverflow.com/a/14319048/1974143
 # types: http://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
 
-DROP DATABASE IF EXISTS `sotorrent18_09`;
+DROP DATABASE IF EXISTS `sotorrent18_12`;
 
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE DATABASE `sotorrent18_09` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE `sotorrent18_12` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
 
-USE `sotorrent18_09`;
+USE `sotorrent18_12`;
 
 ######################
 # Create type tables #

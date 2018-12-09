@@ -1,8 +1,8 @@
 #!/bin/bash
 
 prefix="PostReferenceGH"
-
 first_file="$prefix$(printf "%012d" 0).csv"
+last_index=182
 
 echo "Merging CSV files..."
 gunzip "$first_file.gz"
@@ -10,7 +10,7 @@ gunzip "$first_file.gz"
 sed -i'' -e '$a\' ${first_file}
 mv ${first_file} "$prefix.csv"
 
-for i in {1..3}
+for i in {1..$last_index}
 do
   current_file="$prefix$(printf "%012d" ${i}).csv"
   gunzip "$current_file.gz"  

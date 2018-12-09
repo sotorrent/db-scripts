@@ -1,4 +1,4 @@
---- Status: 2018-10-27
+--- Status: 2018-12-09
 --- Execute this in BigQuery
 
 --- select all source code lines of text files that contain a link to Stack Overflow
@@ -31,7 +31,7 @@ FROM (
 )
 WHERE REGEXP_CONTAINS(LOWER(line), r'https?:\/\/(?:www.)?stackoverflow\.com\/[^\s)."]*');
 
-=> gh_so_references_2018_10_27.matched_lines
+=> gh_so_references_2018_12_09.matched_lines
 
 
 --- join with table "files" to get information about repos
@@ -44,14 +44,14 @@ SELECT
   size,
   url,
   line
-FROM `sotorrent-org.gh_so_references_2018_10_27.matched_lines` as lines
+FROM `sotorrent-org.gh_so_references_2018_12_09.matched_lines` as lines
 LEFT JOIN `bigquery-public-data.github_repos.files` as files
 ON lines.file_id = files.id;
 
-=> gh_so_references_2018_10_27.matched_files
+=> gh_so_references_2018_12_09.matched_files
 
 
---- normalize the SO links to (http://stackoverflow.com/(a/q)/<id>)
+--- normalize the SO links to (http://stackoverflow.com/(a/q)/<id>) + info whether link points to comment
 #standardSQL
 SELECT
   file_id,
@@ -76,9 +76,9 @@ SELECT
     THEN CAST(REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment([\d]+)_[\d]+') AS INT64)
   END AS comment_id,
   line
-FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files`;
+FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files`;
 
-=> gh_so_references_2018_10_27.matched_files_normalized
+=> gh_so_references_2018_12_09.matched_files_normalized
 
 
 --- extract post id from links, set post type id, and extract file extension from path
@@ -101,11 +101,11 @@ SELECT
   url,
   comment_id,
   line
-FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_normalized`
+FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_normalized`
 WHERE
   REGEXP_CONTAINS(url, r'(https:\/\/stackoverflow\.com\/(?:a|q)\/[\d]+)');
   
-=> gh_so_references_2018_10_27.matched_files_aq
+=> gh_so_references_2018_12_09.matched_files_aq
 
 
 --- use camel case for column names, add number of copies, and split repo name for export to MySQL database
@@ -113,7 +113,7 @@ WHERE
 WITH
   copies AS (
     SELECT file_id, count(*) as copies
-    FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_aq`
+    FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_aq`
     GROUP BY file_id
   )
 SELECT
@@ -148,9 +148,9 @@ FROM (
     url as SOUrl,
     CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl,
     line as MatchedLine
-  FROM `sotorrent-org.gh_so_references_2018_10_27.matched_files_aq` files
+  FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_aq` files
   JOIN copies
   ON files.file_id = copies.file_id
 );
 
-=> gh_so_references_2018_10_27.PostReferenceGH
+=> gh_so_references_2018_12_09.PostReferenceGH

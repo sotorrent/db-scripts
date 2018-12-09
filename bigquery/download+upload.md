@@ -1,10 +1,14 @@
-# How to upload files to Google Cloud using the command line (Ubuntu)
+# How to download/upload files from/to Google Cloud using the command line (Ubuntu)
 
 (1) Install and initialize Google Cloud SDK:
 
     https://cloud.google.com/sdk/downloads#apt-get
 
-(2) Upload files to storage bucket:
+(2) Download files from a storage bucket:
+
+    gsutil cp gs://sotorrent/*.csv.gz ./
+
+(3) Upload files to a storage bucket:
 
     gsutil cp Users.csv gs://sotorrent/
     gsutil cp Badges.csv gs://sotorrent/
@@ -14,7 +18,7 @@
     gsutil cp PostLinks.csv gs://sotorrent/
     gsutil cp Tags.csv gs://sotorrent/
     gsutil cp Votes.csv gs://sotorrent/
-
+    
     gsutil cp PostBlockDiff.csv gs://sotorrent/
     gsutil cp PostVersion.csv gs://sotorrent/
     gsutil cp PostBlockVersion.csv gs://sotorrent/

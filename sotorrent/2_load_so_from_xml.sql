@@ -1,4 +1,4 @@
-USE `sotorrent18_09`;
+USE `sotorrent18_12`;
 
 SET foreign_key_checks = 0;
 LOAD XML LOCAL INFILE 'Users.xml'
