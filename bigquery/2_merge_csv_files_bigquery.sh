@@ -10,7 +10,7 @@ gunzip "$first_file.gz"
 sed -i'' -e '$a\' ${first_file}
 mv ${first_file} "$prefix.csv"
 
-for i in {1..$last_index}
+for (( i=1; i<=$last_index; i++ ))
 do
   current_file="$prefix$(printf "%012d" ${i}).csv"
   gunzip "$current_file.gz"  
