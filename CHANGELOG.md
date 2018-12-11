@@ -9,7 +9,6 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Changes to table `PostReferenceGH`:
   * Improve Stack Overflow URL extraction from source code files in BigQuery GitHub dataset
   * Stack Overflow links are now normalized to "https" instead of the "http" links
-  * Add new column `MatchingLine`, containing the matched source code line with the Stack Overflow URL
   * Add new column `CommentId`, indicating if a question link refers to a comment
   * Split column `RepoName` into `RepoOwner` and `RepoName`, keep complete repo name as new column `Repo`
   * Retrieved references on 2018-12-09
