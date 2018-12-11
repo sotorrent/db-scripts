@@ -9,5 +9,5 @@ OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(FileId, RepoName, Branch, Path, FileExt, Size, Copies, PostId, PostTypeId, SOUrl, GHUrl);
+(FileId, Repo, RepoOwner, RepoName, Branch, Path, FileExt, Size, Copies, PostId, PostTypeId, CommentId, SOUrl, GHUrl);
 SET foreign_key_checks = 1;
