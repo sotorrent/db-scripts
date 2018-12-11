@@ -1,8 +1,6 @@
 # How to download/upload files from/to Google Cloud using the command line (Ubuntu)
 
-(1) Install and initialize Google Cloud SDK:
-
-    https://cloud.google.com/sdk/downloads#apt-get
+(1) [Install and initialize](https://cloud.google.com/sdk/downloads#apt-get) Google Cloud SDK.
 
 (2) Download files from a storage bucket:
 
