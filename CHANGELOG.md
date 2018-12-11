@@ -5,14 +5,18 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* New release of Stack Overflow data dump in December 2018
-* Improve Stack Overflow URL extraction for table `PostReferenceGH`
-* Add new column `MatchingLine` to table `PostReferenceGH`
-* Add new column `CommentId` to table `PostReferenceGH`, indicating if a question link refers to a comment
-* Split column `RepoName` into `RepoOwner` and `RepoName`, keep complete repo name as column `Repo`
-* Stack Overflow links are now normalized to "https" instead of the "http" links
-* Improve post block predecessor matching strategy
-* Add remark regarding extraction on macOS to README file
+* Update to Stack Overflow data dump 2018-12-02
+* Changes to table `PostReferenceGH`:
+  * Improve Stack Overflow URL extraction from source code files in BigQuery GitHub dataset
+  * Stack Overflow links are now normalized to "https" instead of the "http" links
+  * Add new column `MatchingLine`, containing the matched source code line with the Stack Overflow URL
+  * Add new column `CommentId`, indicating if a question link refers to a comment
+  * Split column `RepoName` into `RepoOwner` and `RepoName`, keep complete repo name as new column `Repo`
+  * Retrieved references on 2018-12-09
+* Improve post block predecessor matching
+  * Revised matching strategy (see [this](https://arxiv.org/abs/1811.00804) paper for more information)
+  * New [default](https://github.com/sotorrent/posthistory-extractor/blob/5876e666e5001b5a7b9a26057358a9855f088a0a/src/org/sotorrent/posthistoryextractor/Config.java#L75) metrics and thresholds 
+* Add remark regarding possible issue with extraction of dataset on macOS to README file
 
 ## [2018-09-23] - Second release for MSR Mining Challenge 2019, based on SO data dump 2018-09-05
 
