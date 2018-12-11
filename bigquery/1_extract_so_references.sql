@@ -130,8 +130,7 @@ SELECT
   PostTypeId,
   CommentId,
   SOUrl,
-  GHUrl,
-  MatchedLine
+  GHUrl
 FROM (
   SELECT  
     files.file_id as FileId,
@@ -146,8 +145,7 @@ FROM (
     post_type_id as PostTypeId,
     comment_id as CommentId,
     url as SOUrl,
-    CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl,
-    line as MatchedLine
+    CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl
   FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_aq` files
   JOIN copies
   ON files.file_id = copies.file_id
