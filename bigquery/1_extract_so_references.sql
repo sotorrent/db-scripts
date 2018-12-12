@@ -60,8 +60,18 @@ SELECT
   REPLACE(path, '\n', '') as path,
   size,
   CASE
-	--- DO NOT replace the distinction between answers and questions, because otherwise URLs like this won't be matched: http://stackoverflow.com/a/3758880/1035417
-    WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/a\/([\d]+)')
+    --- DO NOT replace the distinction between answers and questions, because otherwise URLs like this won't be matched: http://stackoverflow.com/a/3758880/1035417
+    WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment[\d]+_[\d]+')
+      THEN CONCAT(
+        CONCAT("https://stackoverflow.com/q/",
+          REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/([\d]+)')), --- question id
+        CONCAT(CONCAT(CONCAT(
+				  "#comment",
+				  REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment([\d]+)_[\d]+'))), --- comment id
+				  "_"),
+				  REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/([\d]+)') --- question id
+			)
+	WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/a\/([\d]+)')
     THEN CONCAT("https://stackoverflow.com/a/", REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/a\/([\d]+)'))
     WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s#]+#([\d]+)')
     THEN CONCAT("https://stackoverflow.com/a/", REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s#]+#([\d]+)'))
@@ -72,8 +82,9 @@ SELECT
     ELSE url
   END AS url,
   CASE
-    WHEN REGEXP_CONTAINS(LOWER(url), r'(https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment[\d]+_[\d]+)')
+    WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment[\d]+_[\d]+')
     THEN CAST(REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/[\d]+\/[^\s\/#]+#comment([\d]+)_[\d]+') AS INT64)
+    ELSE NULL
   END AS comment_id,
   line
 FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files`;
@@ -92,10 +103,12 @@ SELECT
   size,
   CAST(REGEXP_EXTRACT(url, r'https:\/\/stackoverflow\.com\/(?:a|q)\/([\d]+)') AS INT64) as post_id,
   CASE
-    WHEN REGEXP_CONTAINS(url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
-    THEN 1
+    WHEN REGEXP_CONTAINS(url, r'https:\/\/stackoverflow\.com\/q\/[\d]+#comment[\d]+_[\d]+')
+	THEN 99 --- comment
+	WHEN REGEXP_CONTAINS(url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
+    THEN 1 --- question
     WHEN REGEXP_CONTAINS(url, r'(https:\/\/stackoverflow\.com\/a\/[\d]+)')
-    THEN 2
+    THEN 2 --- answer
     ELSE NULL
   END as post_type_id,
   url,

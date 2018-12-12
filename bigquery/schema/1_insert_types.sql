@@ -11,6 +11,7 @@ INSERT INTO `2018_03_28.PostType` (Id, Type) VALUES (5, 'TagWiki');
 INSERT INTO `2018_03_28.PostType` (Id, Type) VALUES (6, 'ModeratorNomination');
 INSERT INTO `2018_03_28.PostType` (Id, Type) VALUES (7, 'WikiPlaceholder');
 INSERT INTO `2018_03_28.PostType` (Id, Type) VALUES (8, 'PrivilegeWiki');
+INSERT INTO `2018_03_28.PostType` (Id, Type) VALUES (99, 'Comment'); # SOTorrent-specific post type for table PostReferenceGH
 
 # PostBlockTypes
 #standardsql
