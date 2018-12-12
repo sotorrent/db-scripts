@@ -5,6 +5,10 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
+* n/a
+
+## [2018-12-09] - Third release for MSR Mining Challenge 2019, based on SO data dump 2018-12-02
+
 * Update to Stack Overflow data dump 2018-12-02
 * Changes to table `PostReferenceGH`:
   * Improve Stack Overflow URL extraction from source code files in BigQuery GitHub dataset
