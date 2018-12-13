@@ -23,3 +23,5 @@ ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_6 (Copies);
 
 ALTER TABLE `TitleVersion` ADD INDEX titleversion_index_1 (PredEditDistance);
 ALTER TABLE `TitleVersion` ADD INDEX titleversion_index_2 (SuccEditDistance);
+
+ALTER TABLE `GHMatches` ADD INDEX ghmatches_index_1 (FileId);

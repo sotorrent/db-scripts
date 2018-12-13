@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS `PostVersionUrl`;
 DROP TABLE IF EXISTS `CommentUrl`;
 DROP TABLE IF EXISTS `PostReferenceGH`;
 DROP TABLE IF EXISTS `TitleVersion`;
+DROP TABLE IF EXISTS `GHMatches`;
 SET foreign_key_checks = 1;
 
 ######################
@@ -193,4 +194,9 @@ CREATE TABLE `TitleVersion` (
   FOREIGN KEY(PostHistoryTypeId) REFERENCES PostHistoryType(Id),
   FOREIGN KEY(PredPostHistoryId) REFERENCES PostHistory(Id),
   FOREIGN KEY(SuccPostHistoryId) REFERENCES PostHistory(Id)
+) AUTO_INCREMENT = 1;
+
+CREATE TABLE `GHMatches` (
+  FileId VARCHAR(40) NOT NULL,
+  MatchedLine TEXT NOT NULL
 ) AUTO_INCREMENT = 1;
