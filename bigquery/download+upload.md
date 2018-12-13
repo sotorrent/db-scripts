@@ -25,3 +25,4 @@
     gsutil cp TitleVersion.csv gs://sotorrent/ 
       
     gsutil cp PostReferenceGH.csv gs://sotorrent/
+    gsutil cp GHMatches.csv gs://sotorrent/

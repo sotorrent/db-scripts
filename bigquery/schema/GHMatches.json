@@ -1,0 +1,13 @@
+// delimiter ',', header row present
+[
+    {
+        "mode": "REQUIRED",
+        "name": "FileId",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "MatchedLine",
+        "type": "STRING"
+    }
+]

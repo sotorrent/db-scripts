@@ -198,5 +198,5 @@ CREATE TABLE `TitleVersion` (
 
 CREATE TABLE `GHMatches` (
   FileId VARCHAR(40) NOT NULL,
-  MatchedLine TEXT NOT NULL
+  MatchedLine LONGTEXT NOT NULL
 ) AUTO_INCREMENT = 1;
