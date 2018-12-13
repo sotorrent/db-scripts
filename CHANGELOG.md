@@ -19,6 +19,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
     * `SOUrl` now points directly to comments, not to corresponding questions 
   * Split column `RepoName` into `RepoOwner` and `RepoName`, keep complete repo name as new column `Repo`
   * Retrieved references on 2018-12-09
+* New table `GHMatches` with matched source code lines containing a link to Stack Overflow questions, answers, or comments
 * Improve post block predecessor matching
   * Revised matching strategy (see [this](https://arxiv.org/abs/1811.00804) paper for more information)
   * New [default](https://github.com/sotorrent/posthistory-extractor/blob/5876e666e5001b5a7b9a26057358a9855f088a0a/src/org/sotorrent/posthistoryextractor/Config.java#L75) metrics and thresholds 
