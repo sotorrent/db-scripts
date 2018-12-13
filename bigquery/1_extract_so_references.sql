@@ -165,3 +165,13 @@ FROM (
 );
 
 => gh_so_references_2018_12_09.PostReferenceGH
+
+--- save matched lines is a separate table
+#standardSQL
+SELECT
+  file_id as FileId,
+  line as MatchedLine
+FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_aq`
+GROUP BY FileId, MatchedLine;
+
+=> gh_so_references_2018_12_09.GHMatches
