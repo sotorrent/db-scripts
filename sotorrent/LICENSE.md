@@ -11,9 +11,9 @@ The following tables are identical to the corresponding XML files in the [offici
 Legal code can be found below ([source](https://github.com/creativecommons/legalcode/blob/master/by-sa_3.0.txt)).
 
 
-## Table PostReferenceGH
+## Tables PostReferenceGH and GHMatches
 
-The table `PostReferenceGH` was retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github), for which the [GitHub Terms of Service](https://help.github.com/articles/github-terms-of-service/) apply.
+The tables `PostReferenceGH` and `GHMatches` were retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github), for which the [GitHub Terms of Service](https://help.github.com/articles/github-terms-of-service/) apply.
 
 ## Other SOTorrent tables
 
