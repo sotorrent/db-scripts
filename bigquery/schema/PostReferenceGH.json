@@ -7,6 +7,16 @@
     },
     {
         "mode": "REQUIRED",
+        "name": "Repo",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "RepoOwner",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
         "name": "RepoName",
         "type": "STRING"
     },
@@ -43,6 +53,11 @@
     {
         "mode": "REQUIRED",
         "name": "PostTypeId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "CommentId",
         "type": "INTEGER"
     },
     {
