@@ -20,6 +20,7 @@ ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_3 (Branch);
 ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_4 (FileExt);
 ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_5 (Size);
 ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_6 (Copies);
+ALTER TABLE `PostReferenceGH` ADD INDEX postreferencegh_index_7 (CommentId);
 
 ALTER TABLE `TitleVersion` ADD INDEX titleversion_index_1 (PredEditDistance);
 ALTER TABLE `TitleVersion` ADD INDEX titleversion_index_2 (SuccEditDistance);
