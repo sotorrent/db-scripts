@@ -21,7 +21,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
   * Retrieved references on 2018-12-09
 * New table `GHMatches` with matched source code lines containing a link to Stack Overflow questions, answers, or comments
 * Improve post block predecessor matching
-  * Revised matching strategy (see [this](https://arxiv.org/abs/1811.00804) paper for more information)
+  * Revised matching strategy (see [this](https://arxiv.org/abs/1811.00804) paper preprint for more information)
   * New [default](https://github.com/sotorrent/posthistory-extractor/blob/5876e666e5001b5a7b9a26057358a9855f088a0a/src/org/sotorrent/posthistoryextractor/Config.java#L75) metrics and thresholds 
 * Add remark to use Archive Utility on macOS to extract the dataset (see [README](https://github.com/sotorrent/db-scripts/blob/master/sotorrent/README.md) file)
 
