@@ -5,7 +5,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* n/a
+* Improved detection of HTML code blocks
 
 ## [2018-12-09] - Third release for MSR Mining Challenge 2019, based on SO data dump 2018-12-02
 
