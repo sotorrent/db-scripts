@@ -6,6 +6,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * Improved detection of HTML code blocks
+* Update to MySQL 8.0
 
 ## [2018-12-09] - Third release for MSR Mining Challenge 2019, based on SO data dump 2018-12-02
 
