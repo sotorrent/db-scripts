@@ -1,37 +1,43 @@
---- Status: 2018-12-09
+--- Status: 2019-02-13
 --- Execute this in BigQuery
+
+--- TODO: Document "Last Modified" from "Table Info" of table "bigquery-public-data:github_repos.contents"
 
 --- select all source code lines of text files that contain a link to Stack Overflow
 #standardSQL
 SELECT
   file_id,
   size,
-  REGEXP_REPLACE(
-      REGEXP_EXTRACT(LOWER(line), r'(https?:\/\/(?:www.)?stackoverflow\.com\/[^\s)."]*)'),
-      r'(^https)',
-      'http'
-  ) as url,
+  url,
   line
 FROM (
-  SELECT
-    file_id,
-    size,
-    line
-  FROM (
-    SELECT
-      id as file_id,
-      size,
-      SPLIT(content, '\n') as lines
-    FROM `bigquery-public-data.github_repos.contents`
-    WHERE
-      binary = false AND
-      content is not null
-  )
-  CROSS JOIN UNNEST(lines) as line  
+	SELECT
+	  file_id,
+	  size,
+	  REGEXP_EXTRACT_ALL(LOWER(line), r'(https?:\/\/(?:www.)?stackoverflow\.com\/[^\s)."]*)') as urls,
+	  line
+	FROM (
+	  SELECT
+		file_id,
+		size,
+		line
+	  FROM (
+		SELECT
+		  id as file_id,
+		  size,
+		  SPLIT(REGEXP_REPLACE(content, r'(\r\n?|\n)', '\n'), '\n') as lines
+		FROM `bigquery-public-data.github_repos.contents`
+		WHERE
+		  binary = false AND
+		  content is not null
+	  )
+	  CROSS JOIN UNNEST(lines) as line  
+	)
+	WHERE REGEXP_CONTAINS(LOWER(line), r'https?:\/\/(?:www.)?stackoverflow\.com\/[^\s)."]*')
 )
-WHERE REGEXP_CONTAINS(LOWER(line), r'https?:\/\/(?:www.)?stackoverflow\.com\/[^\s)."]*');
+CROSS JOIN UNNEST(urls) as url;
 
-=> gh_so_references_2018_12_09.matched_lines
+=> gh_so_references_2019_02_13.matched_lines
 
 
 --- join with table "files" to get information about repos
@@ -44,11 +50,11 @@ SELECT
   size,
   url,
   line
-FROM `sotorrent-org.gh_so_references_2018_12_09.matched_lines` as lines
+FROM `sotorrent-org.gh_so_references_2019_02_13.matched_lines` as lines
 LEFT JOIN `bigquery-public-data.github_repos.files` as files
 ON lines.file_id = files.id;
 
-=> gh_so_references_2018_12_09.matched_files
+=> gh_so_references_2019_02_13.matched_files
 
 
 --- normalize the SO links to (http://stackoverflow.com/(a/q)/<id>) + info whether link points to comment
@@ -57,7 +63,7 @@ SELECT
   file_id,
   repo_name,
   branch,
-  REPLACE(path, '\n', '') as path,
+  REGEXP_REPLACE(path, r'(\r\n?|\n)', '') as path,
   size,
   CASE
     --- DO NOT replace the distinction between answers and questions, because otherwise URLs like this won't be matched: http://stackoverflow.com/a/3758880/1035417
@@ -87,9 +93,9 @@ SELECT
     ELSE NULL
   END AS comment_id,
   line
-FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files`;
+FROM `sotorrent-org.gh_so_references_2019_02_13.matched_files`;
 
-=> gh_so_references_2018_12_09.matched_files_normalized
+=> gh_so_references_2019_02_13.matched_files_normalized
 
 
 --- extract post id from links, set post type id, and extract file extension from path
@@ -114,11 +120,11 @@ SELECT
   url,
   comment_id,
   line
-FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_normalized`
+FROM `sotorrent-org.gh_so_references_2019_02_13.matched_files_normalized`
 WHERE
   REGEXP_CONTAINS(url, r'(https:\/\/stackoverflow\.com\/(?:a|q)\/[\d]+)');
   
-=> gh_so_references_2018_12_09.matched_files_aq
+=> gh_so_references_2019_02_13.matched_files_aq
 
 
 --- use camel case for column names, add number of copies, and split repo name for export to MySQL database
@@ -126,7 +132,7 @@ WHERE
 WITH
   copies AS (
     SELECT file_id, count(*) as copies
-    FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_aq`
+    FROM `sotorrent-org.gh_so_references_2019_02_13.matched_files_aq`
     GROUP BY file_id
   )
 SELECT
@@ -159,12 +165,12 @@ FROM (
     comment_id as CommentId,
     url as SOUrl,
     CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl
-  FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_aq` files
+  FROM `sotorrent-org.gh_so_references_2019_02_13.matched_files_aq` files
   JOIN copies
   ON files.file_id = copies.file_id
 );
 
-=> gh_so_references_2018_12_09.PostReferenceGH
+=> gh_so_references_2019_02_13.PostReferenceGH
 
 --- save matched lines is a separate table
 #standardSQL
@@ -172,7 +178,7 @@ SELECT
   file_id as FileId,
   --- prevent error "Bad character (ASCII 0) encountered" when importing into BigQuery again
   REGEXP_REPLACE(REGEXP_REPLACE(line, r'[\r\n]+', '&#xD;&#xA;'), r'\x00', '') as MatchedLine
-FROM `sotorrent-org.gh_so_references_2018_12_09.matched_files_aq`
+FROM `sotorrent-org.gh_so_references_2019_02_13.matched_files_aq`
 GROUP BY FileId, MatchedLine;
 
-=> gh_so_references_2018_12_09.GHMatches
+=> gh_so_references_2019_02_13.GHMatches
