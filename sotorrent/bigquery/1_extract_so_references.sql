@@ -67,7 +67,7 @@ SELECT
   size,
   CASE
     --- DO NOT replace the distinction between answers and questions, because otherwise URLs like this won't be matched: http://stackoverflow.com/a/3758880/1035417
-    WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/\d+\/[^\s\/#]+(?:\/\d+)?(?:\?[^\s\/#]+)?#comment\d+_\d+')
+    WHEN REGEXP_CONTAINS(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/(?:questions|q|a)\/\d+\/[^\s\/#]+(?:\/\d+)?(?:\?[^\s\/#]+)?#comment\d+_\d+')
       THEN CONCAT(
         CONCAT("https://stackoverflow.com/q/",
           REGEXP_EXTRACT(LOWER(url), r'https?:\/\/(?:www.)?stackoverflow\.com\/questions\/([\d]+)')), --- question id
