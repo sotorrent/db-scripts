@@ -22,7 +22,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostBlockDiff`;
 
-SELECT Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, IFNULL(PredPostHistoryId, ''), IFNULL(SuccPostHistoryId, '')
+SELECT Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, IFNULL(PredPostHistoryId, ''), IFNULL(SuccPostHistoryId, ''), MostRecentVersion
 INTO OUTFILE 'F:/Temp/PostVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -31,7 +31,7 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 FROM `PostVersion`;
 
-SELECT Id, PostBlockTypeId, PostId, PostHistoryId, LocalId, IFNULL(PredPostBlockVersionId, ''), IFNULL(PredPostHistoryId, ''), IFNULL(PredLocalId, ''), IFNULL(RootPostBlockVersionId, ''), IFNULL(RootPostHistoryId, ''), IFNULL(RootLocalId, ''), IFNULL(PredEqual, ''), IFNULL(PredSimilarity, ''), IFNULL(PredCount, ''), IFNULL(SuccCount, ''), Length, LineCount, REPLACE(Content, '\n', '&#xD;&#xA;')
+SELECT Id, PostBlockTypeId, PostId, PostHistoryId, LocalId, IFNULL(PredPostBlockVersionId, ''), IFNULL(PredPostHistoryId, ''), IFNULL(PredLocalId, ''), IFNULL(RootPostBlockVersionId, ''), IFNULL(RootPostHistoryId, ''), IFNULL(RootLocalId, ''), IFNULL(PredEqual, ''), IFNULL(PredSimilarity, ''), IFNULL(PredCount, ''), IFNULL(SuccCount, ''), Length, LineCount, REPLACE(Content, '\n', '&#xD;&#xA;'), MostRecentVersion
 INTO OUTFILE 'F:/Temp/PostBlockVersion.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','

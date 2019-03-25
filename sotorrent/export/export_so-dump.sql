@@ -4,21 +4,21 @@ USE `sotorrent19_03`;
 
 # Users
 SELECT
-	Id,
+  Id,
   Reputation,
   IFNULL(CreationDate, ''),
   IFNULL(DisplayName, ''),
-	IFNULL(LastAccessDate, ''),
-	IFNULL(WebsiteUrl, ''),
-	IFNULL(Location, ''),
-	IFNULL(ProfileImageUrl, ''),
-	IFNULL(AboutMe, ''),
-	IFNULL(Views, ''),
-	IFNULL(UpVotes, ''),
-	IFNULL(DownVotes, ''),
-	IFNULL(Age, ''),
-	IFNULL(AccountId, ''),
-	IFNULL(EmailHash, '')
+  IFNULL(LastAccessDate, ''),
+  IFNULL(WebsiteUrl, ''),
+  IFNULL(Location, ''),
+  IFNULL(ProfileImageUrl, ''),
+  IFNULL(AboutMe, ''),
+  IFNULL(Views, ''),
+  IFNULL(UpVotes, ''),
+  IFNULL(DownVotes, ''),
+  IFNULL(Age, ''),
+  IFNULL(AccountId, ''),
+  IFNULL(EmailHash, '')
 INTO OUTFILE 'F:/Temp/Users.csv'
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -29,12 +29,12 @@ FROM `Users`;
 
 # Badges
 SELECT
-	Id,
+  Id,
   UserId,
   IFNULL(Name, ''),
   IFNULL(Date, ''),
-	IFNULL(Class, ''),
-	IFNULL(TagBased, '')
+  IFNULL(Class, ''),
+  IFNULL(TagBased, '')
 INTO OUTFILE 'F:/Temp/Badges.csv'
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -45,28 +45,28 @@ FROM `Badges`;
 
 # Posts
 SELECT
-	Id,
-	IFNULL(PostTypeId, ''),
-	IFNULL(AcceptedAnswerId, ''),
-	IFNULL(ParentId, ''),
-	IFNULL(CreationDate, ''),
-	IFNULL(DeletionDate, ''),
-	IFNULL(Score, ''),
-	IFNULL(ViewCount, ''),
-	IFNULL(REPLACE(Body, '\n', '&#xD;&#xA;'), ''),
-	IFNULL(OwnerUserId, ''),
-	IFNULL(OwnerDisplayName, ''),
-	IFNULL(LastEditorUserId, ''),
-	IFNULL(LastEditorDisplayName, ''),
-	IFNULL(LastEditDate, ''),
-	IFNULL(LastActivityDate, ''),
-	IFNULL(Title, ''),
-	IFNULL(Tags, ''),
-	IFNULL(AnswerCount, ''),
-	IFNULL(CommentCount, ''),
-	IFNULL(FavoriteCount, ''),
-	IFNULL(ClosedDate, ''),
-	IFNULL(CommunityOwnedDate, '')
+  Id,
+  IFNULL(PostTypeId, ''),
+  IFNULL(AcceptedAnswerId, ''),
+  IFNULL(ParentId, ''),
+  IFNULL(CreationDate, ''),
+  IFNULL(DeletionDate, ''),
+  IFNULL(Score, ''),
+  IFNULL(ViewCount, ''),
+  IFNULL(REPLACE(Body, '\n', '&#xD;&#xA;'), ''),
+  IFNULL(OwnerUserId, ''),
+  IFNULL(OwnerDisplayName, ''),
+  IFNULL(LastEditorUserId, ''),
+  IFNULL(LastEditorDisplayName, ''),
+  IFNULL(LastEditDate, ''),
+  IFNULL(LastActivityDate, ''),
+  IFNULL(Title, ''),
+  IFNULL(Tags, ''),
+  IFNULL(AnswerCount, ''),
+  IFNULL(CommentCount, ''),
+  IFNULL(FavoriteCount, ''),
+  IFNULL(ClosedDate, ''),
+  IFNULL(CommunityOwnedDate, '')
 INTO OUTFILE 'F:/Temp/Posts.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -77,13 +77,13 @@ FROM `Posts`;
 
 # Comments
 SELECT
-	Id,
-	PostId,
-	Score,
-	IFNULL(REPLACE(Text, '\n', '&#xD;&#xA;'), ''),
-	IFNULL(CreationDate, ''),
-	IFNULL(UserDisplayName, ''),
-	IFNULL(UserId, '')
+  Id,
+  PostId,
+  Score,
+  IFNULL(REPLACE(Text, '\n', '&#xD;&#xA;'), ''),
+  IFNULL(CreationDate, ''),
+  IFNULL(UserDisplayName, ''),
+  IFNULL(UserId, '')
 INTO OUTFILE 'F:/Temp/Comments.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -94,15 +94,15 @@ FROM `Comments`;
 
 # PostHistory
 SELECT
-	Id,
-	PostHistoryTypeId,
-	PostId,
-	IFNULL(RevisionGUID, ''),
-	IFNULL(CreationDate, ''),
-	IFNULL(UserId, ''),
-	IFNULL(UserDisplayName, ''),
-	IFNULL(REPLACE(Comment, '\n', '&#xD;&#xA;'), ''),
-	IFNULL(REPLACE(Text, '\n', '&#xD;&#xA;'), '')
+  Id,
+  PostHistoryTypeId,
+  PostId,
+  IFNULL(RevisionGUID, ''),
+  IFNULL(CreationDate, ''),
+  IFNULL(UserId, ''),
+  IFNULL(UserDisplayName, ''),
+  IFNULL(REPLACE(Comment, '\n', '&#xD;&#xA;'), ''),
+  IFNULL(REPLACE(Text, '\n', '&#xD;&#xA;'), '')
 INTO OUTFILE 'F:/Temp/PostHistory.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -113,11 +113,11 @@ FROM `PostHistory`;
 
 # PostLinks
 SELECT
-	Id,
-	IFNULL(CreationDate, ''),
-	PostId,
-	RelatedPostId,
-	IFNULL(LinkTypeId, '')
+  Id,
+  IFNULL(CreationDate, ''),
+  PostId,
+  RelatedPostId,
+  IFNULL(LinkTypeId, '')
 INTO OUTFILE 'F:/Temp/PostLinks.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -128,11 +128,11 @@ FROM `PostLinks`;
 
 # Tags
 SELECT
-	Id,
-	IFNULL(TagName, ''),
-	IFNULL(Count, ''),
-	IFNULL(ExcerptPostId, ''),
-	IFNULL(WikiPostId, '')
+  Id,
+  IFNULL(TagName, ''),
+  IFNULL(Count, ''),
+  IFNULL(ExcerptPostId, ''),
+  IFNULL(WikiPostId, '')
 INTO OUTFILE 'F:/Temp/Tags.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
@@ -143,12 +143,12 @@ FROM `Tags`;
 
 # Votes
 SELECT
-	Id,
-	PostId,
-	IFNULL(VoteTypeId, ''),
-	IFNULL(UserId, ''),
-	IFNULL(CreationDate, ''),
-	IFNULL(BountyAmount, '')
+  Id,
+  PostId,
+  IFNULL(VoteTypeId, ''),
+  IFNULL(UserId, ''),
+  IFNULL(CreationDate, ''),
+  IFNULL(BountyAmount, '')
 INTO OUTFILE 'F:/Temp/Votes.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
