@@ -1,9 +1,9 @@
-USE `sotorrent18_12`;
+USE `sotorrent19_03`;
 
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostBlockDiff` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA LOCAL INFILE 'PostBlockDiff.csv' INTO TABLE `PostBlockDiff`
+LOAD DATA INFILE  'F:/Temp/PostBlockDiff.csv' INTO TABLE `PostBlockDiff`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -16,7 +16,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA LOCAL INFILE 'PostVersion.csv' INTO TABLE `PostVersion`
+LOAD DATA INFILE  'F:/Temp/PostVersion.csv' INTO TABLE `PostVersion`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -30,7 +30,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostBlockVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA LOCAL INFILE 'PostBlockVersion.csv' INTO TABLE `PostBlockVersion`
+LOAD DATA INFILE  'F:/Temp/PostBlockVersion.csv' INTO TABLE `PostBlockVersion`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -53,7 +53,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostVersionUrl` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA LOCAL INFILE 'PostVersionUrl.csv' INTO TABLE `PostVersionUrl`
+LOAD DATA INFILE  'F:/Temp/PostVersionUrl.csv' INTO TABLE `PostVersionUrl`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -70,7 +70,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `CommentUrl` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA LOCAL INFILE 'CommentUrl.csv' INTO TABLE `CommentUrl`
+LOAD DATA INFILE  'F:/Temp/CommentUrl.csv' INTO TABLE `CommentUrl`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -87,7 +87,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `TitleVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA LOCAL INFILE 'TitleVersion.csv' INTO TABLE `TitleVersion`
+LOAD DATA INFILE  'F:/Temp/TitleVersion.csv' INTO TABLE `TitleVersion`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'

@@ -1,8 +1,8 @@
-USE `sotorrent18_12`;
+USE `sotorrent19_03`;
 
 SET foreign_key_checks = 0;
 # load file exported from BigQuery (see also https://cloud.google.com/sql/docs/mysql/import-export/)
-LOAD DATA LOCAL INFILE 'GHMatches.csv' INTO TABLE `GHMatches`
+LOAD DATA INFILE  'F:/Temp/GHMatches.csv' INTO TABLE `GHMatches`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'

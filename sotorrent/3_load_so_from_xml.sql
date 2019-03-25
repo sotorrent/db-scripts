@@ -1,49 +1,49 @@
-USE `sotorrent18_12`;
+USE `sotorrent19_03`;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'Users.xml'
+LOAD XML INFILE 'F:/Temp/Users.xml'
 INTO TABLE `Users`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'Badges.xml'
+LOAD XML INFILE 'F:/Temp/Badges.xml'
 INTO TABLE `Badges`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'Posts.xml'
+LOAD XML INFILE 'F:/Temp/Posts.xml'
 INTO TABLE `Posts`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'Comments.xml'
+LOAD XML INFILE 'F:/Temp/Comments.xml'
 INTO TABLE `Comments`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'PostHistory.xml'
+LOAD XML INFILE 'F:/Temp/PostHistory.xml'
 INTO TABLE `PostHistory`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'PostLinks.xml'
+LOAD XML INFILE 'F:/Temp/PostLinks.xml'
 INTO TABLE `PostLinks`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'Tags.xml'
+LOAD XML INFILE 'F:/Temp/Tags.xml'
 INTO TABLE `Tags`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
-LOAD XML LOCAL INFILE 'Votes.xml'
+LOAD XML INFILE 'F:/Temp/Votes.xml'
 INTO TABLE `Votes`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;

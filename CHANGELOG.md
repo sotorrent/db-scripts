@@ -5,10 +5,16 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* Improved detection of HTML code blocks
-* Improved detection of comment links (links containing a query string, such as `https://stackoverflow.com/questions/28705447/is-there-a-java-method-that-fills-a-list-by-calling-a-function-many-times/28705651?noredirect=1#comment45733057_28705651`, are now correctly handled)
-* Multiple Stack Overflow links per source code line are now correctly extracted (previously only the first match per line)
-* New columns `PostVersion.IsMostRecentVersion` and `PostBlockVersion.IsMostRecentVersion` that make it easier to analyze only the most recent version of a post
+* n/a
+
+## [2018-03-17] - First release based on SO data dump 2019-03-04
+
+* Update to Stack Overflow data dump 2019-03-04
+* Update GitHub references to 2019-03-15 (according to BigQuery table info)
+* Improve detection of HTML code blocks
+* Improve detection of comment links (links containing a query string, such as `https://stackoverflow.com/questions/28705447/is-there-a-java-method-that-fills-a-list-by-calling-a-function-many-times/28705651?noredirect=1#comment45733057_28705651`, are now correctly handled)
+* Correctly handle multiple Stack Overflow links per source code line (previously only the first match in each line was extracted)
+* Add new columns `PostVersion.MostRecentVersion` and `PostBlockVersion.MostRecentVersion` that make it easier to analyze only the most recent version of a post/post block
 * Update to MySQL 8.0
 
 ## [2018-12-09] - Third release for MSR Mining Challenge 2019, based on SO data dump 2018-12-02

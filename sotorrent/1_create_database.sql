@@ -1,18 +1,18 @@
 # Copyright (c) 2013 Georgios Gousios
 # MIT-licensed
-# Updated by Sebastian Baltes to support data dump version 2018-03-13
+# Updated by Sebastian Baltes to support data dump version 2018-03-13 upwards
 
 # collation: http://stackoverflow.com/a/1036459/1974143
 # character set: http://stackoverflow.com/a/20429481/1974143 and https://mathiasbynens.be/notes/mysql-utf8mb4#character-sets
 # underscore vs. camel case: http://stackoverflow.com/a/14319048/1974143
 # types: http://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
 
-DROP DATABASE IF EXISTS `sotorrent18_12`;
+DROP DATABASE IF EXISTS `sotorrent19_03`;
 
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE DATABASE `sotorrent18_12` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE `sotorrent19_03` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
 
-USE `sotorrent18_12`;
+USE `sotorrent19_03`;
 
 ######################
 # Create type tables #

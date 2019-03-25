@@ -1,4 +1,4 @@
-USE `sotorrent18_12`;
+USE `sotorrent19_03`;
 
 SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS `PostBlockType`;
@@ -67,7 +67,7 @@ CREATE TABLE `PostVersion` (
   CreationDate DATETIME NOT NULL,
   PredPostHistoryId INT DEFAULT NULL,
   SuccPostHistoryId INT DEFAULT NULL,
-  IsMostRecentVersion BOOLEAN DEFAULT FALSE,
+  MostRecentVersion BOOLEAN DEFAULT FALSE,
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PredPostHistoryId, SuccPostHistoryId),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
@@ -97,7 +97,7 @@ CREATE TABLE `PostBlockVersion` (
   Length INT NOT NULL,
   LineCount INT NOT NULL,
   Content TEXT NOT NULL,
-  IsMostRecentVersion BOOLEAN DEFAULT FALSE,
+  MostRecentVersion BOOLEAN DEFAULT FALSE,
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PostBlockTypeId, LocalId),
   FOREIGN KEY(PostBlockTypeId) REFERENCES PostBlockType(Id),

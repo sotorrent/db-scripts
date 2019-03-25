@@ -2,7 +2,7 @@
 
 prefix="PostReferenceGH"
 first_file="$prefix$(printf "%012d" 0).csv"
-last_index=3
+last_index=4
 
 echo "Merging CSV files..."
 gunzip "$first_file.gz"
