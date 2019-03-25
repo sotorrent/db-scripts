@@ -22,7 +22,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId)
+(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId, MostRecentVersion)
 SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
 	SuccPostHistoryId = nullif(@SuccPostHistoryId, '');
 SET foreign_key_checks = 1;
@@ -36,7 +36,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostBlockTypeId, PostId, PostHistoryId, LocalId, @PredPostBlockVersionId, @PredPostHistoryId, @PredLocalId, @RootPostBlockVersionId, @RootPostHistoryId, @RootLocalId, @PredEqual, @PredSimilarity, @PredCount, @SuccCount, Length, LineCount, @Content)
+(Id, PostBlockTypeId, PostId, PostHistoryId, LocalId, @PredPostBlockVersionId, @PredPostHistoryId, @PredLocalId, @RootPostBlockVersionId, @RootPostHistoryId, @RootLocalId, @PredEqual, @PredSimilarity, @PredCount, @SuccCount, Length, LineCount, @Content, MostRecentVersion)
 SET Content = REPLACE(@Content, '&#xD;&#xA;', '\n'),
     PredPostBlockVersionId = nullif(@PredPostBlockVersionId, ''),
     PredPostHistoryId = nullif(@PredPostHistoryId, ''),
