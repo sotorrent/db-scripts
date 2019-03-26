@@ -39,5 +39,10 @@
         "mode": "NULLABLE",
         "name": "SuccPostHistoryId",
         "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "MostRecentVersion",
+        "type": "BOOLEAN"
     }
 ]

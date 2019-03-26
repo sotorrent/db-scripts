@@ -89,5 +89,10 @@
         "mode": "REQUIRED",
         "name": "Content",
         "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "MostRecentVersion",
+        "type": "BOOLEAN"
     }
 ]
