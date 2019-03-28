@@ -5,7 +5,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* n/a
+* Improve matching of very short post blocks (containing only one token)
 
 ## [2018-03-17] - First release based on SO data dump 2019-03-04
 
