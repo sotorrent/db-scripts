@@ -2,7 +2,7 @@
 
 1. Unzip all CSV and XML files: `gunzip *.gz`. On macOS, please use the build-in "Archive Utility" instead (see this [issue description](https://github.com/sotorrent/db-scripts/issues/7)).
 2. Edit the SQL script `2_create_sotorrent_user.sql` to choose a password for the sotorrent user and execute the script to create the user.
-3. Update the paths in files `3_load_so_from_xml.sql`, `6_load_sotorrent.sql`, `7_load_postreferencegh.sql`, and `8_load_ghmatches.sql`.
+3. Update the paths in `3_load_so_from_xml.sql`, `6_load_sotorrent.sql`, `7_load_postreferencegh.sql`, and `8_load_ghmatches.sql` according to your configuration.
 4. Run the below script in your MySQL client.
 
 Import into MySQL database:
@@ -22,3 +22,62 @@ Import into MySQL database:
 The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2019-03-04.
 
 The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2019-03-17 (last updated 2019-03-15 according to table info).
+
+## MySQL Troubleshooting
+
+### Ubuntu and Windows: Configuration used to test the dataset
+
+We used the following configuration to test the dataset. See also the remarks below this section.
+
+Client configuration:
+
+    [mysql]
+    ...
+    default-character-set=utf8mb4
+    ...
+
+Server configuration:
+
+    [mysqld]
+    ...
+    collation-server=utf8mb4_unicode_ci
+    secure-file-priv="/data/tmp" # update path as needed
+    tmp_table_size=1G
+    myisam_max_sort_file_size=100G
+    myisam_sort_buffer_size=1G
+    key_buffer_size=256M
+    read_buffer_size=128K
+    read_rnd_buffer_size=256K
+    innodb_flush_log_at_trx_commit=1
+    innodb_log_buffer_size=1M
+    innodb_buffer_pool_size=48G
+    innodb_log_file_size=48M
+    join_buffer_size=256M
+    open_files_limit=4161
+    sort_buffer_size=256M
+    table_definition_cache=1400
+    ...
+
+### Ubuntu: AppArmor prevents access to files
+
+In case an `OS errno 13 - Permission denied` error prevents you from importing the files, you may need to update your AppArmor configuration:
+
+    sudo vim /etc/apparmor.d/usr.sbin.mysqld
+
+    ...
+    # Allow data dir access
+      /var/lib/mysql/ r,
+      /var/lib/mysql/** rwk,
+      /data/tmp/** rwk, # add this line (update path as needed)
+    ...
+    
+    sudo /etc/init.d/apparmor reload
+
+### Windows: Camel-case table names
+
+Add this to your server configuration:
+
+    [mysqld]
+    ...
+    lower_case_table_names=2
+    ...
