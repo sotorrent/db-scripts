@@ -1,8 +1,8 @@
 --- Execute this in BigQuery
 
 --- "Table Info" of table "bigquery-public-data:github_repos.contents"
---- Last Modified: Mar 15, 2019, 9:40:36 AM 
---- Number of Rows: 258,078,765
+--- Last Modified: Mar 29, 2019, 7:49:02 AM 
+--- Number of Rows: 258,409,596
 --- Table Size: 2.19 TB 
 
 --- select all source code lines of text files that contain a link to Stack Overflow
@@ -16,7 +16,7 @@ FROM (
 	SELECT
 	  file_id,
 	  size,
-	  REGEXP_EXTRACT_ALL(LOWER(line), r'(https?:\/\/(?:www.)?stackoverflow\.com\/[^\s)."]*)') as urls,
+	  REGEXP_EXTRACT_ALL(LOWER(line), r'(https?:\/\/(?:www.)?stackoverflow\.com\/(?:[a-zA-Z0-9\-_#/\\?=+&%;]*[a-zA-Z0-9/])?)') as urls,
 	  line
 	FROM (
 	  SELECT
@@ -39,7 +39,7 @@ FROM (
 )
 CROSS JOIN UNNEST(urls) as url;
 
-=> gh_so_references_2019_03_17.matched_lines
+=> gh_so_references_2019_03_29.matched_lines
 
 --- prevent "Resources exceeded during query execution" error
 #standardSQL
@@ -50,7 +50,7 @@ SELECT
   path
 FROM `bigquery-public-data.github_repos.files`
 WHERE id IN (
-  SELECT DISTINCT file_id FROM `sotorrent-org.gh_so_references_2019_03_17.matched_lines`
+  SELECT DISTINCT file_id FROM `sotorrent-org.gh_so_references_2019_03_29.matched_lines`
 );
 
 => files_tmp
@@ -65,11 +65,11 @@ SELECT
   size,
   url,
   line
-FROM `sotorrent-org.gh_so_references_2019_03_17.matched_lines` as lines
-LEFT JOIN `sotorrent-org.gh_so_references_2019_03_17.files_tmp` as files
+FROM `sotorrent-org.gh_so_references_2019_03_29.matched_lines` as lines
+LEFT JOIN `sotorrent-org.gh_so_references_2019_03_29.files_tmp` as files
 ON lines.file_id = files.id;
 
-=> gh_so_references_2019_03_17.matched_files
+=> gh_so_references_2019_03_29.matched_files
 => delete files_tmp
 
 --- normalize the SO links, map them to http://stackoverflow.com/(a/q)/<id> or comment link
@@ -108,9 +108,9 @@ SELECT
     ELSE NULL
   END AS comment_id,
   line
-FROM `sotorrent-org.gh_so_references_2019_03_17.matched_files`;
+FROM `sotorrent-org.gh_so_references_2019_03_29.matched_files`;
 
-=> gh_so_references_2019_03_17.matched_files_normalized
+=> gh_so_references_2019_03_29.matched_files_normalized
 
 
 --- extract post id from links, set post type id, and extract file extension from path
@@ -135,11 +135,11 @@ SELECT
   url,
   comment_id,
   line
-FROM `sotorrent-org.gh_so_references_2019_03_17.matched_files_normalized`
+FROM `sotorrent-org.gh_so_references_2019_03_29.matched_files_normalized`
 WHERE
   REGEXP_CONTAINS(url, r'(https:\/\/stackoverflow\.com\/(?:a|q)\/[\d]+)');
   
-=> gh_so_references_2019_03_17.matched_files_aq
+=> gh_so_references_2019_03_29.matched_files_aq
 
 
 --- use camel case for column names, add number of copies, and split repo name for export to MySQL database
@@ -147,7 +147,7 @@ WHERE
 WITH
   copies AS (
     SELECT file_id, count(*) as copies
-    FROM `sotorrent-org.gh_so_references_2019_03_17.matched_files_aq`
+    FROM `sotorrent-org.gh_so_references_2019_03_29.matched_files_aq`
     GROUP BY file_id
   )
 SELECT
@@ -180,12 +180,12 @@ FROM (
     comment_id as CommentId,
     url as SOUrl,
     CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl
-  FROM `sotorrent-org.gh_so_references_2019_03_17.matched_files_aq` files
+  FROM `sotorrent-org.gh_so_references_2019_03_29.matched_files_aq` files
   JOIN copies
   ON files.file_id = copies.file_id
 );
 
-=> gh_so_references_2019_03_17.PostReferenceGH
+=> gh_so_references_2019_03_29.PostReferenceGH
 
 
 --- save matched lines is a separate table
@@ -194,7 +194,7 @@ SELECT
   file_id as FileId,
   --- prevent error "Bad character (ASCII 0) encountered" when importing into BigQuery again
   REGEXP_REPLACE(REGEXP_REPLACE(line, r'[\r\n]+', '&#xD;&#xA;'), r'\x00', '') as MatchedLine
-FROM `sotorrent-org.gh_so_references_2019_03_17.matched_files_aq`
+FROM `sotorrent-org.gh_so_references_2019_03_29.matched_files_aq`
 GROUP BY FileId, MatchedLine;
 
-=> gh_so_references_2019_03_17.GHMatches
+=> gh_so_references_2019_03_29.GHMatches

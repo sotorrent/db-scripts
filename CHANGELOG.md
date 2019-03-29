@@ -6,6 +6,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * Improve matching of very short post blocks (containing only one token)
+* Update regular expression used to extract Stack Overflow links from GitHub files
 
 ## [2018-03-17] - First release based on SO data dump 2019-03-04
 
