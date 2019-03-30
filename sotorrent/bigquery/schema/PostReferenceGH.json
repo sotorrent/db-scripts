@@ -51,11 +51,6 @@
         "type": "INTEGER"
     },
     {
-        "mode": "REQUIRED",
-        "name": "PostTypeId",
-        "type": "INTEGER"
-    },
-    {
         "mode": "NULLABLE",
         "name": "CommentId",
         "type": "INTEGER"

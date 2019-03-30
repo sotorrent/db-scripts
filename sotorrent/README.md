@@ -21,7 +21,7 @@ Import into MySQL database:
 
 The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2019-03-04.
 
-The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2019-03-17 (last updated 2019-03-15 according to table info).
+The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2019-03-29 (last updated 2019-03-29 according to table info).
 
 ## MySQL Troubleshooting
 
@@ -63,7 +63,7 @@ Server configuration:
 In case an `OS errno 13 - Permission denied` error prevents you from importing the files, you may need to update your AppArmor configuration:
 
     sudo vim /etc/apparmor.d/usr.sbin.mysqld
-
+    
     ...
     # Allow data dir access
       /var/lib/mysql/ r,

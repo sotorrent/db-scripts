@@ -34,7 +34,6 @@ INSERT INTO `PostType` VALUES(5, 'TagWiki');
 INSERT INTO `PostType` VALUES(6, 'ModeratorNomination');
 INSERT INTO `PostType` VALUES(7, 'WikiPlaceholder');
 INSERT INTO `PostType` VALUES(8, 'PrivilegeWiki');
-INSERT INTO `PostType` VALUES(99, 'Comment'); # SOTorrent-specific post type for table PostReferenceGH
 
 # see https://meta.stackexchange.com/a/2678
 CREATE TABLE `PostHistoryType` (

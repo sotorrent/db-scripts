@@ -9,6 +9,6 @@ OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(FileId, @MatchedLine)
+(FileId, PostIds, @MatchedLine)
 SET MatchedLine = REPLACE(@MatchedLine, '&#xD;&#xA;', '\n');
 SET foreign_key_checks = 1;

@@ -6,15 +6,16 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * Improve matching of very short post blocks (containing only one token)
-* Update regular expression used to extract Stack Overflow links from GitHub files
 
 ## [2018-03-17] - First release based on SO data dump 2019-03-04
 
 * Update to Stack Overflow data dump 2019-03-04
-* Update GitHub references to 2019-03-15 (according to BigQuery table info)
+* Update GitHub references to 2019-03-29 (according to BigQuery table info)
 * Improve detection of HTML code blocks
 * Improve detection of comment links (links containing a query string, such as `https://stackoverflow.com/questions/28705447/is-there-a-java-method-that-fills-a-list-by-calling-a-function-many-times/28705651?noredirect=1#comment45733057_28705651`, are now correctly handled)
-* Correctly handle multiple Stack Overflow links per source code line (previously only the first match in each line was extracted)
+* Update regular expression used to extract Stack Overflow links from GitHub files, correctly handle multiple Stack Overflow links per source code line (previously only the first match in each line was extracted)
+* Table `PostReferenceGH` now only contains links pointing to a valid `PostId` or `CommentId`, remove column `PostTypeId` (which was derived from links and was thus sometimes wrong) and previously introduced id 99 for comments
+* New column `GHMatches.PostIds` that contains a space-separated list of post ids found in the matched line
 * Add new columns `PostVersion.MostRecentVersion` and `PostBlockVersion.MostRecentVersion` that make it easier to analyze only the most recent version of a post/post block
 * Update to MySQL 8.0
 

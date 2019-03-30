@@ -5,6 +5,11 @@
         "name": "FileId",
         "type": "STRING"
     },
+	{
+        "mode": "REQUIRED",
+        "name": "PostIds",
+        "type": "STRING"
+    },
     {
         "mode": "REQUIRED",
         "name": "MatchedLine",

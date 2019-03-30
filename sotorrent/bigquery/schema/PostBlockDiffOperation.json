@@ -1,4 +1,4 @@
-// delimiter ',', no header row
+// create empty table
 [
     {
         "mode": "REQUIRED",
