@@ -18,6 +18,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * New column `GHMatches.PostIds` that contains a space-separated list of post ids found in the matched line
 * Add new columns `PostVersion.MostRecentVersion` and `PostBlockVersion.MostRecentVersion` that make it easier to analyze only the most recent version of a post/post block
 * Update to MySQL 8.0
+* Switch to 7z for data compression
 
 ## [2018-12-09] - Third release for MSR Mining Challenge 2019, based on SO data dump 2018-12-02
 
