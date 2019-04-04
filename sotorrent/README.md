@@ -1,6 +1,6 @@
 ## Importing the SOTorrent data set
 
-1. Unzip all CSV and XML files: `gunzip *.gz`. On macOS, please use the build-in "Archive Utility" instead (see this [issue description](https://github.com/sotorrent/db-scripts/issues/7)).
+1. Unzip all CSV and XML files: `7za e *.gz`.
 2. Edit the SQL script `2_create_sotorrent_user.sql` to choose a password for the sotorrent user and execute the script to create the user.
 3. Update the paths in `3_load_so_from_xml.sql`, `6_load_sotorrent.sql`, `7_load_postreferencegh.sql`, and `8_load_ghmatches.sql` according to your configuration.
 4. Run the below script in your MySQL client.

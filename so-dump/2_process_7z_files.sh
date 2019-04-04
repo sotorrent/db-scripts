@@ -24,11 +24,11 @@ sed -e 's/TagBased="True"/TagBased="1"/' tmp.xml > Badges.xml
 rm tmp.xml
 
 # zip XML files
-gzip -k Badges.xml
-gzip -k Comments.xml
-gzip -k PostHistory.xml
-gzip -k PostLinks.xml
-gzip -k Posts.xml
-gzip -k Tags.xml
-gzip -k Users.xml
-gzip -k Votes.xml
+7za a Badges.xml.7z Badges.xml
+7za a Comments.xml.7z Comments.xml
+7za a PostHistory.xml.7z PostHistory.xml
+7za a PostLinks.xml.7z PostLinks.xml
+7za a Posts.xml.7z Posts.xml
+7za a Tags.xml.7z Tags.xml
+7za a Users.xml.7z Users.xml
+7za a Votes.xml.7z Votes.xml
