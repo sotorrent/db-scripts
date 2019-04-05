@@ -6,6 +6,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * Improve matching of very short post blocks (containing only one token)
+* Add table `VoteType` (see [this](https://github.com/sotorrent/db-scripts/issues/17) issue on GitHub)
 
 ## [2019-03-17] - First release based on SO data dump 2019-03-04
 
