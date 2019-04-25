@@ -352,3 +352,23 @@ JOIN
 ON so.PostId = external.PostId;
 # 180 (2.4%)
 
+###################
+### ICSME paper ###
+###################
+
+# retrieve second code snippet sample described in paper (see also R script "clones.R")
+SELECT *
+FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones`
+WHERE PostBlockTypeId = 2 AND ThreadCount > 1 AND LineCount >= 20;
+
+=> sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesFiltered
+
+SELECT COUNT(*)
+FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesFiltered`;
+# 46,818
+
+# TODO: Retrieve question tags and other metadata, compare programming languages
+SELECT code_blocks.* 
+FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized` code_blocks
+JOIN `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesFiltered` filter
+ON code_blocks.ContentNormalizedHash = filter.ContentNormalizedHash;
