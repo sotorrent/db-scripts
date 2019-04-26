@@ -361,14 +361,60 @@ SELECT *
 FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClones`
 WHERE PostBlockTypeId = 2 AND ThreadCount > 1 AND LineCount >= 20;
 
-=> sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesFiltered
+=> sotorrent-extension.2018_09_23.MostRecentCodeBlockVersionNormalizedClonesFiltered
 
 SELECT COUNT(*)
-FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesFiltered`;
+FROM `sotorrent-extension.2018_09_23.MostRecentCodeBlockVersionNormalizedClonesFiltered`;
 # 46,818
 
 # TODO: Retrieve question tags and other metadata, compare programming languages
-SELECT code_blocks.* 
-FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized` code_blocks
-JOIN `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalizedClonesFiltered` filter
-ON code_blocks.ContentNormalizedHash = filter.ContentNormalizedHash;
+SELECT
+  filtered_code_blocks_2.PostId,
+  filtered_code_blocks_2.PostTypeId,
+  filtered_code_blocks_2.ParentId,
+  PostBlockTypeId,
+  filtered_code_blocks_2.CreationDate,
+  LineCount,
+  filtered_code_blocks_2.Score,
+  Tags
+  LineCountNormalized,
+  ContentNormalizedHash,
+  Content,
+  ContentNoEmptyLines,
+  ContentNormalized
+FROM (
+  SELECT
+    filtered_code_blocks.PostId,
+    filtered_code_blocks.PostTypeId,
+    filtered_code_blocks.ParentId,
+    PostBlockTypeId,
+    filtered_code_blocks.CreationDate,
+    LineCount,
+    Score,
+    LineCountNormalized,
+    ContentNormalizedHash,
+    Content,
+    ContentNoEmptyLines,
+    ContentNormalized
+  FROM (
+    SELECT code_blocks.* 
+    FROM `sotorrent-extension.2018_09_23.MostRecentPostBlockVersionNormalized` code_blocks
+    JOIN `sotorrent-extension.2018_09_23.MostRecentCodeBlockVersionNormalizedClonesFiltered` filter
+    ON code_blocks.ContentNormalizedHash = filter.ContentNormalizedHash
+  ) filtered_code_blocks
+  JOIN `sotorrent-org.2018_09_23.Posts` posts
+  ON filtered_code_blocks.PostId = posts.Id
+) filtered_code_blocks_2
+JOIN `sotorrent-org.2018_09_23.Posts` posts_2
+ON filtered_code_blocks_2.ParentId = posts_2.Id;
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparison
+
+
+SELECT Tag, COUNT(DISTINCT ParentId) AS ThreadCount
+FROM `sotorrent-extension.2018_09_23.CodeBlocksComparison`
+CROSS JOIN UNNEST(REGEXP_EXTRACT_ALL(Tags, r'<([^>]+)>')) AS Tag
+GROUP BY Tag
+ORDER BY ThreadCount DESC;
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonTagFrequency
