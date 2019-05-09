@@ -418,3 +418,11 @@ GROUP BY Tag
 ORDER BY ThreadCount DESC;
 
 => sotorrent-extension.2018_09_23.CodeBlocksComparisonTagFrequency
+
+# Tags selected in CodeBlocksComparisonTagFrequency.ods
+SELECT *
+FROM `sotorrent-extension.2018_09_23.CodeBlocksComparison`
+WHERE REGEXP_CONTAINS(Tags,
+r'<(android|javascript|java|php|jquery|html|c#|css|python|json|mysql|ios|c\+\+|ruby-on-rails|sql|asp\.net|angularjs|objective-c|spring|vba|twitter-bootstrap|c||node\.js|android-layout|html5|angular|android-fragments|ruby|excel-vba|swing|asp\.net-mvc|css3|spring-mvc|swift|r|django|hibernate)>');
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonFiltered
