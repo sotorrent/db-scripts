@@ -367,7 +367,7 @@ SELECT COUNT(*)
 FROM `sotorrent-extension.2018_09_23.MostRecentCodeBlockVersionNormalizedClonesFiltered`;
 # 46,818
 
-# TODO: Retrieve question tags and other metadata, compare programming languages
+# Retrieve question tags and other metadata to be able to compare programming languages
 SELECT
   filtered_code_blocks_2.PostId,
   filtered_code_blocks_2.PostTypeId,
@@ -421,32 +421,52 @@ ORDER BY ThreadCount DESC;
 
 # Tags selected in CodeBlocksComparisonTagFrequency.ods
 SELECT
-  PostId,
-  PostTypeId,
-  ParentId,
-  PostBlockTypeId,
-  CreationDate,
-  LineCount,
-  LineCountNormalized,
-  Score,
-  Tags,
-  REGEXP_CONTAINS(Tags, r'<(java|spring|swing|spring-mvc|hibernate)>') AS Java,
-  REGEXP_CONTAINS(Tags, r'<(javascript|jquery|json|angularjs|node\.js)>') AS JavaScript,
-  REGEXP_CONTAINS(Tags, r'<(php)>') AS PHP,
-  REGEXP_CONTAINS(Tags, r'<(html|css|html5|css3)>') AS HTMLCSS,
-  REGEXP_CONTAINS(Tags, r'<(c#|asp\.net|asp\.net-mvc)>') AS CSharp,
-  REGEXP_CONTAINS(Tags, r'<(python|django)>') AS Python,
-  REGEXP_CONTAINS(Tags, r'<(mysql|sql)>') AS SQL,
-  REGEXP_CONTAINS(Tags, r'<(swift)>') AS Swift,
-  REGEXP_CONTAINS(Tags, r'<(c\+\+)>') AS CPP,
-  REGEXP_CONTAINS(Tags, r'<(objective-c)>') AS ObjectiveC,
-  REGEXP_CONTAINS(Tags, r'<(c)>') AS C,
-  REGEXP_CONTAINS(Tags, r'<(ruby)>') AS Ruby,
-  REGEXP_CONTAINS(Tags, r'<(vba|excel-vba)>') AS VBA,
-  REGEXP_CONTAINS(Tags, r'<(r)>') AS R,
   ContentNormalizedHash,
-  Content
-FROM `sotorrent-extension.2018_09_23.CodeBlocksComparison` cb
-WHERE REGEXP_CONTAINS(Tags, r'<(javascript|java|php|jquery|html|c#|css|python|json|mysql|c\+\+|ruby-on-rails|sql|asp\.net|angularjs|objective-c|spring|vba|c|node\.js|html5|angular|ruby|excel-vba|swing|asp\.net-mvc|css3|spring-mvc|swift|r|django|hibernate)>');
+  COUNT(DISTINCT ParentId) AS ThreadCount,
+  COUNT(DISTINCT PostId) AS PostCount,
+  STRING_AGG(DISTINCT CAST(ParentId AS String), " ") AS ParentIds,
+  STRING_AGG(CAST(PostId AS String), " ") AS PostIds,
+  STRING_AGG(CAST(Score AS String), " ") AS Scores,
+  LOGICAL_OR(Java) AS Java,
+  LOGICAL_OR(JavaScript) AS JavaScript,
+  LOGICAL_OR(PHP) AS PHP,
+  LOGICAL_OR(HTMLCSS) AS HTMLCSS,
+  LOGICAL_OR(CSharp) AS CSharp,
+  LOGICAL_OR(Python) AS Python,
+  LOGICAL_OR(SQL) AS SQL,
+  LOGICAL_OR(Swift) AS Swift,
+  LOGICAL_OR(CPP) AS CPP,
+  LOGICAL_OR(ObjectiveC) AS ObjectiveC,
+  LOGICAL_OR(C) AS C,
+  LOGICAL_OR(Ruby) AS Ruby,
+  LOGICAL_OR(VBA) AS VBA,
+  LOGICAL_OR(R) AS R,
+  MIN(Content) AS Content
+FROM (
+  SELECT
+    ContentNormalizedHash,
+    PostId,
+    ParentId,
+    Score,
+    REGEXP_CONTAINS(Tags, r'<(java|spring|swing|spring-mvc|hibernate)>') AS Java,
+    REGEXP_CONTAINS(Tags, r'<(javascript|jquery|json|angularjs|node\.js)>') AS JavaScript,
+    REGEXP_CONTAINS(Tags, r'<(php)>') AS PHP,
+    REGEXP_CONTAINS(Tags, r'<(html|css|html5|css3)>') AS HTMLCSS,
+    REGEXP_CONTAINS(Tags, r'<(c#|asp\.net|asp\.net-mvc)>') AS CSharp,
+    REGEXP_CONTAINS(Tags, r'<(python|django)>') AS Python,
+    REGEXP_CONTAINS(Tags, r'<(mysql|sql)>') AS SQL,
+    REGEXP_CONTAINS(Tags, r'<(swift)>') AS Swift,
+    REGEXP_CONTAINS(Tags, r'<(c\+\+)>') AS CPP,
+    REGEXP_CONTAINS(Tags, r'<(objective-c)>') AS ObjectiveC,
+    REGEXP_CONTAINS(Tags, r'<(c)>') AS C,
+    REGEXP_CONTAINS(Tags, r'<(ruby)>') AS Ruby,
+    REGEXP_CONTAINS(Tags, r'<(vba|excel-vba)>') AS VBA,
+    REGEXP_CONTAINS(Tags, r'<(r)>') AS R,
+    Content
+  FROM `sotorrent-extension.2018_09_23.CodeBlocksComparison` cb
+  WHERE REGEXP_CONTAINS(Tags, r'<(javascript|java|php|jquery|html|c#|css|python|json|mysql|c\+\+|ruby-on-rails|sql|asp\.net|angularjs|objective-c|spring|vba|c|node\.js|html5|angular|ruby|excel-vba|swing|asp\.net-mvc|css3|spring-mvc|swift|r|django|hibernate)>')
+)
+GROUP BY ContentNormalizedHash
+HAVING ThreadCount > 1;
 
 => sotorrent-extension.2018_09_23.CodeBlocksComparisonFiltered
