@@ -275,7 +275,7 @@ FROM (
 
 => sotorrent-extension.2018_09_23.CodeClonesSample2LinksSO
 
-# Retrieve external links
+# Retrieve external links (second sample)
 SELECT
   ContentNormalizedHash,
   clones.PostId as PostId,
@@ -373,10 +373,11 @@ SELECT
   filtered_code_blocks_2.PostTypeId,
   filtered_code_blocks_2.ParentId,
   PostBlockTypeId,
+  filtered_code_blocks_2.OwnerUserId,
   filtered_code_blocks_2.CreationDate,
   LineCount,
   filtered_code_blocks_2.Score,
-  Tags
+  Tags,
   LineCountNormalized,
   ContentNormalizedHash,
   Content,
@@ -388,6 +389,7 @@ FROM (
     filtered_code_blocks.PostTypeId,
     filtered_code_blocks.ParentId,
     PostBlockTypeId,
+    OwnerUserId,
     filtered_code_blocks.CreationDate,
     LineCount,
     Score,
@@ -424,9 +426,12 @@ SELECT
   ContentNormalizedHash,
   COUNT(DISTINCT ParentId) AS ThreadCount,
   COUNT(DISTINCT PostId) AS PostCount,
-  STRING_AGG(DISTINCT CAST(ParentId AS String), " ") AS ParentIds,
-  STRING_AGG(CAST(PostId AS String), " ") AS PostIds,
-  STRING_AGG(CAST(Score AS String), " ") AS Scores,
+  STRING_AGG(CAST(ParentId AS String), ";") AS ParentIds,
+  STRING_AGG(CAST(PostId AS String), ";") AS PostIds,
+  STRING_AGG(OwnerUserId, ";") AS OwnerUserIds,
+  STRING_AGG(CAST(CreationDate AS String), ";") AS CreationDates,
+  STRING_AGG(CAST(Score AS String), ";") AS Scores,
+  ARRAY_LENGTH(SPLIT(MIN(Content), '&#xD;&#xA;')) AS LineCount,
   LOGICAL_OR(Java) AS Java,
   LOGICAL_OR(JavaScript) AS JavaScript,
   LOGICAL_OR(PHP) AS PHP,
@@ -447,7 +452,13 @@ FROM (
     ContentNormalizedHash,
     PostId,
     ParentId,
+    CASE
+    	WHEN OwnerUserId IS NULL THEN "N/A"
+    	ELSE CAST(OwnerUserId AS String)
+    END AS OwnerUserId,
+    CreationDate,
     Score,
+    LineCount,
     REGEXP_CONTAINS(Tags, r'<(java|spring|swing|spring-mvc|hibernate)>') AS Java,
     REGEXP_CONTAINS(Tags, r'<(javascript|jquery|json|angularjs|node\.js)>') AS JavaScript,
     REGEXP_CONTAINS(Tags, r'<(php)>') AS PHP,
@@ -466,7 +477,127 @@ FROM (
   FROM `sotorrent-extension.2018_09_23.CodeBlocksComparison` cb
   WHERE REGEXP_CONTAINS(Tags, r'<(javascript|java|php|jquery|html|c#|css|python|json|mysql|c\+\+|ruby-on-rails|sql|asp\.net|angularjs|objective-c|spring|vba|c|node\.js|html5|angular|ruby|excel-vba|swing|asp\.net-mvc|css3|spring-mvc|swift|r|django|hibernate)>')
 )
-GROUP BY ContentNormalizedHash
+GROUP BY ContentNormalizedHash 
 HAVING ThreadCount > 1;
 
 => sotorrent-extension.2018_09_23.CodeBlocksComparisonFiltered
+
+# Retrieve links from posts containing clones (third sample)
+SELECT
+  ContentNormalizedHash,
+  clones.PostId,
+  PostTypeId,
+  ParentId,
+  RootDomain,
+  CompleteDomain,
+  Url
+FROM
+  `sotorrent-org.2018_09_23.PostVersionUrl` post_version_url
+JOIN
+  `sotorrent-extension.2018_09_23.CodeBlocksComparison` clones
+ON
+  post_version_url.PostId = clones.PostId
+WHERE
+  PostHistoryId = (
+  SELECT
+    MAX(PostHistoryId)
+  FROM
+    `sotorrent-org.2018_09_23.PostVersion` pv
+  WHERE
+    pv.PostId = post_version_url.PostId
+  );
+  
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonLinks
+  
+
+# Retrieve and normalize SO links (third sample)
+SELECT
+  ContentNormalizedHash,
+  PostId,
+  PostTypeId,
+  ParentId,
+  REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/(?:a|q)\/([\d]+)') AS LinkedPostId,
+  CASE
+	WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/q') THEN 1
+	WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/a') THEN 2
+	ELSE NULL
+  END AS LinkedPostTypeId,
+  Url
+FROM (
+  SELECT
+    ContentNormalizedHash,
+    PostId,
+    PostTypeId,
+    ParentId,
+    CASE
+      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/a\/[\d]+)')
+	    THEN REGEXP_EXTRACT(Url, r'(https:\/\/stackoverflow\.com\/a\/[\d]+)')
+      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
+	    THEN REGEXP_EXTRACT(Url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
+      WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/questions\/[\d]+\/[^\s\/\#]+(?:\/|\#)([\d]+)')
+	    THEN CONCAT("https://stackoverflow.com/a/", REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/questions\/[\d]+\/[^\s\/\#]+(?:\/|\#)([\d]+)'))
+      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/questions\/[\d]+)')
+	    THEN CONCAT("https://stackoverflow.com/q/", REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/questions\/([\d]+)'))
+      ELSE Url
+    END AS Url
+  FROM (
+    SELECT
+      ContentNormalizedHash,
+      PostId,
+      PostTypeId,
+      ParentId,
+      REGEXP_REPLACE(LOWER(Url), r'^http:', 'https:') AS Url
+    FROM
+      `sotorrent-extension.2018_09_23.CodeBlocksComparisonLinks`
+    WHERE
+      RootDomain = "stackoverflow.com"
+   )
+);
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonLinksSO
+
+# Retrieve external links (third sample)
+SELECT
+  ContentNormalizedHash,
+  clones.PostId as PostId,
+  PostTypeId,
+  ParentId,
+  RootDomain,
+  CompleteDomain,
+  Url
+FROM
+  `sotorrent-org.2018_09_23.PostVersionUrl` post_version_url
+JOIN
+  `sotorrent-extension.2018_09_23.CodeBlocksComparison` clones
+ON
+  post_version_url.PostId = clones.PostId
+WHERE
+  PostHistoryId = (
+    SELECT
+    MAX(PostHistoryId)
+    FROM
+    `sotorrent-org.2018_09_23.PostVersion` pv
+    WHERE
+    pv.PostId = post_version_url.PostId
+  )
+  AND RootDomain <> "stackoverflow.com";
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonLinksNonSO
+
+
+# Count SO links per code block hash
+SELECT ContentNormalizedHash, LinkedPostId, LinkedPostTypeId, COUNT(PostId) AS PostCount
+FROM `sotorrent-extension.2018_09_23.CodeBlocksComparisonLinksSO`
+WHERE LinkedPostId IS NOT NULL
+GROUP BY ContentNormalizedHash, LinkedPostId, LinkedPostTypeId;
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonLinksSOExport
+
+
+# Count non-SO links per code block hash
+SELECT ContentNormalizedHash, Url, COUNT(PostId) AS PostCount
+FROM `sotorrent-extension.2018_09_23.CodeBlocksComparisonLinks`
+WHERE RootDomain <> "stackoverflow.com"
+GROUP BY ContentNormalizedHash, Url;
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonLinksNonSOExport
