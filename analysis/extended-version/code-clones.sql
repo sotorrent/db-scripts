@@ -374,6 +374,7 @@ SELECT
   filtered_code_blocks_2.ParentId,
   PostBlockTypeId,
   filtered_code_blocks_2.OwnerUserId,
+  filtered_code_blocks_2.OwnerDisplayName,
   filtered_code_blocks_2.CreationDate,
   LineCount,
   filtered_code_blocks_2.Score,
@@ -390,6 +391,7 @@ FROM (
     filtered_code_blocks.ParentId,
     PostBlockTypeId,
     OwnerUserId,
+    OwnerDisplayName,
     filtered_code_blocks.CreationDate,
     LineCount,
     Score,
@@ -429,6 +431,7 @@ SELECT
   STRING_AGG(CAST(ParentId AS String), ";") AS ParentIds,
   STRING_AGG(CAST(PostId AS String), ";") AS PostIds,
   STRING_AGG(OwnerUserId, ";") AS OwnerUserIds,
+  STRING_AGG(OwnerDisplayName, ";") AS OwnerDisplayNames,
   STRING_AGG(CAST(CreationDate AS String), ";") AS CreationDates,
   STRING_AGG(CAST(Score AS String), ";") AS Scores,
   ARRAY_LENGTH(SPLIT(MIN(Content), '&#xD;&#xA;')) AS LineCount,
@@ -456,6 +459,10 @@ FROM (
     	WHEN OwnerUserId IS NULL THEN "N/A"
     	ELSE CAST(OwnerUserId AS String)
     END AS OwnerUserId,
+    CASE
+      WHEN OwnerDisplayName IS NULL THEN "N/A"
+      ELSE CAST(OwnerDisplayName AS String)
+    END AS OwnerDisplayName,
     CreationDate,
     Score,
     LineCount,
