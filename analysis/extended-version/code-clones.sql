@@ -608,3 +608,112 @@ WHERE RootDomain <> "stackoverflow.com"
 GROUP BY ContentNormalizedHash, Url;
 
 => sotorrent-extension.2018_09_23.CodeBlocksComparisonLinksNonSOExport
+
+
+# get links for all filtered code block hashes
+SELECT
+  ContentNormalizedHash,
+  selected_posts.PostId as PostId,
+  ParentId,
+  PostTypeId,
+  PostHistoryId,
+  Url,
+  RootDomain,
+  CompleteDomain,
+  Path,
+  Query,
+  FragmentIdentifier 
+FROM (
+  SELECT ContentNormalizedHash, PostId, ParentId, PostTypeId
+  FROM `sotorrent-org.2019_03_17.Posts` posts
+  JOIN (
+    SELECT ContentNormalizedHash, CAST(PostId AS INT64) as PostId
+    FROM `sotorrent-extension.2018_09_23.CodeBlocksComparisonFiltered`
+    CROSS JOIN UNNEST(SPLIT(PostIds, ";")) AS PostId
+  ) sample
+  ON posts.Id = sample.PostId
+) selected_posts
+JOIN `sotorrent-org.2019_03_17.PostVersionUrl` links
+ON selected_posts.PostId = links.PostId
+WHERE
+  PostHistoryId = (
+  SELECT
+    MAX(PostHistoryId)
+  FROM
+    `sotorrent-org.2018_09_23.PostVersion` pv
+  WHERE
+    pv.PostId = selected_posts.PostId
+);
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinks
+
+# Retrieve and normalize SO links (filtered code blocks)
+SELECT
+  ContentNormalizedHash,
+  PostId,
+  PostTypeId,
+  ParentId,
+  REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/(?:a|q)\/([\d]+)') AS LinkedPostId,
+  CASE
+  WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/q') THEN 1
+  WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/a') THEN 2
+  ELSE NULL
+  END AS LinkedPostTypeId,
+  Url
+FROM (
+  SELECT
+    ContentNormalizedHash,
+    PostId,
+    PostTypeId,
+    ParentId,
+    CASE
+      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/a\/[\d]+)')
+      THEN REGEXP_EXTRACT(Url, r'(https:\/\/stackoverflow\.com\/a\/[\d]+)')
+      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
+      THEN REGEXP_EXTRACT(Url, r'(https:\/\/stackoverflow\.com\/q\/[\d]+)')
+      WHEN REGEXP_CONTAINS(Url, r'https:\/\/stackoverflow\.com\/questions\/[\d]+\/[^\s\/\#]+(?:\/|\#)([\d]+)')
+      THEN CONCAT("https://stackoverflow.com/a/", REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/questions\/[\d]+\/[^\s\/\#]+(?:\/|\#)([\d]+)'))
+      WHEN REGEXP_CONTAINS(Url, r'(https:\/\/stackoverflow\.com\/questions\/[\d]+)')
+      THEN CONCAT("https://stackoverflow.com/q/", REGEXP_EXTRACT(Url, r'https:\/\/stackoverflow\.com\/questions\/([\d]+)'))
+      ELSE Url
+    END AS Url
+  FROM (
+    SELECT
+      ContentNormalizedHash,
+      PostId,
+      PostTypeId,
+      ParentId,
+      REGEXP_REPLACE(LOWER(Url), r'^http:', 'https:') AS Url
+    FROM
+      `sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinks`
+    WHERE
+      RootDomain = "stackoverflow.com"
+   )
+);
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinksSO
+
+
+# Retrieve external links (filtered code blocks)
+SELECT *
+FROM `sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinks` clones
+WHERE RootDomain <> "stackoverflow.com";
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinksNonSO
+
+
+# Count SO links per code block hash
+SELECT ContentNormalizedHash, LinkedPostId, LinkedPostTypeId, COUNT(PostId) AS PostCount
+FROM `sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinksSO`
+WHERE LinkedPostId IS NOT NULL
+GROUP BY ContentNormalizedHash, LinkedPostId, LinkedPostTypeId;
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinksSOExport
+
+
+# Count non-SO links per code block hash
+SELECT ContentNormalizedHash, Url, COUNT(PostId) AS PostCount
+FROM `sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinksNonSO`
+GROUP BY ContentNormalizedHash, Url;
+
+=> sotorrent-extension.2018_09_23.CodeBlocksComparisonFilteredLinksNonSOExport
