@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `TitleVersion`;
 DROP TABLE IF EXISTS `GHMatches`;
 SET foreign_key_checks = 1;
 
+
 ######################
 # Create type tables #
 ######################
@@ -35,6 +36,7 @@ CREATE TABLE `PostBlockDiffOperation` (
 INSERT INTO `PostBlockDiffOperation` VALUES(-1, 'DELETE');
 INSERT INTO `PostBlockDiffOperation` VALUES(0, 'EQUAL');
 INSERT INTO `PostBlockDiffOperation` VALUES(1, 'INSERT');
+
 
 ######################
 # Create data tables #

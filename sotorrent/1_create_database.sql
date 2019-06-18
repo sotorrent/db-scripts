@@ -14,18 +14,20 @@ CREATE DATABASE `sotorrent19_06` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE u
 
 USE `sotorrent19_06`;
 
+
 ######################
 # Create type tables #
 ######################
 
 # see https://meta.stackexchange.com/a/2678
+# see http://data.stackexchange.com/stackoverflow/query/36599/show-all-types
+
 CREATE TABLE `PostType` (
   Id TINYINT NOT NULL,
   Type VARCHAR(50) NOT NULL,
   PRIMARY KEY(Id)
 );
 
-# see http://data.stackexchange.com/stackoverflow/query/36599/show-all-types
 INSERT INTO `PostType` VALUES(1, 'Question');
 INSERT INTO `PostType` VALUES(2, 'Answer');
 INSERT INTO `PostType` VALUES(3, 'Wiki');
@@ -35,14 +37,12 @@ INSERT INTO `PostType` VALUES(6, 'ModeratorNomination');
 INSERT INTO `PostType` VALUES(7, 'WikiPlaceholder');
 INSERT INTO `PostType` VALUES(8, 'PrivilegeWiki');
 
-# see https://meta.stackexchange.com/a/2678
 CREATE TABLE `PostHistoryType` (
   Id TINYINT NOT NULL,
   Type VARCHAR(50) NOT NULL,
   PRIMARY KEY(Id)
 );
 
-# http://data.stackexchange.com/stackoverflow/query/36599/show-all-types
 INSERT INTO `PostHistoryType` VALUES(1, 'Initial Title');
 INSERT INTO `PostHistoryType` VALUES(2, 'Initial Body');
 INSERT INTO `PostHistoryType` VALUES(3, 'Initial Tags');
@@ -74,6 +74,28 @@ INSERT INTO `PostHistoryType` VALUES(36, 'Post Migrated Here');
 INSERT INTO `PostHistoryType` VALUES(37, 'Post Merge Source');
 INSERT INTO `PostHistoryType` VALUES(38, 'Post Merge Destination');
 INSERT INTO `PostHistoryType` VALUES(50, 'CommunityBump');
+
+CREATE TABLE `VoteType` (
+  Id TINYINT NOT NULL,
+  Name VARCHAR(50) NOT NULL,
+  PRIMARY KEY(Id)
+);
+
+INSERT INTO `VoteType` VALUES(1, 'AcceptedByOriginator');
+INSERT INTO `VoteType` VALUES(2, 'UpMod');
+INSERT INTO `VoteType` VALUES(3, 'DownMod');
+INSERT INTO `VoteType` VALUES(4, 'Offensive');
+INSERT INTO `VoteType` VALUES(5, 'Favorite');
+INSERT INTO `VoteType` VALUES(6, 'Close');
+INSERT INTO `VoteType` VALUES(7, 'Reopen');
+INSERT INTO `VoteType` VALUES(8, 'BountyStart');
+INSERT INTO `VoteType` VALUES(9, 'BountyClose');
+INSERT INTO `VoteType` VALUES(10, 'Deletion');
+INSERT INTO `VoteType` VALUES(11, 'Undeletion');
+INSERT INTO `VoteType` VALUES(12, 'Spam');
+INSERT INTO `VoteType` VALUES(15, 'ModeratorReview');
+INSERT INTO `VoteType` VALUES(16, 'ApproveEditSuggestion');
+
 
 ######################
 # Create data tables #
