@@ -1,4 +1,4 @@
-USE `sotorrent19_03`;
+USE `sotorrent19_06`;
 
 CREATE INDEX `comments_index_1` ON Comments(UserId);
 CREATE INDEX `comments_index_2` ON Comments(UserDisplayName);
