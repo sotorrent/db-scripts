@@ -24,4 +24,4 @@ echo "Removing empty lines from CSV file..."
 sed -i'' -e '/^\s*$/d' "$prefix.csv"
 
 echo "Compressing CSV file..."
-gzip -k "$prefix.csv"
+7za a "$prefix.csv.7z" "$prefix.csv"

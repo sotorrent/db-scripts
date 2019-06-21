@@ -23,7 +23,7 @@ sed -e 's/TagBased="False"/TagBased="0"/' Badges.xml > tmp.xml
 sed -e 's/TagBased="True"/TagBased="1"/' tmp.xml > Badges.xml
 rm tmp.xml
 
-# zip XML files
+# compress XML files
 7za a Badges.xml.7z Badges.xml
 7za a Comments.xml.7z Comments.xml
 7za a PostHistory.xml.7z PostHistory.xml
