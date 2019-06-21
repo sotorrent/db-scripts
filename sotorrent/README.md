@@ -1,8 +1,18 @@
 ## Importing the SOTorrent data set
 
-1. Unzip all CSV and XML files: `7za e *.gz`.
+1. Unzip all CSV and XML files.
+   Windows (e.g. using [Cygwin](https://www.cygwin.com/) or [7zip](https://www.7-zip.org/)):
+   `7za e *.7z`
+
+   Linux (e.g. using ``):
+
+   `7z e *.7z *.csv`
+   `7z e *.7z *.xml`
+
 2. Edit the SQL script `2_create_sotorrent_user.sql` to choose a password for the sotorrent user and execute the script to create the user.
+
 3. Update the paths in `3_load_so_from_xml.sql`, `6_load_sotorrent.sql`, `7_load_postreferencegh.sql`, and `8_load_ghmatches.sql` according to your configuration.
+
 4. Run the below script in your MySQL client.
 
 Import into MySQL database:
@@ -19,9 +29,9 @@ Import into MySQL database:
 
 ## Data
 
-The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2019-03-04.
+The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2019-06-03.
 
-The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2019-03-29 (last updated 2019-03-29 according to table info).
+The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2019-06-21 (last updated 2019-06-21 according to table info).
 
 ## MySQL Troubleshooting
 

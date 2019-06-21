@@ -37,10 +37,9 @@ bq extract --destination_format "CSV" --compression "GZIP" "$project:$dataset.GH
 # download compressed CSV files
 gsutil cp "gs://$bucket/*.csv.gz" ./
 
-# download compressed CSV files
-gsutil cp "gs://$bucket/*.csv.gz" ./
-
 # merge CSV files
 ./merge_csv_files_PostReferenceGH.sh
 ./merge_csv_files_GHMatches.sh
 
+# remove CSV files in the cloud
+gsutil rm "gs://$bucket/*.csv.gz"

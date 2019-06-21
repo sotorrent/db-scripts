@@ -5,6 +5,10 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
+* Automate execution of SQL scripts
+
+## [2019-06-21] - First release based on SO data dump 2019-06-03
+
 * Improve matching of very short post blocks (containing only one token)
 * Add table `VoteType` (see [this](https://github.com/sotorrent/db-scripts/issues/17) issue on GitHub)
 * Automate execution of BigQuery scripts
