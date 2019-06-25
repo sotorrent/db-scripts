@@ -4,11 +4,10 @@
    Windows (e.g. using [Cygwin](https://www.cygwin.com/) or [7zip](https://www.7-zip.org/)):
    `7za e *.7z`
 
-   Linux (e.g. using ``):
+   Linux (e.g. using [p7zip](https://sourceforge.net/projects/p7zip/)):
 
-   `7z e *.7z *.csv`
-   `7z e *.7z *.xml`
-
+   `for file in ./*.7z; do 7z e "$file"; done`
+   
 2. Edit the SQL script `2_create_sotorrent_user.sql` to choose a password for the sotorrent user and execute the script to create the user.
 
 3. Update the paths in `3_load_so_from_xml.sql`, `6_load_sotorrent.sql`, `7_load_postreferencegh.sql`, and `8_load_ghmatches.sql` according to your configuration.
