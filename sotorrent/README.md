@@ -1,4 +1,4 @@
-## Importing the SOTorrent data set
+## Importing the SOTorrent dataset
 
 1. Unzip all CSV and XML files.
 
