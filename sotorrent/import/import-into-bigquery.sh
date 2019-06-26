@@ -7,6 +7,7 @@ logfile="bigquery.log"
 
 # TODO: copy or create type tables
 
+# import CSV files without header row
 bq load --source_format=CSV "$project:$dataset.Badges" "gs://$bucket/Badges.csv" ./bigquery-schema/Badges.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.Comments" "gs://$bucket/Comments.csv" ./bigquery-schema/Comments.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.CommentUrl" "gs://$bucket/CommentUrl.csv" ./bigquery-schema/CommentUrl.json &>> "$logfile"
@@ -23,5 +24,9 @@ bq load --source_format=CSV "$project:$dataset.TitleVersion" "gs://$bucket/Title
 bq load --source_format=CSV "$project:$dataset.Users" "gs://$bucket/Users.csv" ./bigquery-schema/Users.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.Votes" "gs://$bucket/Votes.csv" ./bigquery-schema/Votes.json &>> "$logfile"
 
+# import CSV files with header row
 bq load --source_format=CSV --skip_leading_rows=1 "$project:$dataset.GHMatches" "gs://$bucket/GHMatches.csv" ./bigquery-schema/GHMatches.json &>> "$logfile"
 bq load --source_format=CSV --skip_leading_rows=1 "$project:$dataset.PostReferenceGH" "gs://$bucket/PostReferenceGH.csv" ./bigquery-schema/PostReferenceGH.json &>> "$logfile"
+
+# remove CSV files in the cloud
+gsutil rm "gs://$bucket/*.csv.gz"
