@@ -5,6 +5,8 @@ dataset="2019_06_21"
 bucket="sotorrent"
 logfile="bigquery.log"
 
+# TODO: copy or create type tables
+
 bq load --source_format=CSV "$project:$dataset.Badges" "gs://$bucket/Badges.csv" ./bigquery-schema/Badges.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.Comments" "gs://$bucket/Comments.csv" ./bigquery-schema/Comments.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.CommentUrl" "gs://$bucket/CommentUrl.csv" ./bigquery-schema/CommentUrl.json &>> "$logfile"
