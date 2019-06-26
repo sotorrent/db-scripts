@@ -1,0 +1,13 @@
+// create empty table
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Type",
+        "type": "STRING"
+    }
+]
