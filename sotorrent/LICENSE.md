@@ -6,7 +6,7 @@
 The following tables are identical to the corresponding XML files in the [official Stack Exhange data dump](https://archive.org/details/stackexchange), which is licensed under
 *Creative Commons Attribution-Share Alike 3.0 Unported* ([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/legalcode)):
 
-`Badges`, `Comments`, `PostHistory`, `PostLinks`, `Posts`, `Tags`, `Users`, `Votes`, `PostType`
+`Badges`, `Comments`, `PostHistory`, `PostLinks`, `Posts`, `Tags`, `Users`, `Votes`, `PostType`, `VoteType`
 
 Legal code can be found below ([source](https://github.com/creativecommons/legalcode/blob/master/by-sa_3.0.txt)).
 

@@ -1,7 +1,9 @@
-## Importing the SOTorrent data set
+## Importing the SOTorrent dataset
 
 1. Unzip all CSV and XML files.
+
    Windows (e.g. using [Cygwin](https://www.cygwin.com/) or [7zip](https://www.7-zip.org/)):
+
    `7za e *.7z`
 
    Linux (e.g. using [p7zip](https://sourceforge.net/projects/p7zip/)):
