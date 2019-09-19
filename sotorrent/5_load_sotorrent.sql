@@ -1,9 +1,7 @@
-USE `sotorrent19_06`;
-
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostBlockDiff` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA INFILE  'F:/Temp/PostBlockDiff.csv' INTO TABLE `PostBlockDiff`
+LOAD DATA INFILE  '<PATH>PostBlockDiff.csv' INTO TABLE `PostBlockDiff`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -16,7 +14,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA INFILE  'F:/Temp/PostVersion.csv' INTO TABLE `PostVersion`
+LOAD DATA INFILE  '<PATH>PostVersion.csv' INTO TABLE `PostVersion`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -30,7 +28,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostBlockVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA INFILE  'F:/Temp/PostBlockVersion.csv' INTO TABLE `PostBlockVersion`
+LOAD DATA INFILE  '<PATH>PostBlockVersion.csv' INTO TABLE `PostBlockVersion`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -53,7 +51,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `PostVersionUrl` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA INFILE  'F:/Temp/PostVersionUrl.csv' INTO TABLE `PostVersionUrl`
+LOAD DATA INFILE  '<PATH>PostVersionUrl.csv' INTO TABLE `PostVersionUrl`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -70,7 +68,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `CommentUrl` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA INFILE  'F:/Temp/CommentUrl.csv' INTO TABLE `CommentUrl`
+LOAD DATA INFILE  '<PATH>CommentUrl.csv' INTO TABLE `CommentUrl`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -87,7 +85,7 @@ SET foreign_key_checks = 1;
 SET foreign_key_checks = 0;
 # remove auto-increment for import
 ALTER TABLE `TitleVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
-LOAD DATA INFILE  'F:/Temp/TitleVersion.csv' INTO TABLE `TitleVersion`
+LOAD DATA INFILE  '<PATH>TitleVersion.csv' INTO TABLE `TitleVersion`
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -98,4 +96,30 @@ SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
 	PredEditDistance = nullif(@PredEditDistance, ''),
 	SuccPostHistoryId = nullif(@SuccPostHistoryId, ''),
 	SuccEditDistance = nullif(@SuccEditDistance, '');
+SET foreign_key_checks = 1;
+
+SET foreign_key_checks = 0;
+# load file exported from BigQuery (see also https://cloud.google.com/sql/docs/mysql/import-export/)
+LOAD DATA INFILE  '<PATH>PostReferenceGH.csv' INTO TABLE `PostReferenceGH`
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(FileId, Repo, RepoOwner, RepoName, Branch, Path, FileExt, Size, Copies, PostId, @CommentId, SOUrl, GHUrl)
+SET CommentId = nullif(@CommentId, '');
+SET foreign_key_checks = 1;
+
+SET foreign_key_checks = 0;
+# load file exported from BigQuery (see also https://cloud.google.com/sql/docs/mysql/import-export/)
+LOAD DATA INFILE  '<PATH>GHMatches.csv' INTO TABLE `GHMatches`
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(FileId, PostIds, @MatchedLine)
+SET MatchedLine = REPLACE(@MatchedLine, '&#xD;&#xA;', '\n');
 SET foreign_key_checks = 1;

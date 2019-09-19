@@ -1,5 +1,3 @@
-USE `sotorrent19_06`;
-
 SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS `PostBlockType`;
 DROP TABLE IF EXISTS `PostBlockDiffOperation`;
