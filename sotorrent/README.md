@@ -60,7 +60,7 @@ Server configuration:
     read_rnd_buffer_size=256K
     innodb_flush_log_at_trx_commit=1
     innodb_log_buffer_size=1M
-    innodb_buffer_pool_size=48G
+    innodb_buffer_pool_size=48G # assumes system has 64GB RAM
     innodb_log_file_size=48M
     join_buffer_size=256M
     open_files_limit=4161
