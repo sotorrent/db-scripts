@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS `CommentUrl`;
 DROP TABLE IF EXISTS `PostReferenceGH`;
 DROP TABLE IF EXISTS `TitleVersion`;
 DROP TABLE IF EXISTS `GHMatches`;
+DROP TABLE IF EXISTS `StackSnippetVersion`;
 SET foreign_key_checks = 1;
 
 
@@ -98,7 +99,6 @@ CREATE TABLE `PostBlockVersion` (
   LineCount INT NOT NULL,
   Content TEXT NOT NULL,
   MostRecentVersion BOOLEAN DEFAULT FALSE,
-  StackSnippetVersionId INT DEFAULT NULL,
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PostBlockTypeId, LocalId),
   FOREIGN KEY(PostBlockTypeId) REFERENCES PostBlockType(Id),
@@ -208,6 +208,12 @@ CREATE TABLE `GHMatches` (
 
 CREATE TABLE `StackSnippetVersion` (
   Id INT NOT NULL AUTO_INCREMENT,
+  PostId INT NOT NULL,
+  PostTypeId TINYINT NOT NULL,
+  PostHistoryId INT NOT NULL,
   Content TEXT NOT NULL,
-  PRIMARY KEY(Id)
+  PRIMARY KEY(Id),
+  FOREIGN KEY(PostId) REFERENCES Posts(Id),
+  FOREIGN KEY(PostTypeId) REFERENCES PostType(Id),
+  FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id)
 ) AUTO_INCREMENT = 1;
