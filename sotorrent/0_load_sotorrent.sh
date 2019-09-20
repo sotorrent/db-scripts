@@ -4,8 +4,12 @@ root_password="_AqUjvtv68E\$N!r]"
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
 sotorrent_db="sotorrent19_09"
-data_path="\/Users\/sebastian\/git\/sotorrent\/db-scripts\/so-dump\/" # escape slashes here because the string is used in a sed command
 load_sotorrent=true
+
+# absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
+# escape slashes in path because the string is used in a sed command
+data_path="F:\/Temp\/" # Cygwin
+#data_path="\/tmp\/" # Linux
 
 rm -f $log_file
 
