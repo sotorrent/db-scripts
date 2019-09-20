@@ -98,6 +98,7 @@ CREATE TABLE `PostBlockVersion` (
   LineCount INT NOT NULL,
   Content TEXT NOT NULL,
   MostRecentVersion BOOLEAN DEFAULT FALSE,
+  StackSnippetVersionId INT DEFAULT NULL,
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PostBlockTypeId, LocalId),
   FOREIGN KEY(PostBlockTypeId) REFERENCES PostBlockType(Id),
@@ -203,4 +204,10 @@ CREATE TABLE `GHMatches` (
   PostIds TEXT NOT NULL,
   MatchedLine LONGTEXT NOT NULL,
   PRIMARY KEY(Id)
+) AUTO_INCREMENT = 1;
+
+CREATE TABLE `StackSnippetVersion` (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Content TEXT NOT NULL,
+  PRIMARY KEY(Id),
 ) AUTO_INCREMENT = 1;
