@@ -6,6 +6,9 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * Automate execution of SQL scripts
+* Add column `MostRecentVersion` to table `TitleVersion`
+* Add table `StackSnippetVersion`
+* Extract language information from Stack Snippets and link individual snippets to their predecessors
 
 ## [2019-06-21] - First release based on SO data dump 2019-06-03
 
