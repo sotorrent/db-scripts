@@ -53,5 +53,10 @@
         "mode": "NULLABLE",
         "name": "SuccEditDistance",
         "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "MostRecentVersion",
+        "type": "BOOLEAN"
     }
 ]

@@ -151,7 +151,7 @@ CREATE TABLE `CommentUrl` (
   Url TEXT NOT NULL,
   FullMatch TEXT NOT NULL,
   PRIMARY KEY(Id),
-  # there are comments for posts that don't exist anymore
+  # the SO data dump contains comments for posts that don't exist anymore
   # FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(CommentId) REFERENCES Comments(Id)
 ) AUTO_INCREMENT = 1;
@@ -188,6 +188,7 @@ CREATE TABLE `TitleVersion` (
   PredEditDistance INT DEFAULT NULL,
   SuccPostHistoryId INT DEFAULT NULL,
   SuccEditDistance INT DEFAULT NULL,
+  MostRecentVersion BOOLEAN DEFAULT FALSE,
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PredPostHistoryId, SuccPostHistoryId),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),

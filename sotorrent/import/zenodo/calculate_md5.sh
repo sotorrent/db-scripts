@@ -18,3 +18,4 @@ md5sum sotorrent/PostBlockVersion.csv.7z
 md5sum sotorrent/PostVersion.csv.7z
 md5sum sotorrent/PostVersionUrl.csv.7z
 md5sum sotorrent/TitleVersion.csv.7z
+md5sum sotorrent/StackSnippetVersion.csv.7z

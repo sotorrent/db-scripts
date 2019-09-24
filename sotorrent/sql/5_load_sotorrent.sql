@@ -91,11 +91,24 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, Title, @PredPostHistoryId, @PredEditDistance, @SuccPostHistoryId, @SuccEditDistance)
+(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, Title, @PredPostHistoryId, @PredEditDistance, @SuccPostHistoryId, @SuccEditDistance, MostRecentVersion)
 SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
 	PredEditDistance = nullif(@PredEditDistance, ''),
 	SuccPostHistoryId = nullif(@SuccPostHistoryId, ''),
 	SuccEditDistance = nullif(@SuccEditDistance, '');
+SET foreign_key_checks = 1;
+
+SET foreign_key_checks = 0;
+# remove auto-increment for import
+ALTER TABLE `StackSnippetVersion` MODIFY Id INT, DROP PRIMARY KEY, ADD PRIMARY KEY (Id);
+LOAD DATA INFILE  '<PATH>StackSnippetVersion.csv' INTO TABLE `StackSnippetVersion`
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+(Id, PostId, PostTypeId, PostHistoryId, @Content)
+SET Content = REPLACE(@Content, '&#xD;&#xA;', '\n');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;

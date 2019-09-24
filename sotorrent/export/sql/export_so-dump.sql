@@ -1,7 +1,5 @@
 # Export tables from offical SO dump to CSV to be able to import them into BigQuery
 
-USE `sotorrent19_06`;
-
 # Users
 SELECT
   Id,
@@ -19,7 +17,7 @@ SELECT
   IFNULL(Age, ''),
   IFNULL(AccountId, ''),
   IFNULL(EmailHash, '')
-INTO OUTFILE 'F:/Temp/Users.csv'
+INTO OUTFILE '<PATH>Users.csv'
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -35,7 +33,7 @@ SELECT
   IFNULL(Date, ''),
   IFNULL(Class, ''),
   IFNULL(TagBased, '')
-INTO OUTFILE 'F:/Temp/Badges.csv'
+INTO OUTFILE '<PATH>Badges.csv'
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -67,7 +65,7 @@ SELECT
   IFNULL(FavoriteCount, ''),
   IFNULL(ClosedDate, ''),
   IFNULL(CommunityOwnedDate, '')
-INTO OUTFILE 'F:/Temp/Posts.csv' 
+INTO OUTFILE '<PATH>Posts.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -84,7 +82,7 @@ SELECT
   IFNULL(CreationDate, ''),
   IFNULL(UserDisplayName, ''),
   IFNULL(UserId, '')
-INTO OUTFILE 'F:/Temp/Comments.csv' 
+INTO OUTFILE '<PATH>Comments.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -103,7 +101,7 @@ SELECT
   IFNULL(UserDisplayName, ''),
   IFNULL(REPLACE(Comment, '\n', '&#xD;&#xA;'), ''),
   IFNULL(REPLACE(Text, '\n', '&#xD;&#xA;'), '')
-INTO OUTFILE 'F:/Temp/PostHistory.csv' 
+INTO OUTFILE '<PATH>PostHistory.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -118,7 +116,7 @@ SELECT
   PostId,
   RelatedPostId,
   IFNULL(LinkTypeId, '')
-INTO OUTFILE 'F:/Temp/PostLinks.csv' 
+INTO OUTFILE '<PATH>PostLinks.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -133,7 +131,7 @@ SELECT
   IFNULL(Count, ''),
   IFNULL(ExcerptPostId, ''),
   IFNULL(WikiPostId, '')
-INTO OUTFILE 'F:/Temp/Tags.csv' 
+INTO OUTFILE '<PATH>Tags.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
@@ -149,7 +147,7 @@ SELECT
   IFNULL(UserId, ''),
   IFNULL(CreationDate, ''),
   IFNULL(BountyAmount, '')
-INTO OUTFILE 'F:/Temp/Votes.csv' 
+INTO OUTFILE '<PATH>Votes.csv' 
 CHARACTER SET utf8mb4
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'

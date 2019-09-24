@@ -12,3 +12,5 @@ rm PostVersionUrl.csv
 rm CommentUrl.csv
 7za a TitleVersion.csv.7z TitleVersion.csv
 rm TitleVersion.csv
+7za a StackSnippetVersion.csv.7z StackSnippetVersion.csv
+rm StackSnippetVersion.csv
