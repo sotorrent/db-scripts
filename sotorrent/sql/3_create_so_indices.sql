@@ -10,5 +10,5 @@ CREATE INDEX `posts_index_3` ON Posts(OwnerDisplayName);
 
 CREATE INDEX `users_index_1` ON Users(DisplayName);
 
-ALTER TABLE Threads ADD INDEX ThreadsPostIdIndex(PostId);
-ALTER TABLE Threads ADD INDEX ThreadsParentIdIndex(ParentId);
+CREATE INDEX `threads_index_1` ON Threads(PostId);
+CREATE INDEX `threads_index_2` ON Threads(ParentId);
