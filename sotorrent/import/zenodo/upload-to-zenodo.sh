@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Before executing this script, create a new dataset version and delete the old files using the Zendodo website
+
 ZENODO_TOKEN="" # update this
 DEPOSIT_ID="3460115" # update this
 #curl "https://zenodo.org/api/deposit/depositions/$DEPOSIT_ID?access_token=$ZENODO_TOKEN" | grep -Eo '"links":{"download":"https://zenodo\.org/api/files/[^/]+'
