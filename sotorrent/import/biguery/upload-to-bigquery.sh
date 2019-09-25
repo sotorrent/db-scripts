@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 gsutil cp so-dump-bigquery/Users.csv gs://sotorrent/
 gsutil cp so-dump-bigquery/Badges.csv gs://sotorrent/

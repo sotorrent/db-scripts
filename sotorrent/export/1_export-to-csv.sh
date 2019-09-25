@@ -14,7 +14,7 @@ rm -f $log_file
 if [ "$1" = "so-dump"  ] || [ "$1" = "sotorrent" ]; then
 	echo "Exporting $1 tables..." | tee -a "$log_file"
 	sed -e"s/<PATH>/$data_path/g" "./sql/export_$1.sql" > "./sql/export_$1_absolute_paths.sql"
-	mysql $sotorrent_db -u sotorrent --password="$sotorrent_password" < "./sql/export_$1_absolute_paths.sql" >> $log_file  2>&1
+	mysql $sotorrent_db -u sotorrent --password="$sotorrent_password" < "./sql/export_$1_absolute_paths.sql" >> $log_file 2>&1
 	rm "./sql/export_$1_absolute_paths.sql"	
 else
 	echo 'The first argument must be either "so-dump" or "sotorrent".' | tee -a "$log_file"

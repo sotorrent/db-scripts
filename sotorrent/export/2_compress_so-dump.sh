@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 7za a Badges.csv.7z Badges.csv
 rm Badges.csv

@@ -45,3 +45,19 @@ LOAD XML INFILE '<PATH>Votes.xml'
 INTO TABLE `Votes`
 ROWS IDENTIFIED BY '<row>';
 SET foreign_key_checks = 1;
+
+# create helper table that makes it easier to retrieve the parent id of a thread
+CREATE TABLE Threads AS
+SELECT
+  Id as PostId,
+  PostTypeId,
+  CASE
+    WHEN PostTypeId=1 THEN Id
+    WHEN PostTypeId=2 THEN ParentId
+  END as ParentId
+FROM Posts
+# only consider questions and answers
+WHERE PostTypeId=1
+  OR PostTypeId=2; 
+ALTER TABLE Threads ADD INDEX ThreadsPostIdIndex (PostId);
+ALTER TABLE Threads ADD INDEX ThreadsParentIdIndex (ParentId);
