@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 md5sum so-dump/Badges.xml.7z
 md5sum so-dump/Comments.xml.7z

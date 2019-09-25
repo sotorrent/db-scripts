@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
-ZENODO_TOKEN=""
-DEPOSIT_ID="2628274"
+ZENODO_TOKEN="" # update this
+DEPOSIT_ID="3460115" # update this
 #curl "https://zenodo.org/api/deposit/depositions/$DEPOSIT_ID?access_token=$ZENODO_TOKEN" | grep -Eo '"links":{"download":"https://zenodo\.org/api/files/[^/]+'
-ZENODO_BUCKET="40db99da-4e7f-4419-98b6-317b162d71c6"
+ZENODO_BUCKET="41eb92f6-86eb-4ac1-a488-dc362d19c5ce" # update this
 
 upload_file() {
 	FILE_PATH="$1"
