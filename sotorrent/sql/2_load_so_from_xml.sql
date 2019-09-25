@@ -58,6 +58,4 @@ SELECT
 FROM Posts
 # only consider questions and answers
 WHERE PostTypeId=1
-  OR PostTypeId=2; 
-ALTER TABLE Threads ADD INDEX ThreadsPostIdIndex (PostId);
-ALTER TABLE Threads ADD INDEX ThreadsParentIdIndex (ParentId);
+  OR PostTypeId=2;

@@ -19,7 +19,7 @@ The tables `PostReferenceGH` and `GHMatches` were retrieved from the [Google Big
 
 The following tables are based on the tables from the official Stack Exchange data dump listed above. We license them under *Creative Commons Attribution-ShareAlike 4.0 International* ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)):
 
-`CommentUrl`, `PostBlockDiff`, `PostBlockVersion`, `PostVersion`, `PostVersionUrl`, `StackSnippetVersion`, `TitleVersion`
+`CommentUrl`, `PostBlockDiff`, `PostBlockVersion`, `PostVersion`, `PostVersionUrl`, `StackSnippetVersion`, `Threads`, `TitleVersion`
 
 Legal code can be found below ([source](https://github.com/creativecommons/legalcode/blob/master/by-sa_4.0.txt)).
 
