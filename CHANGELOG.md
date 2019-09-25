@@ -12,6 +12,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Automate execution of SQL scripts
 * Add column `MostRecentVersion` to table `TitleVersion`
 * Add table `StackSnippetVersion`
+* Helper table `Threads` is now officially part of SOTorrent 
 
 ## [2019-06-21] - First release based on SO data dump 2019-06-03
 
