@@ -19,6 +19,7 @@ bq load --source_format=CSV "$project:$dataset.PostLinks" "gs://$bucket/PostLink
 bq load --source_format=CSV "$project:$dataset.Posts" "gs://$bucket/Posts.csv" ./schema/Posts.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.PostVersion" "gs://$bucket/PostVersion.csv" ./schema/PostVersion.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.PostVersionUrl" "gs://$bucket/PostVersionUrl.csv" ./schema/PostVersionUrl.json &>> "$logfile"
+bq load --source_format=CSV "$project:$dataset.StackSnippetVersion" "gs://$bucket/StackSnippetVersion.csv" ./schema/StackSnippetVersion.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.Tags" "gs://$bucket/Tags.csv" ./schema/Tags.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.TitleVersion" "gs://$bucket/TitleVersion.csv" ./schema/TitleVersion.json &>> "$logfile"
 bq load --source_format=CSV "$project:$dataset.Users" "gs://$bucket/Users.csv" ./schema/Users.json &>> "$logfile"

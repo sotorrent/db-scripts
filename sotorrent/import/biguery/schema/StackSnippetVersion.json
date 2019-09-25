@@ -1,0 +1,27 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "Id",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostTypeId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostHistoryId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Content",
+        "type": "STRING"
+    }
+]
