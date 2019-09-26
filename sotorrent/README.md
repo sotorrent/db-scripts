@@ -9,10 +9,14 @@
    Linux (e.g. using [p7zip](https://sourceforge.net/projects/p7zip/)):
 
    `for file in ./*.7z; do 7z e "$file"; done`
-   
-2. Edit the SQL script `load_sotorrent.sh` to change the passwords for the `root` and `sotorrent` MySQL users and the path where the CSV and XML files are located.
 
-3. Run the `load_sotorrent.sh` script.
+2. Unzip the SQL scripts:
+
+	`7za e sql.7z -osql`
+   
+3. Edit the SQL script `load_sotorrent.sh` to change the passwords for the `root` and `sotorrent` MySQL users and the path where the CSV and XML files are located.
+
+4. Run the `load_sotorrent.sh` script.
 
 ## Data
 
