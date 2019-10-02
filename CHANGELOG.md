@@ -5,7 +5,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* Extract language information from Stack Snippets and link individual snippets to their predecessors
+* Extract language information from Stack Snippets and link individual snippets to their predecessors, add `MostRecentVersion` flag
 * Add non-generated comments (`PostHistory.Comment`) to table `PostVersion`
 * Update database schema on website
 
