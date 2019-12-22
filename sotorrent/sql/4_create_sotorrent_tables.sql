@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS `PostReferenceGH`;
 DROP TABLE IF EXISTS `TitleVersion`;
 DROP TABLE IF EXISTS `GHMatches`;
 DROP TABLE IF EXISTS `StackSnippetVersion`;
+DROP TABLE IF EXISTS `PostViews`;
 SET foreign_key_checks = 1;
 
 
@@ -69,6 +70,7 @@ CREATE TABLE `PostVersion` (
   PredPostHistoryId INT DEFAULT NULL,
   SuccPostHistoryId INT DEFAULT NULL,
   MostRecentVersion BOOLEAN DEFAULT FALSE,
+  Comment TEXT, 
   PRIMARY KEY(Id),
   UNIQUE(PostHistoryId, PredPostHistoryId, SuccPostHistoryId),
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
@@ -218,3 +220,11 @@ CREATE TABLE `StackSnippetVersion` (
   FOREIGN KEY(PostTypeId) REFERENCES PostType(Id),
   FOREIGN KEY(PostHistoryId) REFERENCES PostHistory(Id)
 ) AUTO_INCREMENT = 1;
+
+CREATE TABLE `PostViews` (
+    PostId INT NOT NULL,
+    Version DATE NOT NULL,
+    ViewCount INT NOT NULL,
+    PRIMARY KEY (PostId, Version),
+    FOREIGN KEY(PostId) REFERENCES Posts(Id)
+);

@@ -11,6 +11,8 @@ load_sotorrent=true
 data_path="F:\/Temp\/" # Cygwin
 #data_path="\/tmp\/" # Linux
 
+declare -a datadump_versions=("2016-09-12")
+
 rm -f $log_file
 
 if [ "$1" = "so-only" ]; then
@@ -54,5 +56,15 @@ if [ "$load_sotorrent" = true ] ; then
 	echo "Creating indices for SOTorrent tables..." | tee -a "$log_file"
 	mysql $sotorrent_db -u root --password="$root_password" < ./sql/6_create_sotorrent_indices.sql >> $log_file  2>&1
 fi
+
+echo "Loading PostViews tables..." | tee -a "$log_file"
+for version in ${datadump_versions[@]}; do
+    version_path="$data_path$version\/"
+    echo "Reading PostViews.xml from $version_path..."
+    
+	sed -e"s/<PATH>/$version_path/g" ./sql/7_load_postviews.sql | sed -e"s/<VERSION>/$version/g" > ./sql/7_load_postviews_absolute_paths.sql
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/7_load_postviews_absolute_paths.sql >> $log_file  2>&1
+	rm ./sql/7_load_postviews_absolute_paths.sql
+done
 
 echo "Finished." | tee -a "$log_file"
