@@ -112,6 +112,16 @@ SET Content = REPLACE(@Content, '&#xD;&#xA;', '\n');
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
+LOAD DATA INFILE  '<PATH>PostViews.csv' INTO TABLE `PostViews`
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+(PostId, Version, ViewCount)
+SET foreign_key_checks = 1;
+
+SET foreign_key_checks = 0;
 # load file exported from BigQuery (see also https://cloud.google.com/sql/docs/mysql/import-export/)
 LOAD DATA INFILE  '<PATH>PostReferenceGH.csv' INTO TABLE `PostReferenceGH`
 CHARACTER SET utf8mb4

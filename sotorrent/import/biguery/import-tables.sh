@@ -22,6 +22,7 @@ bq load --source_format=CSV "$project:$dataset.Tags" "gs://$bucket/Tags.csv" ./s
 bq load --source_format=CSV "$project:$dataset.TitleVersion" "gs://$bucket/TitleVersion.csv" ./schema/TitleVersion.json >> "$logfile" 2>&1
 bq load --source_format=CSV "$project:$dataset.Users" "gs://$bucket/Users.csv" ./schema/Users.json >> "$logfile" 2>&1
 bq load --source_format=CSV "$project:$dataset.Votes" "gs://$bucket/Votes.csv" ./schema/Votes.json >> "$logfile" 2>&1
+bq load --source_format=CSV "$project:$dataset.PostViews" "gs://$bucket/PostViews.csv" ./schema/PostViews.json >> "$logfile" 2>&1
 
 # import CSV files with header row
 bq load --source_format=CSV --skip_leading_rows=1 "$project:$dataset.GHMatches" "gs://$bucket/GHMatches.csv" ./schema/GHMatches.json >> "$logfile" 2>&1

@@ -1,0 +1,17 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Version",
+        "type": "DATE"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "ViewCount",
+        "type": "INTEGER"
+    }
+]
