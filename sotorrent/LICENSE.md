@@ -1,7 +1,7 @@
 # Licenses
 
 
-## Tables based on the offical Stack Exchange data dump
+## Tables from offical Stack Exchange data dump
 
 The following tables are identical to the corresponding XML files in the [official Stack Exhange data dump](https://archive.org/details/stackexchange), which is licensed under
 *Creative Commons Attribution-ShareAlike 4.0 International* ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)):
@@ -19,7 +19,7 @@ The tables `PostReferenceGH` and `GHMatches` were retrieved from the [Google Big
 
 The following tables are based on the tables from the official Stack Exchange data dump listed above. We license them under *Creative Commons Attribution-ShareAlike 4.0 International* ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)):
 
-`CommentUrl`, `PostBlockDiff`, `PostBlockVersion`, `PostVersion`, `PostVersionUrl`, `StackSnippetVersion`, `Threads`, `TitleVersion`
+`CommentUrl`, `PostBlockDiff`, `PostBlockVersion`, `PostVersion`, `PostVersionUrl`, `StackSnippetVersion`, `Threads`, `TitleVersion`, `PostViews`
 
 Legal code can be found below ([source](https://github.com/creativecommons/legalcode/blob/master/by-sa_4.0.txt)).
 

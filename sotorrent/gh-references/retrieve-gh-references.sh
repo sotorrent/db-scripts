@@ -1,14 +1,14 @@
 #!/bin/sh
 
 project="sotorrent-org"
-dataset="gh_so_references_2019_09_23"
+dataset="gh_so_references_2019_12_25"
 bucket="sotorrent"
 logfile="bigquery.log"
 
 # "Table Info" of table "bigquery-public-data:github_repos.contents"
-# Last Modified: Sep 20, 2019, 3:51:50 PM
-# Number of Rows: 261,943,326
-# Table Size: 2.23 TB
+# Last Modified: Dec 20, 2019, 6:19:41 AM
+# Number of Rows: 263,349,520
+# Table Size: 2.25 TB
 
 # select all source code lines of text files that contain a link to Stack Overflow
 bq --headless query --max_rows=0 --destination_table "$project:$dataset.matched_lines" "$(< sql/matched_lines.sql)" >> "$logfile" 2>&1
