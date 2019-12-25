@@ -6,8 +6,13 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 ## [Upcoming]
 
 * Extract language information from Stack Snippets and link individual snippets to their predecessors, add `MostRecentVersion` flag
-* Add non-generated comments (`PostHistory.Comment`) to table `PostVersion`
+* Add table [PostTags](https://github.com/sotorrent/db-scripts/issues/4)
 * Update database schema on website
+
+## [2019-12-25] - First release based on SO data dump 2019-12-02
+
+* Add non-generated comments (`PostHistory.Comment`) to table `PostVersion`
+* Add view count history (new table `PostViews`)
 
 ## [2019-09-23] - First release based on SO data dump 2019-09-04
 * Automate execution of SQL scripts
