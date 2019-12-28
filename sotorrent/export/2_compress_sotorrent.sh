@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 7za a PostBlockDiff.csv.7z PostBlockDiff.csv
 rm PostBlockDiff.csv

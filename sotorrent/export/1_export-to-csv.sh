@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
-sotorrent_db="sotorrent19_09"
+sotorrent_db="sotorrent19_12"
 
 # absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
 # escape slashes in path because the string is used in a sed command
