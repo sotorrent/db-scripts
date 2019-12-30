@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # on some systems, you need to replace md5 by md5
 
@@ -14,6 +14,7 @@ md5 gh-references/PostReferenceGH.csv.7z
 md5 so-dump/Posts.xml.7z
 md5 sotorrent/PostVersion.csv.7z
 md5 sotorrent/PostVersionUrl.csv.7z
+md5 sotorrent/PostViews.csv.7z
 md5 sotorrent/StackSnippetVersion.csv.7z
 md5 so-dump/Tags.xml.7z
 md5 sotorrent/TitleVersion.csv.7z
