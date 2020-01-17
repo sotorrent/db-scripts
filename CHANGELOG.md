@@ -9,6 +9,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Add table [PostTags](https://github.com/sotorrent/db-scripts/issues/4)
 * Add user reference to table `PostVersion`
 * Update database schema on website
+* Add historical user reputation?
 
 ## [2019-12-25] - First release based on SO data dump 2019-12-02
 
