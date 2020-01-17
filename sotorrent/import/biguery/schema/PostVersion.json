@@ -43,5 +43,10 @@
         "mode": "REQUIRED",
         "name": "MostRecentVersion",
         "type": "BOOLEAN"
+    },
+	{
+        "mode": "NULLABLE",
+        "name": "Comment",
+        "type": "STRING"
     }
 ]

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 project="sotorrent-org"
 dataset="gh_so_references_2019_12_25"
@@ -43,3 +43,8 @@ gsutil cp "gs://$bucket/*.csv.gz" ./
 
 # remove CSV files in the cloud
 gsutil rm "gs://$bucket/*.csv.gz"
+
+# zip local CSV files
+7za a PostReferenceGH.csv.7z PostReferenceGH.csv && rm PostReferenceGH.csv
+7za a GHMatches.csv.7z GHMatches.csv && rm GHMatches.csv
+

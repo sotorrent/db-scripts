@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 # Before executing this script, create a new dataset version and delete the old files using the Zendodo website
 
 ZENODO_TOKEN="" # update this
-DEPOSIT_ID="3460115" # update this
+DEPOSIT_ID="3595538" # update this
 #curl "https://zenodo.org/api/deposit/depositions/$DEPOSIT_ID?access_token=$ZENODO_TOKEN" | grep -Eo '"links":{"download":"https://zenodo\.org/api/files/[^/]+'
-ZENODO_BUCKET="41eb92f6-86eb-4ac1-a488-dc362d19c5ce" # update this
+ZENODO_BUCKET="1984a41f-5518-4c42-a0e6-78f79adb8fe9" # update this
 
 upload_file() {
 	FILE_PATH="$1"
@@ -33,3 +33,4 @@ upload_file "sotorrent/PostVersion.csv.7z"
 upload_file "sotorrent/PostVersionUrl.csv.7z"
 upload_file "sotorrent/TitleVersion.csv.7z"
 upload_file "sotorrent/StackSnippetVersion.csv.7z"
+upload_file "sotorrent/PostViews.csv.7z"
