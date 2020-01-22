@@ -37,7 +37,7 @@ FROM (
       ELSE url
     END AS url,
     line
-  FROM `sotorrent-org.gh_so_references_2019_03_29.matched_lines`
+  FROM `sotorrent-org.<DATASET>.matched_lines`
 )
 WHERE REGEXP_CONTAINS(url, r'(https:\/\/stackoverflow\.com\/(?:a|q)\/[\d]+)');
 

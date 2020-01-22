@@ -30,4 +30,3 @@ FROM (
 	WHERE REGEXP_CONTAINS(LOWER(line), r'https?:\/\/(?:www.)?stackoverflow\.com\/[^\s)."]*')
 )
 CROSS JOIN UNNEST(urls) as url;
-

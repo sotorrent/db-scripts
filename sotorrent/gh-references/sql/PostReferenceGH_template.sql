@@ -2,7 +2,7 @@
 WITH
   copies AS (
     SELECT file_id, count(*) as copies
-    FROM `sotorrent-org.gh_so_references_2019_03_29.matched_files_aq`
+    FROM `sotorrent-org.<DATASET>.matched_files_aq`
     GROUP BY file_id
   )
 SELECT
@@ -33,7 +33,7 @@ FROM (
     comment_id as CommentId,
     url as SOUrl,
     CONCAT('https://raw.githubusercontent.com/', repo_name, "/", branch, "/", path) as GHUrl
-  FROM `sotorrent-org.gh_so_references_2019_03_29.matched_files_aq` files
+  FROM `sotorrent-org.<DATASET>.matched_files_aq` files
   JOIN copies
   ON files.file_id = copies.file_id
 );

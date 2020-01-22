@@ -10,7 +10,7 @@ SELECT
   comment_id,
   url,
   line
-FROM `sotorrent-org.gh_so_references_2019_03_29.matched_lines_aq` as lines
+FROM `sotorrent-org.<DATASET>.matched_lines_aq` as lines
 LEFT JOIN `bigquery-public-data.github_repos.files` as files
 ON lines.file_id = files.id;
 
