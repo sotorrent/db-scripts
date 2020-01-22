@@ -10,6 +10,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Add user reference to table `PostVersion`
 * Update database schema on website
 * Add historical user reputation?
+* Add links to SO posts/comments found in GH commits
 
 ## [2019-12-25] - First release based on SO data dump 2019-12-02
 
