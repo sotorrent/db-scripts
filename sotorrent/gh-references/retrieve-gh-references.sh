@@ -1,7 +1,7 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="gh_so_references_2019_12_25"
+dataset="gh_so_references_2020_01_24"
 sotorrent="2019_12_25"
 bucket="sotorrent"
 logfile="bigquery.log"
