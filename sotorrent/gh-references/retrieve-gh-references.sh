@@ -27,8 +27,11 @@ rm ./sql/matched_lines_aq.sql
 
 # join with table "files" to get information about repositories
 # extract file extension from path
-sed -e"s/<DATASET>/$dataset/g" ./sql/matched_files_aq_template.sql > ./sql/matched_files_aq.sql
+sed -e"s/<DATASET>/$dataset/g" ./sql/matched_files_aq_template.sql | sed -e"s/<COUNT>/2/g" | sed -e"s/<ID>/0/g" > ./sql/matched_files_aq.sql
 bq --headless query --max_rows=0 --destination_table "$project:$dataset.matched_files_aq" "$(< sql/matched_files_aq.sql)" >> "$logfile" 2>&1
+rm ./sql/matched_files_aq.sql
+sed -e"s/<DATASET>/$dataset/g" ./sql/matched_files_aq_template.sql | sed -e"s/<COUNT>/2/g" | sed -e"s/<ID>/1/g" > ./sql/matched_files_aq.sql
+bq --headless --replace=false query --max_rows=0 --destination_table "$project:$dataset.matched_files_aq" "$(< sql/matched_files_aq.sql)" >> "$logfile" 2>&1
 rm ./sql/matched_files_aq.sql
 
 # validate post ids and comments ids
