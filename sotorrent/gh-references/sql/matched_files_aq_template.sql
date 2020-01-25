@@ -10,8 +10,11 @@ SELECT
   comment_id,
   url,
   line
-FROM `sotorrent-org.<DATASET>.matched_lines_aq` as lines
-WHERE MOD(ABS(FARM_FINGERPRINT(file_id)), <COUNT>) = <ID>
+FROM (
+  SELECT *
+  FROM `sotorrent-org.<DATASET>.matched_lines_aq`
+  WHERE MOD(ABS(FARM_FINGERPRINT(file_id)), <COUNT>) = <ID>
+)  as lines
 LEFT JOIN `bigquery-public-data.github_repos.files` as files
 ON lines.file_id = files.id;
 
