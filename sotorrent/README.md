@@ -13,7 +13,7 @@
 2. Unzip the SQL scripts:
 
 	`7za e sql.7z -osql`
-   
+  
 3. Edit the SQL script `load_sotorrent.sh` to change the passwords for the `root` and `sotorrent` MySQL users and the path where the CSV and XML files are located.
 
 4. Run the `load_sotorrent.sh` script.
@@ -22,7 +22,7 @@
 
 The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2019-12-02.
 
-The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2019-12-25 (last updated 2019-12-20 according to table info).
+The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2020-01-24 (last updated 2020-01-24 according to table info).
 
 ## MySQL Troubleshooting
 
