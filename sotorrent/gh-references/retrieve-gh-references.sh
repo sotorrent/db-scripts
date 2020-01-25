@@ -27,11 +27,8 @@ rm ./sql/matched_lines_aq.sql
 
 # join with table "files" to get information about repositories
 # extract file extension from path
-sed -e"s/<DATASET>/$dataset/g" ./sql/matched_files_aq_template.sql | sed -e"s/<COUNT>/2/g" | sed -e"s/<ID>/0/g" > ./sql/matched_files_aq.sql
+sed -e"s/<DATASET>/$dataset/g" ./sql/matched_files_aq_template.sql > ./sql/matched_files_aq.sql
 bq --headless query --max_rows=0 --destination_table "$project:$dataset.matched_files_aq" "$(< sql/matched_files_aq.sql)" >> "$logfile" 2>&1
-rm ./sql/matched_files_aq.sql
-sed -e"s/<DATASET>/$dataset/g" ./sql/matched_files_aq_template.sql | sed -e"s/<COUNT>/2/g" | sed -e"s/<ID>/1/g" > ./sql/matched_files_aq.sql
-bq --headless --replace=false query --max_rows=0 --destination_table "$project:$dataset.matched_files_aq" "$(< sql/matched_files_aq.sql)" >> "$logfile" 2>&1
 rm ./sql/matched_files_aq.sql
 
 # validate post ids and comments ids
@@ -54,10 +51,10 @@ sed -e"s/<SOTORRENT>/$sotorrent/g" ./sql/GHCommits_template.sql > ./sql/GHCommit
 bq --headless query --max_rows=0 --destination_table "$project:$dataset.GHCommits" "$(< sql/GHCommits.sql)" >> "$logfile" 2>&1
 rm ./sql/GHCommits.sql
 
-# export PostReferenceGH and GHMatches
+# export PostReferenceGH, GHMatches, and GHCommits
 bq extract --destination_format "CSV" --compression "GZIP" "$project:$dataset.PostReferenceGH" "gs://$bucket/PostReferenceGH*.csv.gz"
 bq extract --destination_format "CSV" --compression "GZIP" "$project:$dataset.GHMatches" "gs://$bucket/GHMatches*.csv.gz"
-bq extract --destination_format "CSV" --compression "GZIP" "$project:$dataset.GHMatches" "gs://$bucket/GHCommits*.csv.gz"
+bq extract --destination_format "CSV" --compression "GZIP" "$project:$dataset.GHCommits" "gs://$bucket/GHCommits*.csv.gz"
 
 # download compressed CSV files
 gsutil cp "gs://$bucket/*.csv.gz" ./
@@ -65,12 +62,11 @@ gsutil cp "gs://$bucket/*.csv.gz" ./
 # merge CSV files
 ./sh/merge_csv_files_PostReferenceGH.sh
 ./sh/merge_csv_files_GHMatches.sh
-#./sh/merge_csv_files_GHCommits.sh
+./sh/merge_csv_files_GHCommits.sh
 
 # remove CSV files in the cloud
 gsutil rm "gs://$bucket/*.csv.gz"
 
 # zip local CSV files
-7za a PostReferenceGH.csv.7z PostReferenceGH.csv && rm PostReferenceGH.csv
-7za a GHMatches.csv.7z GHMatches.csv && rm GHMatches.csv
-#7za a GHCommits.csv.7z GHCommits.csv && rm GHCommits.csv
+7za a PostReferenceGH.csv.7z PostReferenceGH.csv && 7za a GHMatches.csv.7z GHMatches.csv && 7za a GHCommits.csv.7z GHCommits.csv && rm *.csv && rm *.csv.gz
+

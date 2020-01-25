@@ -1,6 +1,6 @@
 #standardSQL
 SELECT
-  lines.file_id as file_id,
+  file_id,
   repo_name,
   REGEXP_EXTRACT(ref, r'refs/heads/(.+)') as branch,
   REGEXP_REPLACE(path, r'(\r\n?|\n)', '') as path,
@@ -11,10 +11,9 @@ SELECT
   url,
   line
 FROM (
-  SELECT *
-  FROM `sotorrent-org.<DATASET>.matched_lines_aq`
-  WHERE MOD(ABS(FARM_FINGERPRINT(file_id)), <COUNT>) = <ID>
-)  as lines
-LEFT JOIN `bigquery-public-data.github_repos.files` as files
+  SELECT id, repo_name, ref, path
+  FROM `bigquery-public-data.github_repos.files`
+) as files
+JOIN `sotorrent-org.<DATASET>.matched_lines_aq` as lines
 ON lines.file_id = files.id;
 

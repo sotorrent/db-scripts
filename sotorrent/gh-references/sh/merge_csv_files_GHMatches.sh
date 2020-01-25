@@ -1,15 +1,15 @@
 #!/bin/sh
 
-prefix="GHCommits"
+prefix="GHMatches"
 first_file="$prefix$(printf "%012d" 0).csv"
-last_index=3
+last_index=12
 
 echo "Merging CSV files..."
 gunzip "$first_file.gz"
 # ensure newline add end of file
 # OSX: sed -i '' -e '$a\' ${first_file}
 # Linux: sed -i'' -e '$a\' ${$first_file}
-sed -i '' -e '$a\' ${first_file}
+sed -i'' -e '$a\' ${first_file}
 mv ${first_file} "$prefix.csv"
 
 for (( i=1; i<=$last_index; i++ ))
