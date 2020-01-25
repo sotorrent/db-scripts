@@ -10,7 +10,11 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Add user reference to table `PostVersion`
 * Update database schema on website
 * Add historical user reputation?
-* Add links to SO posts/comments found in GH commits
+
+## [2020-01-24] - Second release based on SO data dump 2019-12-02
+
+* Fix bug in extraction of references from GitHub files causing links to posts published after September 2019 to be missing  (affected tables are `PostReferenceGH` and `GHMatches`)
+* Add new table `GHCommits` with links to Stack Overflow posts or comments found in GitHub commits (using BigQuery GitHub dataset)
 
 ## [2019-12-25] - First release based on SO data dump 2019-12-02
 
