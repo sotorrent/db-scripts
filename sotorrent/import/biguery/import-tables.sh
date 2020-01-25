@@ -1,7 +1,7 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="2019_12_25"
+dataset="2020_01_24"
 bucket="sotorrent"
 logfile="bigquery.log"
 
@@ -27,6 +27,7 @@ bq load --source_format=CSV "$project:$dataset.PostViews" "gs://$bucket/PostView
 # import CSV files with header row
 bq load --source_format=CSV --skip_leading_rows=1 "$project:$dataset.GHMatches" "gs://$bucket/GHMatches.csv" ./schema/GHMatches.json >> "$logfile" 2>&1
 bq load --source_format=CSV --skip_leading_rows=1 "$project:$dataset.PostReferenceGH" "gs://$bucket/PostReferenceGH.csv" ./schema/PostReferenceGH.json >> "$logfile" 2>&1
+bq load --source_format=CSV --skip_leading_rows=1 "$project:$dataset.GHCommits" "gs://$bucket/GHCommits.csv" ./schema/GHCommits.json >> "$logfile" 2>&1
 
 # create helper table that makes it easier to retrieve the parent id of a thread
 bq --headless query --max_rows=0 --destination_table "$project:$dataset.Threads" "$(< sql/Threads.sql)" >> "$logfile" 2>&1

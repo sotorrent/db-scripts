@@ -1,0 +1,42 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "CommitId",
+        "type": "STRING"
+    },
+	{
+        "mode": "REQUIRED",
+        "name": "Repo",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "RepoOwner",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "RepoName",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "NULLABLE",
+        "name": "CommitId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "SOUrl",
+        "type": "STRING"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "GHUrl",
+        "type": "STRING"
+    }
+]
