@@ -10,11 +10,16 @@ logfile="bigquery.log"
 # Last Modified: Jan 24, 2020, 6:19:07 AM
 # Number of Rows: 264,153,976 
 # Table Size: 2.25 TB
+#
+# Unique file contents of text files under 1 MiB on the HEAD branch.
+# Can be joined to [bigquery-public-data:github_repos.files] table using the id columns to identify the repository and file path.
 
 # "Table Info" of table "bigquery-public-data:github_repos.commits"
 # Last Modified: Jan 24, 2020, 5:55:03 AM
 # Number of Rows: 237,651,394
 # Table Size: 774 GB
+#
+# Unique Git commits from open source repositories on GitHub, pre-grouped by repositories they appear in.
 
 # select all source code lines of text files that contain a link to Stack Overflow
 bq --headless query --max_rows=0 --destination_table "$project:$dataset.matched_lines" "$(< sql/matched_lines.sql)" >> "$logfile" 2>&1
