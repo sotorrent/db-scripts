@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS `GHMatches`;
 DROP TABLE IF EXISTS `StackSnippetVersion`;
 DROP TABLE IF EXISTS `PostViews`;
 DROP TABLE IF EXISTS `GHCommits`;
+DROP TABLE IF EXISTS `PostTags`;
 SET foreign_key_checks = 1;
 
 
@@ -244,3 +245,10 @@ CREATE TABLE `GHCommits` (
   FOREIGN KEY(PostId) REFERENCES Posts(Id),
   FOREIGN KEY(CommentId) REFERENCES Comments(Id)
 ) AUTO_INCREMENT = 1;
+
+CREATE TABLE `PostTags` (
+    PostId INT NOT NULL,
+    TagId INT NOT NULL,
+    FOREIGN KEY(PostId) REFERENCES Posts(Id),
+    FOREIGN KEY(TagId) REFERENCES Tags(Id)
+);

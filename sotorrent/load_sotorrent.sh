@@ -3,11 +3,11 @@
 root_password="_AqUjvtv68E\$N!r]"
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
-sotorrent_db="sotorrent19_12"
-db_init=true
-load_so=true
-load_gh=true
-load_sotorrent=true
+sotorrent_db="sotorrent20_03"
+db_init=false
+load_so=false
+load_gh=false
+load_sotorrent=false
 
 # absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
 # escape slashes in path because the string is used in a sed command
@@ -16,21 +16,25 @@ data_path="F:\/Temp\/" # Cygwin
 
 rm -f $log_file
 
-if [ "$1" = "so-only" ]; then
+if [ "$1" = "so-dump" ]; then
 	echo "Will only load SO tables." | tee -a "$log_file"
-	db_init=true
 	load_so=true
 	load_gh=false
 	load_sotorrent=false
-elif [ "$1" = "gh-only" ]; then
+elif [ "$1" = "gh-references" ]; then
 	echo "Will only load GH tables." | tee -a "$log_file"
-	db_init=false
 	load_so=false
 	load_gh=true
 	load_sotorrent=false
+elif [ "$1" = "complete" ]; then
+	echo "Will load all tables." | tee -a "$log_file"
+	load_so=true
+	load_gh=true
+	load_sotorrent=true
 fi
 
-if [ "$db_init" = true ] ; then 
+if [ "$2" = "db-init" ] ; then 
+	db_init=true
 	echo "Creating database..." | tee -a "$log_file"
 	mysql -u root --password="$root_password" -e "DROP DATABASE IF EXISTS $sotorrent_db;
 	  SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -68,16 +72,19 @@ if [ "$load_gh" = true ] ; then
 	sed -e"s/<PATH>/$data_path/g" ./sql/5_load_gh-references.sql > ./sql/5_load_gh-references_paths.sql
 	mysql $sotorrent_db -u root --password="$root_password" < ./sql/5_load_gh-references_paths.sql >> $log_file  2>&1
 	rm ./sql/5_load_gh-references_paths.sql
+	
+	echo "Creating indices for GH References tables..." | tee -a "$log_file"
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/6_create_gh-references_indices.sql >> $log_file  2>&1
 fi
 
 if [ "$load_sotorrent" = true ] ; then 
 	echo "Loading SOTorrent tables..." | tee -a "$log_file"
-	sed -e"s/<PATH>/$data_path/g" ./sql/6_load_sotorrent.sql > ./sql/6_load_sotorrent_paths.sql
-	mysql $sotorrent_db -u root --password="$root_password" < ./sql/6_load_sotorrent_paths.sql >> $log_file  2>&1
-	rm ./sql/6_load_sotorrent_paths.sql
+	sed -e"s/<PATH>/$data_path/g" ./sql/7_load_sotorrent.sql > ./sql/7_load_sotorrent_paths.sql
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/7_load_sotorrent_paths.sql >> $log_file  2>&1
+	rm ./sql/7_load_sotorrent_paths.sql
 	
 	echo "Creating indices for SOTorrent tables..." | tee -a "$log_file"
-	mysql $sotorrent_db -u root --password="$root_password" < ./sql/7_create_sotorrent_indices.sql >> $log_file  2>&1
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/8_create_sotorrent_indices.sql >> $log_file  2>&1
 fi
 
 echo "Finished." | tee -a "$log_file"

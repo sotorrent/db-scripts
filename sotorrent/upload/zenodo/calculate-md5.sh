@@ -12,6 +12,7 @@ md5sum so-dump/PostHistory.xml.7z
 md5sum so-dump/PostLinks.xml.7z
 md5sum gh-references/PostReferenceGH.csv.7z
 md5sum so-dump/Posts.xml.7z
+md5sum sotorrent/PostTags.csv.7z
 md5sum sotorrent/PostVersion.csv.7z
 md5sum sotorrent/PostVersionUrl.csv.7z
 md5sum sotorrent/PostViews.csv.7z

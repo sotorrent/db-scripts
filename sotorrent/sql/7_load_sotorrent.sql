@@ -120,3 +120,13 @@ ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
 (PostId, Version, ViewCount)
 SET foreign_key_checks = 1;
+
+SET foreign_key_checks = 0;
+LOAD DATA INFILE  '<PATH>PostTags.csv' INTO TABLE `PostTags`
+CHARACTER SET utf8mb4
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '\"'
+ESCAPED BY '\"'
+LINES TERMINATED BY '\n'
+(PostId, TagId)
+SET foreign_key_checks = 1;

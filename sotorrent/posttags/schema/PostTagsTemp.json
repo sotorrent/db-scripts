@@ -1,0 +1,12 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "PostId",
+        "type": "INTEGER"
+    },
+    {
+        "mode": "REQUIRED",
+        "name": "Tag",
+        "type": "STRING"
+    }
+]

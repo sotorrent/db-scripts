@@ -5,11 +5,17 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* Extract language information from Stack Snippets and link individual snippets to their predecessors, add `MostRecentVersion` flag
-* Add table [PostTags](https://github.com/sotorrent/db-scripts/issues/4)
-* Add user reference to table `PostVersion`
+* Extract language information from Stack Snippets and link individual snippets to their predecessors
 * Update database schema on website
-* Add historical user reputation?
+* Add historical user reputation
+* Remove foreign key constraints, switch to SQLite, make it possible to only party import SOTorrent
+* Replace XML by CSV files
+
+## [2020-03-15] - First release based on SO data dump 2020-03-02
+
+* Update to Stack Overflow data dump 2020-03-02
+* Update GitHub references to 2020-03-13 (according to BigQuery table info, retrieved 2020-03-15)
+* Add table [PostTags](https://github.com/sotorrent/db-scripts/issues/4)
 
 ## [2020-01-24] - Second release based on SO data dump 2019-12-02
 

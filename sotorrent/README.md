@@ -20,9 +20,9 @@
 
 ## Data
 
-The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2019-12-02.
+The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2020-03-02.
 
-The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2020-01-24 (last updated 2020-01-24 according to table info).
+The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2020-03-15 (last updated 2020-03-13 according to table info).
 
 ## MySQL Troubleshooting
 
