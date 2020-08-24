@@ -1,23 +1,23 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="gh_so_references_2020_03_15"
-sotorrent="2020_03_15"
+dataset="gh_so_references_2020_08_24"
+sotorrent="2020_08_24"
 bucket="sotorrent"
 logfile="bigquery.log"
 
 # "Table Info" of table "bigquery-public-data:github_repos.contents"
-# Last Modified: Mar 13, 2020, 6:29:52 AM
-# Number of Rows: 263,975,088
-# Table Size: 2.25 TB
+# Last Modified:Aug 20, 2020, 6:14:55 PM
+# Number of Rows: 267,402,468
+# Table Size: 2.29 TB
 #
 # Unique file contents of text files under 1 MiB on the HEAD branch.
 # Can be joined to [bigquery-public-data:github_repos.files] table using the id columns to identify the repository and file path.
 
 # "Table Info" of table "bigquery-public-data:github_repos.commits"
-# Last Modified: Mar 13, 2020, 5:57:01 AM
-# Number of Rows: 237,161,297
-# Table Size: 774 GB
+# Last Modified:Aug 20, 2020, 2:11:25 PM
+# Number of Rows: 242,555,808
+# Table Size: 788.49 GB
 #
 # Unique Git commits from open source repositories on GitHub, pre-grouped by repositories they appear in.
 

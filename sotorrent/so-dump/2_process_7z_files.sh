@@ -13,6 +13,12 @@
 # adapt XML for MySQL import
 sed -e 's/TagBased="False"/TagBased="0"/' Badges.xml > tmp.xml && sed -e 's/TagBased="True"/TagBased="1"/' tmp.xml > Badges.xml && rm tmp.xml
 
+# MySQL automatically parse (and modifies) XML-esspaced characters
+# Therefore, replace the carriage return/newline characters with GUIDs
+'&#xD;' --> '\r'
+'&#xA;' --> '\n'
+sed -e 's/\&#xD;/\r/g' PostHistory.xml > tmp.xml && sed -e 's/\&#xA;/\n/g' tmp.xml > PostHistory.xml && rm tmp.xml
+
 # compress XML files
 7za a Badges.xml.7z Badges.xml
 7za a Comments.xml.7z Comments.xml

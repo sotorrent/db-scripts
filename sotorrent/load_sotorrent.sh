@@ -3,7 +3,7 @@
 root_password="_AqUjvtv68E\$N!r]"
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
-sotorrent_db="sotorrent20_03"
+sotorrent_db="sotorrent20_06"
 db_init=false
 load_so=false
 load_gh=false
@@ -11,10 +11,13 @@ load_sotorrent=false
 
 # absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
 # escape slashes in path because the string is used in a sed command
-data_path="F:\/Temp\/" # Cygwin
+data_path="E:\/Temp\/" # Cygwin
 #data_path="\/tmp\/" # Linux
 
 rm -f $log_file
+
+echo "Available command-line arguments: 'so-dump', 'gh-references', 'complete'."
+echo "If called with second parameter 'db-init', a new database is initalized."
 
 if [ "$1" = "so-dump" ]; then
 	echo "Will only load SO tables." | tee -a "$log_file"

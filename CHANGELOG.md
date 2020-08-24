@@ -10,6 +10,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Add historical user reputation
 * Remove foreign key constraints, switch to SQLite, make it possible to only party import SOTorrent
 * Replace XML by CSV files
+* Update escaping of newline characters (related to [this](https://github.com/sotorrent/db-scripts/issues/19) issue )
 
 ## [2020-03-15] - First release based on SO data dump 2020-03-02
 
