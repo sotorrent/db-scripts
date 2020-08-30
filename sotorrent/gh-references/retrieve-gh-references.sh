@@ -1,8 +1,8 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="gh_so_references_2020_08_24"
-sotorrent="2020_08_24"
+dataset="gh_so_references_2020_08_30"
+sotorrent="2020_08_30"
 bucket="sotorrent"
 logfile="bigquery.log"
 
