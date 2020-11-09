@@ -1,23 +1,23 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="gh_so_references_2020_08_24"
-sotorrent="2020_08_24"
+dataset="gh_so_references_2020_11_02"
+sotorrent="2020_08_31"
 bucket="sotorrent"
 logfile="bigquery.log"
 
 # "Table Info" of table "bigquery-public-data:github_repos.contents"
-# Last Modified:Aug 20, 2020, 6:14:55 PM
-# Number of Rows: 267,402,468
-# Table Size: 2.29 TB
+# Last Modified: Oct 29, 2020, 6:23:26 PM 
+# Number of Rows: 268,707,525
+# Table Size: 2.3 TB
 #
 # Unique file contents of text files under 1 MiB on the HEAD branch.
 # Can be joined to [bigquery-public-data:github_repos.files] table using the id columns to identify the repository and file path.
 
 # "Table Info" of table "bigquery-public-data:github_repos.commits"
-# Last Modified:Aug 20, 2020, 2:11:25 PM
-# Number of Rows: 242,555,808
-# Table Size: 788.49 GB
+# Last modified: Oct 29, 2020, 10:03:37 AM 
+# Number of Rows: 244,721,848
+# Table Size: 793.6 GB
 #
 # Unique Git commits from open source repositories on GitHub, pre-grouped by repositories they appear in.
 
@@ -65,13 +65,12 @@ bq extract --destination_format "CSV" --compression "GZIP" "$project:$dataset.GH
 gsutil cp "gs://$bucket/*.csv.gz" ./
 
 # merge CSV files
-./sh/merge_csv_files_PostReferenceGH.sh
-./sh/merge_csv_files_GHMatches.sh
-./sh/merge_csv_files_GHCommits.sh
+./sh/merge_csv_files.sh PostReferenceGH 4
+./sh/merge_csv_files.sh GHMatches 14
+./sh/merge_csv_files.sh GHCommits 0
 
 # remove CSV files in the cloud
 gsutil rm "gs://$bucket/*.csv.gz"
 
 # zip local CSV files
 7za a PostReferenceGH.csv.7z PostReferenceGH.csv && 7za a GHMatches.csv.7z GHMatches.csv && 7za a GHCommits.csv.7z GHCommits.csv && rm *.csv && rm *.csv.gz
-

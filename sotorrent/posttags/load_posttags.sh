@@ -3,11 +3,11 @@
 root_password="_AqUjvtv68E\$N!r]"
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
-sotorrent_db="sotorrent20_03"
+sotorrent_db="sotorrent20_06"
 
 # absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
 # escape slashes in path because the string is used in a sed command
-data_path="F:\/Temp\/" # Cygwin
+data_path="E:\/Temp\/" # Cygwin
 #data_path="\/tmp\/" # Linux
 
 rm -f $log_file
@@ -23,7 +23,7 @@ sed -e"s/<PATH>/$data_path/g" ./sql/load_posttags.sql | sed -e"s/<VERSION>/$vers
 mysql $sotorrent_db -u root --password="$root_password" < ./sql/load_posttags_absolute_paths.sql >> $log_file  2>&1
 rm ./sql/load_posttags_absolute_paths.sql
 cd "$data_path"
-rm "PostTags.csv"
+#rm "PostTags.csv"
 cd "$dir"
 
 echo "Finished." | tee -a "$log_file"

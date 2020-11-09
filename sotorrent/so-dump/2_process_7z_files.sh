@@ -14,9 +14,11 @@
 sed -e 's/TagBased="False"/TagBased="0"/' Badges.xml > tmp.xml && sed -e 's/TagBased="True"/TagBased="1"/' tmp.xml > Badges.xml && rm tmp.xml
 
 # MySQL automatically parse (and modifies) XML-esspaced characters
-# Therefore, replace the carriage return/newline characters with GUIDs
-'&#xD;' --> '\r'
-'&#xA;' --> '\n'
+# Therefore, replace the carriage return/newline characters as follows
+# '&#xD;' --> '\r'
+# '&#xA;' --> '\n'
+sed -e 's/\&#xD;/\r/g' Comments.xml > tmp.xml && sed -e 's/\&#xA;/\n/g' tmp.xml > Comments.xml && rm tmp.xml
+sed -e 's/\&#xD;/\r/g' Posts.xml > tmp.xml && sed -e 's/\&#xA;/\n/g' tmp.xml > Posts.xml && rm tmp.xml
 sed -e 's/\&#xD;/\r/g' PostHistory.xml > tmp.xml && sed -e 's/\&#xA;/\n/g' tmp.xml > PostHistory.xml && rm tmp.xml
 
 # compress XML files

@@ -3,14 +3,14 @@
 root_password="_AqUjvtv68E\$N!r]"
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
-sotorrent_db="sotorrent20_03"
+sotorrent_db="sotorrent20_06"
 
 # absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
 # escape slashes in path because the string is used in a sed command
-data_path="F:\/Temp\/postviews\/" # Cygwin
+data_path="E:\/Temp\/postviews\/" # Cygwin
 #data_path="\/tmp\/" # Linux
 
-declare -a datadump_versions=("2016-09-12" "2016-12-15" "2017-03-14" "2017-06-12" "2017-12-01" "2018-03-13" "2018-06-05" "2018-09-05" "2018-12-02" "2019-03-04" "2019-06-03" "2019-09-04" "2019-12-02" "2020-03-02")
+declare -a datadump_versions=("2016-09-12" "2016-12-15" "2017-03-14" "2017-06-12" "2017-12-01" "2018-03-13" "2018-06-05" "2018-09-05" "2018-12-02" "2019-03-04" "2019-06-03" "2019-09-04" "2019-12-02" "2020-03-02", "2020-06-02")
 
 rm -f $log_file
 
