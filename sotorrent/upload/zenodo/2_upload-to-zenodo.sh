@@ -3,7 +3,12 @@
 # Before executing this script, create a new dataset version and delete the old files on the Zenodo website
 
 ZENODO_TOKEN="" # update this
-ZENODO_BUCKET="ac77dee7-b26a-476f-8464-475e8f7c5715" # update this (see get-zenodo-bucket-id.sh)
+ZENODO_BUCKET="113a8155-8bf0-43c2-9dad-46840be68019" # update this (see get-zenodo-bucket-id.sh)
+
+# absolute path to SQL dump files (consider MySQL's secure-file-priv option)
+# escape slashes in path because the string is used in a sed command
+data_path="E:\/Temp\/" # Cygwin
+#data_path="\/tmp\/" # Linux
 
 upload_file() {
 	FILE_PATH="$1"
@@ -13,27 +18,16 @@ upload_file() {
 } 
 
 echo "Uploading so-dump..."
-upload_file "so-dump/Badges.xml.7z"
-upload_file "so-dump/Comments.xml.7z"
-upload_file "so-dump/PostHistory.xml.7z"
-upload_file "so-dump/PostLinks.xml.7z"
-upload_file "so-dump/Posts.xml.7z"
-upload_file "so-dump/Tags.xml.7z"
-upload_file "so-dump/Users.xml.7z"
-upload_file "so-dump/Votes.xml.7z"
+for file in $data_path/so-dump/*.sql.7z; do
+	upload_file "$file";
+done
 
 echo "Uploading sotorrent..."
-upload_file "sotorrent/CommentUrl.sql.7z"
-upload_file "sotorrent/PostBlockDiff.sql.7z"
-upload_file "sotorrent/PostBlockVersion.sql.7z"
-upload_file "sotorrent/PostVersion.sql.7z"
-upload_file "sotorrent/PostVersionUrl.sql.7z"
-upload_file "sotorrent/TitleVersion.sql.7z"
-upload_file "sotorrent/StackSnippetVersion.sql.7z"
-upload_file "sotorrent/PostViews.sql.7z"
-upload_file "sotorrent/PostTags.sql.7z"
+for file in $data_path/sotorrent/*.sql.7z; do
+	upload_file "$file";
+done
 
 echo "Uploading gh-references..."
-upload_file "gh-references/GHMatches.sql.7z"
-upload_file "gh-references/PostReferenceGH.sql.7z"
-upload_file "gh-references/GHCommits.sql.7z"
+for file in $data_path/gh-references/*.sql.7z; do
+	upload_file "$file";
+done

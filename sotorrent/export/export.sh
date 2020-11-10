@@ -5,9 +5,8 @@ log_file="sotorrent.log"
 sotorrent_db="sotorrent20_06"
 
 # absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
-# escape slashes in path because the string is used in a sed command
-data_path="E:\/Temp\/" # Cygwin
-#data_path="\/tmp\/" # Linux
+data_path="E:/Temp/" # Cygwin
+#data_path="/tmp/" # Linux
 
 rm -f $log_file
 
@@ -15,7 +14,7 @@ if [ "$1" = "so-dump"  ]; then
 	echo "Exporting $1 tables..." | tee -a "$log_file"
 	mysqldump -usotorrent -p$sotorrent_password --default-character-set=utf8mb4 $sotorrent_db Users -r $data_path/so-dump/Users.sql
 	mysqldump -usotorrent -p$sotorrent_password --default-character-set=utf8mb4 $sotorrent_db Badges -r $data_path/so-dump/Badges.sql
-	mysqldump -usotorrent -p$sotorrent_password --default-character-set=utf8mb4 $sotorrent_db PostLinks -$data_path/so-dump/PostLinks.sql
+	mysqldump -usotorrent -p$sotorrent_password --default-character-set=utf8mb4 $sotorrent_db PostLinks -r $data_path/so-dump/PostLinks.sql
 	mysqldump -usotorrent -p$sotorrent_password --default-character-set=utf8mb4 $sotorrent_db Tags -r $data_path/so-dump/Tags.sql
 	mysqldump -usotorrent -p$sotorrent_password --default-character-set=utf8mb4 $sotorrent_db Votes -r $data_path/so-dump/Votes.sql
 	mysqldump -usotorrent -p$sotorrent_password --default-character-set=utf8mb4 $sotorrent_db Comments -r $data_path/so-dump/Comments.sql
