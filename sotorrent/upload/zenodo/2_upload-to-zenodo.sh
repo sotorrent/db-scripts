@@ -3,7 +3,7 @@
 # Before executing this script, create a new dataset version and delete the old files on the Zenodo website
 
 ZENODO_TOKEN="" # update this
-ZENODO_BUCKET="113a8155-8bf0-43c2-9dad-46840be68019" # update this (see get-zenodo-bucket-id.sh)
+ZENODO_BUCKET="ee21a81e-ba0c-4ca5-b495-fb34ea5e56ac" # update this (see get-zenodo-bucket-id.sh)
 
 # absolute path to SQL dump files (consider MySQL's secure-file-priv option)
 # escape slashes in path because the string is used in a sed command

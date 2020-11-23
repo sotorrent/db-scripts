@@ -5,13 +5,19 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* Update import script to use new SQL dumps
 * Extract language information from Stack Snippets and link individual snippets to their predecessors
 * Update database schema on website
 * Add historical user reputation
 * Automate import of tables `PostTags` and `PostViews`
+* Properly wait for MySQL import to be finished instead of using `sleep` 
+* Revise table `PostBlockDiff`
+
+## [2020-11-16] - First release based on SO data dump 2020-09-08
+
+* see 2020-08-31
 
 ## [2020-08-31] - First release based on SO data dump 2020-06-02
+
 * Update escaping of newline characters (related to [this](https://github.com/sotorrent/db-scripts/issues/19) issue )
 * Now using MySQL dumps, newline characters are not espaced anymore in the BigQuery version of the dataset
 * This also fixes a bug in the export script (for tables `PostVersionUrl` and `CommentUrl`, column `LinkAnchor` was identical to column `FullMatch`)

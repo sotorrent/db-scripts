@@ -9,7 +9,7 @@ load_so=false
 load_gh=false
 load_sotorrent=false
 
-# absolute path to SQL dump files (consider MySQL's secure-file-priv option)
+# absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
 # escape slashes in path because the string is used in a sed command
 data_path="E:\/Temp\/" # Cygwin
 #data_path="\/tmp\/" # Linux
@@ -43,6 +43,9 @@ if [ "$2" = "db-init" ] ; then
 	  SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 	  CREATE DATABASE $sotorrent_db DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;"
 
+	echo "Creating Stack Overflow tables..." | tee -a "$log_file"
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_so_tables.sql >> $log_file  2>&1
+
 	echo "Adding database user and granting privileges..." | tee -a "$log_file"
 	mysql -u root --password="$root_password" -e "CREATE USER IF NOT EXISTS 'sotorrent'@'localhost' IDENTIFIED BY '$sotorrent_password';
 	  CREATE USER IF NOT EXISTS 'sotorrent'@'%' IDENTIFIED BY '$sotorrent_password';
@@ -54,19 +57,24 @@ fi
 
 if [ "$load_so" = true ] ; then 
 	echo "Loading Stack Overflow tables..." | tee -a "$log_file"
-	for file in $data_path/so-dump/*.sql; do
-		mysql --user="$user" --password="$password" --database="$database" --execute="source $file";
-	done
-	
+	sed -e"s/<PATH>/$data_path/g" ./sql/load_so_from_xml.sql > ./sql/load_so_from_xml_absolute_paths.sql
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/load_so_from_xml_absolute_paths.sql >> $log_file  2>&1
+	rm ./sql/load_so_from_xml_absolute_paths.sql
+
 	echo "Creating indices for Stack Overflow tables..." | tee -a "$log_file"
 	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_so_indices.sql >> $log_file  2>&1
 fi
 
+if [ "$db_init" = true ] ; then 
+	echo "Creating SOTorrent tables..." | tee -a "$log_file"
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_sotorrent_tables.sql >> $log_file  2>&1
+fi
+
 if [ "$load_gh" = true ] ; then 
-	echo "Loading GitHub references tables..." | tee -a "$log_file"
-	for file in $data_path/gh-references/*.sql; do
-		mysql --user="$user" --password="$password" --database="$database" --execute="source $file";
-	done
+	echo "Loading GH tables..." | tee -a "$log_file"
+	sed -e"s/<PATH>/$data_path/g" ./sql/load_gh-references.sql > ./sql/load_gh-references_paths.sql
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/load_gh-references_paths.sql >> $log_file  2>&1
+	rm ./sql/load_gh-references_paths.sql
 	
 	echo "Creating indices for GH References tables..." | tee -a "$log_file"
 	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_gh-references_indices.sql >> $log_file  2>&1
@@ -74,10 +82,9 @@ fi
 
 if [ "$load_sotorrent" = true ] ; then 
 	echo "Loading SOTorrent tables..." | tee -a "$log_file"
-	echo "Loading GitHub references tables..." | tee -a "$log_file"
-	for file in $data_path/sotorrent/*.sql; do
-		mysql --user="$user" --password="$password" --database="$database" --execute="source $file";
-	done
+	sed -e"s/<PATH>/$data_path/g" ./sql/load_sotorrent.sql > ./sql/load_sotorrent_paths.sql
+	mysql $sotorrent_db -u root --password="$root_password" < ./sql/load_sotorrent_paths.sql >> $log_file  2>&1
+	rm ./sql/load_sotorrent_paths.sql
 	
 	echo "Creating indices for SOTorrent tables..." | tee -a "$log_file"
 	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_sotorrent_indices.sql >> $log_file  2>&1

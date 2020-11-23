@@ -2,11 +2,11 @@
 
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
-sotorrent_db="sotorrent20_06"
+sotorrent_db="sotorrent20_09"
 
 # absolute path to XML and CSV files (consider MySQL's secure-file-priv option)
-data_path="E:/Temp/" # Cygwin
-#data_path="/tmp/" # Linux
+data_path="E:/Temp" # Cygwin
+#data_path="/tmp" # Linux
 
 rm -f $log_file
 

@@ -1,25 +1,25 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="gh_so_references_2020_11_02"
-sotorrent="2020_08_31"
+dataset="gh_so_references_2020_11_22"
+sotorrent="2020_11_16"
 bucket="sotorrent"
 logfile="bigquery.log"
 
+# "Table Info" of table "bigquery-public-data:github_repos.commits"
+# Last modified: Nov 19, 2020, 10:41:33 AM
+# Number of Rows: 245,405,539
+# Table Size: 795.15 GB
+#
+# Unique Git commits from open source repositories on GitHub, pre-grouped by repositories they appear in.
+
 # "Table Info" of table "bigquery-public-data:github_repos.contents"
-# Last Modified: Oct 29, 2020, 6:23:26 PM 
-# Number of Rows: 268,707,525
-# Table Size: 2.3 TB
+# Last Modified: Nov 19, 2020, 8:07:20 PM
+# Number of Rows: 269,172,700
+# Table Size: 2.31 TB
 #
 # Unique file contents of text files under 1 MiB on the HEAD branch.
 # Can be joined to [bigquery-public-data:github_repos.files] table using the id columns to identify the repository and file path.
-
-# "Table Info" of table "bigquery-public-data:github_repos.commits"
-# Last modified: Oct 29, 2020, 10:03:37 AM 
-# Number of Rows: 244,721,848
-# Table Size: 793.6 GB
-#
-# Unique Git commits from open source repositories on GitHub, pre-grouped by repositories they appear in.
 
 # select all source code lines of text files that contain a link to Stack Overflow
 bq --headless query --max_rows=0 --destination_table "$project:$dataset.matched_lines" "$(< sql/matched_lines.sql)" >> "$logfile" 2>&1
