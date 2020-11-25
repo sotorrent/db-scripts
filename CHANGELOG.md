@@ -11,6 +11,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Automate import of tables `PostTags` and `PostViews`
 * Properly wait for MySQL import to be finished instead of using `sleep` 
 * Revise table `PostBlockDiff`
+* Explore feasibility of providing SQLite instead of MySQL dumps
 
 ## [2020-11-16] - First release based on SO data dump 2020-09-08
 
