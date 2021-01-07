@@ -5,19 +5,23 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* Extract language information from Stack Snippets and link individual snippets to their predecessors
+* Extract language information from Stack Snippets, other tags (https://meta.stackexchange.com/questions/184108/what-is-syntax-highlighting-and-how-does-it-work/184109#184109, https://meta.stackexchange.com/questions/353983/goodbye-prettify-hello-highlight-js-swapping-out-our-syntax-highlighter), or highlight.js (see previous link). Integrate Stack Snippet table into post block versions or link individual Stack Snippets to their predecessors.
 * Update database schema on website
 * Add historical user reputation
-* Automate import of tables `PostTags` and `PostViews`
-* Properly wait for MySQL import to be finished instead of using `sleep` 
+* Automate import of tables `PostTags` (in particular the tag processing using BigQuery or update the Java application to import tags first into a HashMap and replace names by IDs there) and `PostViews`
 * Revise table `PostBlockDiff`
+
+## [2020-12-31] - First release based on SO data dump 2020-12-08
+
+* Update to Stack Overflow data dump 2020-12-08
 
 ## [2020-11-16] - First release based on SO data dump 2020-09-08
 
-* see 2020-08-31
+* Update to Stack Overflow data dump 2020-09-08
 
 ## [2020-08-31] - First release based on SO data dump 2020-06-02
 
+* Update to Stack Overflow data dump 2020-06-02
 * Update escaping of newline characters (related to [this](https://github.com/sotorrent/db-scripts/issues/19) issue )
 * Now using MySQL dumps, newline characters are not espaced anymore in the BigQuery version of the dataset
 * This also fixes a bug in the export script (for tables `PostVersionUrl` and `CommentUrl`, column `LinkAnchor` was identical to column `FullMatch`)
@@ -36,10 +40,12 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [2019-12-25] - First release based on SO data dump 2019-12-02
 
+* Update to Stack Overflow data dump 2019-12-02
 * Add non-generated comments (`PostHistory.Comment`) to table `PostVersion`
 * Add view count history (new table `PostViews`)
 
 ## [2019-09-23] - First release based on SO data dump 2019-09-04
+* Update to Stack Overflow data dump 2019-09-04
 * Automate execution of SQL scripts
 * Add column `MostRecentVersion` to table `TitleVersion`
 * Add table `StackSnippetVersion`
@@ -47,6 +53,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [2019-06-21] - First release based on SO data dump 2019-06-03
 
+* Update to Stack Overflow data dump 2019-06-03
 * Improve matching of very short post blocks (containing only one token)
 * Add table `VoteType` (see [this](https://github.com/sotorrent/db-scripts/issues/17) issue on GitHub)
 * Automate execution of BigQuery scripts

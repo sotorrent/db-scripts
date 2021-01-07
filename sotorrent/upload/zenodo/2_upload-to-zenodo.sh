@@ -3,12 +3,11 @@
 # Before executing this script, create a new dataset version and delete the old files on the Zenodo website
 
 ZENODO_TOKEN="" # update this
-ZENODO_BUCKET="ee21a81e-ba0c-4ca5-b495-fb34ea5e56ac" # update this (see get-zenodo-bucket-id.sh)
+ZENODO_BUCKET="3532c8a9-395e-4f0c-8048-13e7e519b3d7" # update this (see get-zenodo-bucket-id.sh)
 
 # absolute path to SQL dump files (consider MySQL's secure-file-priv option)
-# escape slashes in path because the string is used in a sed command
-data_path="E:\/Temp\/" # Cygwin
-#data_path="\/tmp\/" # Linux
+data_path="D:/DataDumps/sotorrent/sotorrent_2020-12-31/data" # Cygwin
+#data_path="/tmp/" # Linux
 
 upload_file() {
 	FILE_PATH="$1"

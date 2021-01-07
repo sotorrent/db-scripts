@@ -1,12 +1,12 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="2020_11_16"
+dataset="2020_12_31"
 bucket="sotorrent"
 logfile="bigquery.log"
 gcloud_mysql_instance="sotorrent"
-gcloud_mysql_db="sotorrent20_09"
-glcoud_mysql_connection="sotorrent-org.US.sotorrent20_09"
+gcloud_mysql_db="sotorrent20_12"
+glcoud_mysql_connection="sotorrent-org.US.sotorrent20_12"
 
 # test database connection
 #gcloud sql connect $gcloud_mysql_instance --user=sotorrent;

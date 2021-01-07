@@ -1,22 +1,22 @@
 #!/bin/bash
 
 project="sotorrent-org"
-dataset="gh_so_references_2020_11_22"
-sotorrent="2020_11_16"
+dataset="gh_so_references_2021_01_04"
+sotorrent="2020_12_31"
 bucket="sotorrent"
 logfile="bigquery.log"
 
 # "Table Info" of table "bigquery-public-data:github_repos.commits"
-# Last modified: Nov 19, 2020, 10:41:33 AM
-# Number of Rows: 245,405,539
-# Table Size: 795.15 GB
+# Last modified:Dec 31, 2020, 9:44:50 AM
+# Number of Rows: 246,818,076
+# Table Size: 798.78 GB
 #
 # Unique Git commits from open source repositories on GitHub, pre-grouped by repositories they appear in.
 
 # "Table Info" of table "bigquery-public-data:github_repos.contents"
-# Last Modified: Nov 19, 2020, 8:07:20 PM
-# Number of Rows: 269,172,700
-# Table Size: 2.31 TB
+# Last Modified: Dec 31, 2020, 3:56:15 PM 
+# Number of Rows: 270,084,372
+# Table Size: 2.33 TB
 #
 # Unique file contents of text files under 1 MiB on the HEAD branch.
 # Can be joined to [bigquery-public-data:github_repos.files] table using the id columns to identify the repository and file path.
@@ -73,4 +73,4 @@ gsutil cp "gs://$bucket/*.csv.gz" ./
 gsutil rm "gs://$bucket/*.csv.gz"
 
 # zip local CSV files
-7za a PostReferenceGH.csv.7z PostReferenceGH.csv && 7za a GHMatches.csv.7z GHMatches.csv && 7za a GHCommits.csv.7z GHCommits.csv && rm *.csv && rm *.csv.gz
+#7za a PostReferenceGH.csv.7z PostReferenceGH.csv && 7za a GHMatches.csv.7z GHMatches.csv && 7za a GHCommits.csv.7z GHCommits.csv && rm *.csv

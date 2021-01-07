@@ -3,7 +3,7 @@
 root_password="_AqUjvtv68E\$N!r]"
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"
-sotorrent_db="sotorrent20_09"
+sotorrent_db="sotorrent20_12"
 db_init=false
 load_so=false
 load_gh=false
