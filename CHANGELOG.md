@@ -11,6 +11,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Automate import of tables `PostTags` (in particular the tag processing using BigQuery or update the Java application to import tags first into a HashMap and replace names by IDs there) and `PostViews`
 * Revise table `PostBlockDiff`
 * Explore feasibility of providing SQLite instead of MySQL dumps
+* Data type of some columns integer intead of boolean (e.g. `PostBlockVersion.MostRecentVersion`), also `MostRecentVersion` seems to contain a bug (see, e.g., post 26853961)
 
 ## [2020-12-31] - First release based on SO data dump 2020-12-08
 
