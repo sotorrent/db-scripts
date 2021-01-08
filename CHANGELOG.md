@@ -5,7 +5,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 
 ## [Upcoming]
 
-* Extract language information from Stack Snippets, other tags (https://meta.stackexchange.com/questions/184108/what-is-syntax-highlighting-and-how-does-it-work/184109#184109, https://meta.stackexchange.com/questions/353983/goodbye-prettify-hello-highlight-js-swapping-out-our-syntax-highlighter), or highlight.js (see previous link). Integrate Stack Snippet table into post block versions or link individual Stack Snippets to their predecessors.
+* Extract language information from Stack Snippets, other tags (https://meta.stackexchange.com/questions/184108/what-is-syntax-highlighting-and-how-does-it-work/184109#184109, https://meta.stackexchange.com/questions/353983/goodbye-prettify-hello-highlight-js-swapping-out-our-syntax-highlighter), or highlight.js (see previous link). Integrate Stack Snippet table into post block versions or link individual Stack Snippets to their predecessors. See also https://stackoverflow.com/help/formatting
 * Update database schema on website
 * Add historical user reputation
 * Automate import of tables `PostTags` (in particular the tag processing using BigQuery or update the Java application to import tags first into a HashMap and replace names by IDs there) and `PostViews`
