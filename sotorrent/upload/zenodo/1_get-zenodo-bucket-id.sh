@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 # retrieve Zenodo bucket id
 

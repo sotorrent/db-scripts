@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 # on some systems, you need to replace md5sum by md5
 

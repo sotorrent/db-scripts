@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 wget https://archive.org/download/stackexchange/stackoverflow.com-Badges.7z
 wget https://archive.org/download/stackexchange/stackoverflow.com-Comments.7z

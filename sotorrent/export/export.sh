@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 sotorrent_password="4ar7JKS2mfgGHiDA"
 log_file="sotorrent.log"

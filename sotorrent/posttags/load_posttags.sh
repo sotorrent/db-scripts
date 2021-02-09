@@ -1,4 +1,5 @@
 #!/bin/sh
+set -Eeuo pipefail
 
 root_password="_AqUjvtv68E\$N!r]"
 sotorrent_password="4ar7JKS2mfgGHiDA"

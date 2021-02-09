@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 project="sotorrent-org"
 dataset="2020_12_31"

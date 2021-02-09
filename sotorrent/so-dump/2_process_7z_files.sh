@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 # unzip XML files
 7za e stackoverflow.com-Badges.7z && rm stackoverflow.com-Badges.7z

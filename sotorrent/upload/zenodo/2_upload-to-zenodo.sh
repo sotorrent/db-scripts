@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 # Before executing this script, create a new dataset version and delete the old files on the Zenodo website
 

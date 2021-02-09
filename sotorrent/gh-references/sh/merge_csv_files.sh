@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 prefix=$1
 last_index=$2

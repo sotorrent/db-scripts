@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 
 if [ "$1" = "so-dump" ]; then
 	echo "Compressing $1 SQL files..."
