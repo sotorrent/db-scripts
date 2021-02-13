@@ -20,7 +20,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId, MostRecentVersion)
+(Id, PostId, PostTypeId, PostHistoryId, PostHistoryTypeId, CreationDate, @PredPostHistoryId, @SuccPostHistoryId, MostRecentVersion, Comment)
 SET PredPostHistoryId = nullif(@PredPostHistoryId, ''),
 	SuccPostHistoryId = nullif(@SuccPostHistoryId, '');
 SET foreign_key_checks = 1;
