@@ -118,7 +118,7 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(PostId, Version, ViewCount)
+(PostId, Version, ViewCount);
 SET foreign_key_checks = 1;
 
 SET foreign_key_checks = 0;
@@ -128,5 +128,5 @@ FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '\"'
 ESCAPED BY '\"'
 LINES TERMINATED BY '\n'
-(PostId, TagId)
+(PostId, TagId);
 SET foreign_key_checks = 1;
