@@ -10,9 +10,8 @@ load_gh=false
 load_sotorrent=false
 
 # absolute path to SQL dump files (consider MySQL's secure-file-priv option)
-# escape slashes in path because the string is used in a sed command
-data_path="E:\/Temp\/" # Cygwin
-#data_path="\/tmp\/" # Linux
+data_path="E:/Temp" # Cygwin
+#data_path="/tmp" # Linux
 
 rm -f $log_file
 
@@ -55,32 +54,32 @@ fi
 if [ "$load_so" = true ] ; then 
 	echo "Loading Stack Overflow tables..." | tee -a "$log_file"
 	for file in $data_path/so-dump/*.sql; do
-		mysql --user="$user" --password="$password" --database="$database" --execute="source $file";
+		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; SOURCE $file;";
 	done
 	
 	echo "Creating indices for Stack Overflow tables..." | tee -a "$log_file"
-	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_so_indices.sql >> $log_file  2>&1
+	mysql $sotorrent_db -u root --password="$root_password" --database="$sotorrent_db" < ./sql/create_so_indices.sql >> $log_file  2>&1
 fi
 
 if [ "$load_gh" = true ] ; then 
 	echo "Loading GitHub references tables..." | tee -a "$log_file"
 	for file in $data_path/gh-references/*.sql; do
-		mysql --user="$user" --password="$password" --database="$database" --execute="source $file";
+		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; SOURCE $file;";
 	done
 	
 	echo "Creating indices for GH References tables..." | tee -a "$log_file"
-	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_gh-references_indices.sql >> $log_file  2>&1
+	mysql $sotorrent_db -u root --password="$root_password" --database="$sotorrent_db" < ./sql/create_gh-references_indices.sql >> $log_file  2>&1
 fi
 
 if [ "$load_sotorrent" = true ] ; then 
 	echo "Loading SOTorrent tables..." | tee -a "$log_file"
 	echo "Loading GitHub references tables..." | tee -a "$log_file"
 	for file in $data_path/sotorrent/*.sql; do
-		mysql --user="$user" --password="$password" --database="$database" --execute="source $file";
+		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; SOURCE $file;";
 	done
 	
 	echo "Creating indices for SOTorrent tables..." | tee -a "$log_file"
-	mysql $sotorrent_db -u root --password="$root_password" < ./sql/create_sotorrent_indices.sql >> $log_file  2>&1
+	mysql $sotorrent_db -u root --password="$root_password" --database="$sotorrent_db" < ./sql/create_sotorrent_indices.sql >> $log_file  2>&1
 fi
 
 echo "Finished." | tee -a "$log_file"
