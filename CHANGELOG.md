@@ -12,6 +12,7 @@ All notable changes to the SOTorrent dataset project will be documented in this 
 * Revise table `PostBlockDiff`
 * Explore feasibility of providing SQLite instead of MySQL dumps
 * Data type of some columns integer intead of boolean (e.g. `PostBlockVersion.MostRecentVersion`), also `MostRecentVersion` seems to contain a bug (see, e.g., post 26853961)
+* Split scripts and data into two Zenodo archives
 
 ## [2020-12-31] - First release based on SO data dump 2020-12-08
 
