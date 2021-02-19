@@ -13,10 +13,13 @@ load_sotorrent=false
 data_path="E:/Temp" # Cygwin
 #data_path="/tmp" # Linux
 
+sql_import_prefix="SET autocommit=0; SET unique_checks=0; SET foreign_key_checks=0;"
+sql_import_suffix="SET unique_checks=1; SET foreign_key_checks=1; COMMIT; SET autocommit=1;";
+
 rm -f $log_file
 
-echo "Available command-line arguments: 'so-dump', 'gh-references', 'complete'."
-echo "If called with second parameter 'db-init', a new database is initalized."
+echo "Available command-line arguments: 'so-dump', 'sotorrent', 'gh-references', 'complete'."
+echo "If called with second parameter 'db-init', a new database is initialized."
 
 if [ "$1" = "so-dump" ]; then
 	echo "Will only load SO tables." | tee -a "$log_file"
@@ -28,6 +31,10 @@ elif [ "$1" = "gh-references" ]; then
 	load_so=false
 	load_gh=true
 	load_sotorrent=false
+elif [ "$1" = "sotorrent" ]; then
+	load_so=false
+	load_gh=false
+	load_sotorrent=true
 elif [ "$1" = "complete" ]; then
 	echo "Will load all tables." | tee -a "$log_file"
 	load_so=true
@@ -54,7 +61,7 @@ fi
 if [ "$load_so" = true ] ; then 
 	echo "Loading Stack Overflow tables..." | tee -a "$log_file"
 	for file in $data_path/so-dump/*.sql; do
-		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; SOURCE $file;";
+		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; $sql_import_prefix SOURCE $file; $sql_import_suffix";
 	done
 	
 	echo "Creating indices for Stack Overflow tables..." | tee -a "$log_file"
@@ -64,7 +71,7 @@ fi
 if [ "$load_gh" = true ] ; then 
 	echo "Loading GitHub references tables..." | tee -a "$log_file"
 	for file in $data_path/gh-references/*.sql; do
-		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; SOURCE $file;";
+		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; $sql_import_prefix SOURCE $file; $sql_import_suffix";
 	done
 	
 	echo "Creating indices for GH References tables..." | tee -a "$log_file"
@@ -73,9 +80,8 @@ fi
 
 if [ "$load_sotorrent" = true ] ; then 
 	echo "Loading SOTorrent tables..." | tee -a "$log_file"
-	echo "Loading GitHub references tables..." | tee -a "$log_file"
 	for file in $data_path/sotorrent/*.sql; do
-		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; SOURCE $file;";
+		mysql -u root --password="$root_password" --database="$sotorrent_db" --execute="USE $sotorrent_db; $sql_import_prefix SOURCE $file; $sql_import_suffix";
 	done
 	
 	echo "Creating indices for SOTorrent tables..." | tee -a "$log_file"
