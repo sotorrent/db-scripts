@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 # unzip XML files
-7za e stackoverflow.7z
+7za e stackoverflow.com.7z
 
 # compress individual XML files
 7za a Badges.xml.7z Badges.xml
